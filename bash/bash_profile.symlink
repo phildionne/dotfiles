@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+
+# RBenv
+# enable shims and autocompletion
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Postgres.app Postgresql
+export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+
+# Heroku Client
+export PATH="/usr/local/heroku/bin:$PATH"
+
+# Path to the bash it configuration
+export BASH_IT=$HOME/.bash_it
+
+# Lock and Load a custom theme file
+# location /.bash_it/themes/
+export BASH_IT_THEME='minimal'
+
+# Editor preferences
+export EDITOR="subl -w"
+export GIT_EDITOR='subl -w'
+
+# Aliases
+alias sl=ls # shame
+alias ls="ls -F"
+alias l="ls -lAh"
+alias ll="ls -l"
+alias la='ls -A'
+
+alias ..='cd ..'         # Go up one directory
+alias ...='cd ../..'     # Go up two directories
+alias ....='cd ../../..' # Go up three directories
+
+# Don't check mail when opening terminal.
+unset MAILCHECK
+
+# Lock and load custom settings
+# source $BASH_IT/custom/custom.bash
+
+# Load Bash It
+source $BASH_IT/bash_it.sh

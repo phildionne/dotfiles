@@ -1,6 +1,6 @@
 {
 	"bold_folder_labels": true,
-	"theme": "Soda Dark.sublime-theme",
+	"draw_white_space": "true",
 	"folder_exclude_patterns":
 	[
 		".git",
@@ -12,5 +12,12 @@
 	[
 		"Vintage"
 	],
-	"scroll_past_end": true
+	"matchBracketsAngle": true,
+	"matchBracketsBraces": true,
+	"matchBracketsSquare": true,
+	"scroll_past_end": true,
+	"tab_size": 2,
+	"theme": "Soda Dark.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true
 }

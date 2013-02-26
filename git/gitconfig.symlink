@@ -3,7 +3,6 @@
 	email = dionne.phil@gmail.com
 [core]
 	excludesfile = ~/.global_ignore
-    editor = vim
 [color]
     diff = auto
     status = auto
@@ -18,6 +17,5 @@
 	pr = pull --rebase
 	st = status -bs
 	plog="log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-	oops = reset --hard HEAD~1
 [push]
 	default = tracking

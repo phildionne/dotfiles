@@ -1,6 +1,8 @@
 [user]
 	name = Philippe Dionne
 	email = dionne.phil@gmail.com
+[github]
+  user = phildionne
 [core]
 	excludesfile = ~/.global_ignore
 [color]

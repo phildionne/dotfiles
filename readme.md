@@ -19,7 +19,11 @@ Symlink `~/dotfiles/sublime2/User/Preferences.Default (OSX).sublime-keymap` and 
 #### Packages
 First, install [Sublime Package Controll](http://wbond.net/sublime_packages/package_control) and then:
 
-1. Emmet
-2. ERB Insert and Toggle Commands
-3. GitGutter
-4. SideBarEnhancements
+1. DashDoc
+2. SideBarEnhancements
+3. Emmet
+4. ERB Insert and Toggle Commands
+5. GitGutter
+6. CoffeeScript
+7. LESS
+8. RSpec

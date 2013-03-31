@@ -12,9 +12,7 @@
 	[
 		"Vintage"
 	],
-	"matchBracketsAngle": true,
-	"matchBracketsBraces": true,
-	"matchBracketsSquare": true,
+	"match_brackets_angle": true,
 	"scroll_past_end": true,
 	"tab_size": 2,
 	"theme": "Soda Dark.sublime-theme",

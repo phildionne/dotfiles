@@ -2,7 +2,7 @@
 
 ## Getting started
 ```
-git clone git@github.com:phildionne/dotfiles.git
+git clone https//github.com:phildionne/dotfiles.git
 ```
 Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins.
 

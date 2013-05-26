@@ -24,3 +24,21 @@
 	default = tracking
 [rebase]
   autosquash = true
+[merge]
+  # Use the OS X graphical three-way merge tool for graphical merges.
+  tool = opendiff
+[mergetool]
+  # Don't prompt before opening the merge tool.
+  prompt = false
+  # Don't keep backups of the merge tool inputs.
+  keepBackup = false
+  # Don't keep the merge tool temporary input/output files.
+  keepTemporaries = false
+[mergetool "opendiff"]
+  # Use a script to setup opendiff correctly for Git merges.
+  path = git-mergetool-opendiff
+
+
+#git config --global mergetool.sublime.cmd "subl -w \$MERGED"
+#git config --global mergetool.sublime.trustExitCode false
+#git config --global merge.tool sublime

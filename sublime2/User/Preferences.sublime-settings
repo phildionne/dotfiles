@@ -1,24 +1,33 @@
 {
 	"bold_folder_labels": true,
-	"draw_white_space": "true",
+	"ensure_newline_at_eof_on_save": true,
+	"draw_white_space": true,
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"match_brackets_angle": true,
+	"scroll_past_end": true,
+	"syntax_sensitive": true,
+	"wide_caret": true,
+  "word_wrap": true,
+  "font_size": 12.0,
+	"flatland_square_tabs": true,
+	"file_exclude_patterns":
+  [
+    ".DS_Store"
+  ],
 	"folder_exclude_patterns":
 	[
 		".git",
 		".sass-cache",
 		"cache/*"
 	],
-	"font_size": 12.0,
+
 	"ignored_packages":
 	[
 		"Vintage"
 	],
-	"match_brackets_angle": true,
-	"scroll_past_end": true,
-	"syntax_sensitive": true,
-	"ruler": 80,
+	"rulers": [80],
 	"tab_size": 2,
-	"translate_tabs_to_spaces": true,
-	"trim_trailing_white_space_on_save": true,
-	"theme": "Flatland.sublime-theme",
-  "color_scheme": "Packages/Theme - Flatland/Flatland.tmTheme"
+	"theme": "Flatland Dark.sublime-theme",
+	"color_scheme": "Packages/Theme - Flatland/Flatland Dark.tmTheme"
 }

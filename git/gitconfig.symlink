@@ -19,6 +19,7 @@
 	pr = pull --rebase
 	st = status -bs
   plog="log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[34m%an" --abbrev-commit --date=relative"
+  verbs="!git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr"
   remote = remote --verbose
 [push]
 	default = tracking

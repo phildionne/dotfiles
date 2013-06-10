@@ -1,20 +1,13 @@
 {
 	"bold_folder_labels": true,
-	"ensure_newline_at_eof_on_save": true,
+	"color_scheme": "Packages/Theme - Flatland/Flatland Dark.tmTheme",
 	"draw_white_space": true,
-	"translate_tabs_to_spaces": true,
-	"trim_trailing_white_space_on_save": true,
-	"match_brackets_angle": true,
-	"scroll_past_end": true,
-	"syntax_sensitive": true,
-	"wide_caret": true,
-  "word_wrap": true,
-  "font_size": 12.0,
-	"flatland_square_tabs": true,
+	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
-  [
-    ".DS_Store"
-  ],
+	[
+		".DS_Store"
+	],
+	"flatland_square_tabs": true,
 	"folder_exclude_patterns":
 	[
 		".git",
@@ -22,13 +15,21 @@
 		"cache/*",
 		".yardoc"
 	],
-
+	"font_size": 12.0,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
-	"rulers": [80],
+	"match_brackets_angle": true,
+	"rulers":
+	[
+		80
+	],
+	"scroll_past_end": true,
+	"syntax_sensitive": true,
 	"tab_size": 2,
 	"theme": "Flatland Dark.sublime-theme",
-	"color_scheme": "Packages/Theme - Flatland/Flatland Dark.tmTheme"
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"wide_caret": true
 }

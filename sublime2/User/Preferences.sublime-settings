@@ -19,7 +19,8 @@
 	[
 		".git",
 		".sass-cache",
-		"cache/*"
+		"cache/*",
+		".yardoc"
 	],
 
 	"ignored_packages":

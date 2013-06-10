@@ -1,4 +1,6 @@
 [
   { "keys": ["ctrl+="], "command": "erb" },
-  { "keys": ["super+shift+r"], "command": "reindent", "args": {"single_line": false} }
+  { "keys": ["super+shift+r"], "command": "reindent", "args": {"single_line": false} },
+  { "keys": ["super+f"], "command": "show_panel", "args": {"panel": "replace"} },
+  { "keys": ["super+alt+f"], "command": "show_panel", "args": {"panel": "find"} }
 ]

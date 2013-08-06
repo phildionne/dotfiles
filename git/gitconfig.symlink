@@ -38,7 +38,8 @@
 [mergetool "opendiff"]
   # Use a script to setup opendiff correctly for Git merges.
   path = git-mergetool-opendiff
-
+[diff]
+  algorithm = patience
 
 #git config --global mergetool.sublime.cmd "subl -w \$MERGED"
 #git config --global mergetool.sublime.trustExitCode false

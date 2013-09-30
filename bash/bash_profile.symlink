@@ -6,6 +6,12 @@ PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # enable shims and autocompletion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+# Ruby Garbage Collection finetuning
+# see http://labs.goclio.com/tuning-ruby-garbage-collection-for-rspec/
+export RUBY_HEAP_MIN_SLOTS=2000000
+export RUBY_HEAP_FREE_MIN=20000
+export RUBY_GC_MALLOC_LIMIT=100000000
+
 # Postgres.app Postgresql
 export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
 

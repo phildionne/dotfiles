@@ -29,16 +29,6 @@ export BASH_IT_THEME='minimal'
 export EDITOR="subl -w"
 export GIT_EDITOR='subl -w'
 
-# Aliases
-alias sl=ls # shame
-alias ls="ls -F"
-alias l="ls -lAh"
-alias ll="ls -l"
-alias la='ls -A'
-
-alias ..='cd ..'         # Go up one directory
-alias ...='cd ../..'     # Go up two directories
-alias ....='cd ../../..' # Go up three directories
 
 # Don't check mail when opening terminal.
 unset MAILCHECK

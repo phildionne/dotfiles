@@ -29,6 +29,8 @@ export BASH_IT_THEME='minimal'
 export EDITOR="subl -w"
 export GIT_EDITOR='subl -w'
 
+# Use Hub, Github's little friend
+alias git=hub
 
 # Don't check mail when opening terminal.
 unset MAILCHECK

@@ -12,6 +12,9 @@ export RUBY_HEAP_MIN_SLOTS=2000000
 export RUBY_HEAP_FREE_MIN=20000
 export RUBY_GC_MALLOC_LIMIT=100000000
 
+# Specify up to date certificates
+export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
+
 # Postgres.app Postgresql
 export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$PATH"
 

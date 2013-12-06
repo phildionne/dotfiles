@@ -2,9 +2,24 @@
 
 ## Getting started
 ```
-git clone https//github.com:phildionne/dotfiles.git
+cd & git clone git@github.com:phildionne/dotfiles.git
 ```
-Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins.
+
+### Bash
+Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins. Mine are:
+
+#### Aliases
+- Bundler
+- General
+- Git
+
+#### Completion
+- Brew
+- Defaults
+- Gem
+- Git
+- Rake
+- SSH
 
 Create symlinks to your dotfiles in `~`. This will overwrite `~/.bash_profile` created by bash-it.
 ```
@@ -12,18 +27,25 @@ cd ~/dotfiles
 rake install
 ```
 
-### Sublime
-Overwrite Sublime preferences:
-Symlink `~/dotfiles/sublime2/User/Preferences.Default (OSX).sublime-keymap` and `~/dotfiles/sublime2/User/Preferences.sublime-settings` to `Packages/User/Preferences.Default (OSX).sublime-keymap` and `Packages/User/Preferences.sublime-settings`
+### SublimeText
+
+Overwrite Sublime preferences with your own:
+
+```
+ln -s /Users/pdionne/dotfiles/sublime/User/Default\ \(OSX\).sublime-keymap /Users/pdionne/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Default\ \(OSX\).sublime-keymap
+ln -s /Users/pdionne/dotfiles/sublime/User/Preferences.sublime-settings /Users/pdionne/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
+```
 
 #### Packages
+
 First, install [Sublime Package Controll](http://wbond.net/sublime_packages/package_control) and then:
 
-1. DashDoc
-2. SideBarEnhancements
-3. Emmet
-4. ERB Insert and Toggle Commands
-5. GitGutter
-6. CoffeeScript
-7. LESS
+1. SideBarEnhancements
+2. Emmet
+3. SublimeERB
+4. GitGutter
+5. BetterCoffeeScript
+6. LESS
+7. SASS
 8. RSpec
+9. Theme - Flatland

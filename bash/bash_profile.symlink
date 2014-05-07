@@ -9,11 +9,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # Cache downloaded packages
 export RUBY_BUILD_CACHE_PATH="~/.rbenv/cache"
 
-# Ruby Garbage Collection finetuning
-# see http://labs.goclio.com/tuning-ruby-garbage-collection-for-rspec/
-export RUBY_HEAP_MIN_SLOTS=2000000
-export RUBY_HEAP_FREE_MIN=20000
-export RUBY_GC_MALLOC_LIMIT=100000000
 # pip should only run if there is a virtualenv currently activated
 export PIP_REQUIRE_VIRTUALENV=true
 

@@ -2,9 +2,12 @@
 
 PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 
-# RBenv
+# rbenv
 # enable shims and autocompletion
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Cache downloaded packages
+export RUBY_BUILD_CACHE_PATH="~/.rbenv/cache"
 
 # Ruby Garbage Collection finetuning
 # see http://labs.goclio.com/tuning-ruby-garbage-collection-for-rspec/

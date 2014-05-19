@@ -24,6 +24,9 @@ export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$PATH"
 # Heroku Client
 export PATH="/usr/local/heroku/bin:$PATH"
 
+# TeX distribution
+export PATH="/usr/texbin:$PATH"
+
 # Path to the bash it configuration
 export BASH_IT=$HOME/.bash_it
 

@@ -32,8 +32,7 @@ rake install
 Overwrite Sublime preferences with your own:
 
 ```
-ln -s /Users/pdionne/dotfiles/sublime/User/Default\ \(OSX\).sublime-keymap /Users/pdionne/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Default\ \(OSX\).sublime-keymap
-ln -s /Users/pdionne/dotfiles/sublime/User/Preferences.sublime-settings /Users/pdionne/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/Preferences.sublime-settings
+ln -s /Users/pdionne/dotfiles/sublime/User/* /Users/pdionne/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/
 ```
 
 #### Packages

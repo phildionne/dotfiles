@@ -1,3 +1,5 @@
+Pry.config.history.file = "~/.irb_history"
+
 begin
   require 'awesome_print'
   Pry.config.print = proc { |output, value| output.puts value.ai }

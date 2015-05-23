@@ -44,3 +44,15 @@
 #git config --global mergetool.sublime.cmd "subl -w \$MERGED"
 #git config --global mergetool.sublime.trustExitCode false
 #git config --global merge.tool sublime
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true

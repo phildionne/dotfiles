@@ -20,6 +20,8 @@ Install [bash-it](https://github.com/revans/bash-it) and pick useful completions
 - Git
 - Rake
 - SSH
+- Grunt
+- Gulp
 
 Create symlinks to your dotfiles in `~`. This will overwrite `~/.bash_profile` created by bash-it.
 ```

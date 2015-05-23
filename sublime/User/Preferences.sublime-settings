@@ -1,13 +1,12 @@
 {
 	"bold_folder_labels": true,
-	"color_scheme": "Packages/Theme - Flatland/Flatland Dark.tmTheme",
+	"color_scheme": "Packages/Theme - Spacegray/base16-ocean.light.tmTheme",
 	"draw_white_space": true,
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
 		".DS_Store"
 	],
-	"flatland_square_tabs": true,
 	"folder_exclude_patterns":
 	[
 		".git",
@@ -19,14 +18,16 @@
 		"tmp",
 		"coverage"
 	],
-	"font_size": 12.0,
+	"font_size": 13.0,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
+		"Theme - Flatland",
+		"Vintage",
 		"Theme - Soda",
-		"Markdown",
-		"Vintage"
+		"MarkdownEditing",
+		"Markdown"
 	],
 	"match_brackets_angle": true,
 	"rulers":
@@ -36,7 +37,7 @@
 	"scroll_past_end": true,
 	"syntax_sensitive": true,
 	"tab_size": 2,
-	"theme": "Flatland Dark.sublime-theme",
+	"theme": "Spacegray Light.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"wide_caret": true

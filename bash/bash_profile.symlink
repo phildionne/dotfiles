@@ -33,8 +33,8 @@ export BASH_IT=$HOME/.bash_it
 export BASH_IT_THEME='minimal'
 
 # Editor preferences
-export EDITOR="subl -w"
-export GIT_EDITOR='subl -w'
+export EDITOR="atom -w"
+export GIT_EDITOR='atom -w'
 
 # Use Hub, Github's little friend
 alias git=hub

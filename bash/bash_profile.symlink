@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
 # Postgres.app postgresql
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 

@@ -11,13 +11,19 @@ export DOCKER_TLS_VERIFY=1
 
 alias compose=docker-compose
 
+###########################
 
 # Path to the bash it configuration
-export BASH_IT=$HOME/.bash_it
+export BASH_IT="$HOME/.bash_it"
 
 # Lock and Load a custom theme file
 # location /.bash_it/themes/
 export BASH_IT_THEME='minimal'
+
+# Set this to false to turn off version control status checking within the prompt for all themes
+export SCM_CHECK=true
+
+###########################
 
 # Editor preferences
 export EDITOR="atom -w"
@@ -37,9 +43,6 @@ alias git=hub
 
 # Don't check mail when opening terminal.
 unset MAILCHECK
-
-# Lock and load custom settings
-# source $BASH_IT/custom/custom.bash
 
 # Load Bash It
 source $BASH_IT/bash_it.sh

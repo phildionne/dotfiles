@@ -9,12 +9,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # Cache downloaded packages
 export RUBY_BUILD_CACHE_PATH="~/.rbenv/cache"
 
-# pip should only run if there is a virtualenv currently activated
-export PIP_REQUIRE_VIRTUALENV=true
-
-# Cache pip-installed packages to avoid re-downloading
-export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-
 # Specify up to date certificates
 export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
 

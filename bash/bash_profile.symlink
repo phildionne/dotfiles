@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+# Postgres.app postgresql
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 
 # Docker
 export DOCKER_HOST=tcp://192.168.59.103:2376
@@ -8,8 +10,6 @@ export DOCKER_CERT_PATH=/Users/pdionne/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
 
 
-# Postgres.app Postgresql
-export PATH="/Applications/Postgres93.app/Contents/MacOS/bin:$PATH"
 
 # Heroku Client
 export PATH="/usr/local/heroku/bin:$PATH"

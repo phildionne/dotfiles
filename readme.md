@@ -1,5 +1,3 @@
-# Dotfiles
-
 ## Getting started
 ```
 cd & git clone git@github.com:phildionne/dotfiles.git
@@ -13,20 +11,25 @@ Install [bash-it](https://github.com/revans/bash-it) and pick useful completions
 - General
 - Git
 
-#### Completion
+#### Plugins
+none
+
+#### Completions
 - Brew
 - Defaults
 - Gem
 - Git
-- Rake
-- SSH
 - Grunt
 - Gulp
+- Rake
+- SSH
 
-Create symlinks to your dotfiles in `~`. This will overwrite `~/.bash_profile` created by bash-it.
+### OSX
+
+Set OSX defaults:
+
 ```
-cd ~/dotfiles
-rake install
+source $HOME/dotfiles/osx
 ```
 
 ### Atom
@@ -37,5 +40,19 @@ Overwrite Atom preferences with your own:
 ln -s $HOME/dotfiles/atom/* $HOME/.atom/
 ```
 
+### Everything else
 
+- `.bash_profile`
+- `.git_config`
+- `.global_ignore`
+- `.gemrc`
+- `.irbrc`
+- `.pryrc`
+- `.rspec`
 
+Create symlinks to your dotfiles in `~`. This will overwrite `~/.bash_profile` created by bash-it.
+
+```
+cd ~/dotfiles
+rake install
+```

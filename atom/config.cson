@@ -1,0 +1,27 @@
+"*":
+  "exception-reporting":
+    userId: "e530aebc-bbd5-2398-0efd-a881b18d06f1"
+  welcome:
+    showOnStartup: false
+  core:
+    disabledPackages: [
+      "background-tips"
+      "linter-scss-lint"
+    ]
+  "one-dark-ui": {}
+  editor:
+    invisibles: {}
+    scrollPastEnd: true
+    fontSize: 13
+  "one-light-ui": {}
+  "tree-view":
+    hideIgnoredNames: true
+  emmet: {}
+  minimap: {}
+  linter:
+    showErrorInline: false
+  "linter-jshint": {}
+  "merge-conflicts":
+    gitPath: "/usr/bin/git"
+"linter-scss-lint":
+  executablePath: "/Users/pdionne/.rbenv/shims/scss-lint"

@@ -29,24 +29,13 @@ cd ~/dotfiles
 rake install
 ```
 
-### SublimeText
+### Atom
 
-Overwrite Sublime preferences with your own:
+Overwrite Atom preferences with your own:
 
 ```
-ln -s /Users/pdionne/dotfiles/sublime/User/* /Users/pdionne/Library/Application\ Support/Sublime\ Text\ 3/Packages/User/
+ln -s $HOME/dotfiles/atom/* $HOME/.atom/
 ```
 
-#### Packages
 
-First, install [Sublime Package Controll](http://wbond.net/sublime_packages/package_control) and then:
 
-1. SideBarEnhancements
-2. Emmet
-3. SublimeERB
-4. GitGutter
-5. BetterCoffeeScript
-6. LESS
-7. SASS
-8. RSpec
-9. Theme - Flatland

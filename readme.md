@@ -29,7 +29,7 @@ none
 Set OSX defaults:
 
 ```
-source $HOME/dotfiles/osx
+source $HOME/dotfiles/osx/set-defaults.sh
 ```
 
 ### Atom

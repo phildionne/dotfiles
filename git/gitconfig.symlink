@@ -4,12 +4,21 @@
 [github]
   user = phildionne
 [core]
+	editor = atom --wait
 	excludesfile = ~/.global_ignore
 [color]
   diff = auto
   status = auto
   branch = auto
   ui = true
+[color "status"]
+	added = green bold
+	changed  = cyan bold
+	untracked = yellow bold
+[color "branch"]
+	current = cyan bold
+	local = yellow
+	remote = green
 [alias]
 	b = branch
 	c = commit -m
@@ -26,8 +35,7 @@
 [rebase]
   autosquash = true
 [merge]
-  # Use the OS X graphical three-way merge tool for graphical merges.
-  tool = opendiff
+  defaultToUpstream = true
 [mergetool]
   # Don't prompt before opening the merge tool.
   prompt = false
@@ -35,15 +43,13 @@
   keepBackup = false
   # Don't keep the merge tool temporary input/output files.
   keepTemporaries = false
-[mergetool "opendiff"]
-  # Use a script to setup opendiff correctly for Git merges.
-  path = git-mergetool-opendiff
 [diff]
   algorithm = patience
-
-#git config --global mergetool.sublime.cmd "subl -w \$MERGED"
-#git config --global mergetool.sublime.trustExitCode false
-#git config --global merge.tool sublime
+	renames = copies
+[status]
+	submodulesummary = true
+	relativePaths = false
+	showUntrackedFiles = all
 [filter "media"]
 	required = true
 	clean = git media clean %f

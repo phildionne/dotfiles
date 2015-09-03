@@ -2,15 +2,15 @@
 	name = Philippe Dionne
 	email = dionne.phil@gmail.com
 [github]
-  user = phildionne
+	user = phildionne
 [core]
 	editor = atom --wait
 	excludesfile = ~/.global_ignore
 [color]
-  diff = auto
-  status = auto
-  branch = auto
-  ui = true
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
 [color "status"]
 	added = green bold
 	changed  = cyan bold
@@ -27,24 +27,24 @@
 	p = push
 	pr = pull --rebase
 	st = status -bs
-  plog="log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[34m%an" --abbrev-commit --date=relative"
-  verbs="!git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr"
-  remote = remote --verbose
+	plog="log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[34m%an" --abbrev-commit --date=relative"
+	verbs="!git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr"
+	remote = remote --verbose
 [push]
 	default = tracking
 [rebase]
-  autosquash = true
+	autosquash = true
 [merge]
-  defaultToUpstream = true
+	defaultToUpstream = true
 [mergetool]
-  # Don't prompt before opening the merge tool.
-  prompt = false
-  # Don't keep backups of the merge tool inputs.
-  keepBackup = false
-  # Don't keep the merge tool temporary input/output files.
-  keepTemporaries = false
+	# Don't prompt before opening the merge tool.
+	prompt = false
+	# Don't keep backups of the merge tool inputs.
+	keepBackup = false
+	# Don't keep the merge tool temporary input/output files.
+	keepTemporaries = false
 [diff]
-  algorithm = patience
+	algorithm = patience
 	renames = copies
 [status]
 	submodulesummary = true

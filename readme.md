@@ -56,3 +56,14 @@ Create symlinks to your dotfiles in `~`. This will overwrite `~/.bash_profile` c
 cd ~/dotfiles
 rake install
 ```
+
+### OSX
+
+Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide).
+
+1. Enable [firewall](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#firewall)
+2. Disable [spotlight suggestions](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#spotlight-suggestions)
+3. Configure [hosts file](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#hosts-file)
+4. Use latest OpenSSL: `brew install openssl && brew link --force openssl`
+5. Use curl with openssl: `brew install curl --with-openssl && brew link --force curl`
+6. Deactivate Chrome's Flash plugin by visiting `chrome://plugins/`

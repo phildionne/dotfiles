@@ -4,7 +4,7 @@
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 
 # Docker
-if ! [ -x "$(docker-machine -v)" ]; then
+if ! [ -x "$(docker-machine -v)" ] && [ "$(docker-machine status default)" = "Running" ]; then
   eval "$(docker-machine env default)" >&2
 fi
 

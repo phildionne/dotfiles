@@ -4,7 +4,6 @@ cd & git clone git@github.com:phildionne/dotfiles.git
 ```
 
 ### Bash
-Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins. Mine are:
 Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins. Mines are:
 
 #### Aliases

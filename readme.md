@@ -5,6 +5,7 @@ cd & git clone git@github.com:phildionne/dotfiles.git
 
 ### Bash
 Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins. Mine are:
+Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins. Mines are:
 
 #### Aliases
 - Bundler
@@ -30,6 +31,14 @@ Set OSX defaults:
 
 ```
 source $HOME/dotfiles/osx/set-defaults.sh
+```
+
+Allow to [write](http://apple.stackexchange.com/questions/152661/write-to-ntfs-formated-drives-on-yosemite) to ntfs formated drives:
+
+```
+brew install homebrew/fuse/ntfs-3g
+sudo mv /sbin/mount_ntfs /sbin/mount_ntfs.original
+sudo ln -s /usr/local/sbin/mount_ntfs /sbin/mount_ntfs
 ```
 
 ### Atom

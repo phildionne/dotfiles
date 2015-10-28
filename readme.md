@@ -68,6 +68,8 @@ sudo mv /sbin/mount_ntfs /sbin/mount_ntfs.original
 sudo ln -s /usr/local/sbin/mount_ntfs /sbin/mount_ntfs
 ```
 
+Configure Mail.app delete button to archive messages by default with [delete2archive](http://thingsofinterest.com/delete2archive/).
+
 #### Security
 
 Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide).

@@ -25,6 +25,28 @@ none
 - SSH
 - npm
 
+### Apps
+
+Use [brew cask](https://github.com/caskroom/homebrew-cask):
+
+```bash
+brew cask install appcleaner \
+evernote \
+github-desktop \
+google-chrome \
+google-drive \
+iterm2 \
+nylas-n1 \
+postgres \
+postico \
+skype \
+slack \
+spectacle \
+transmit \
+virtualbox \
+vlc
+```
+
 ### Atom
 
 Overwrite Atom preferences with your own:

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Postgres.app postgresql
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
 # Docker
 if ! [ -x "$(docker-machine -v)" ] && [ "$(docker-machine status default)" = "Running" ]; then

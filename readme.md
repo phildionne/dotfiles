@@ -55,6 +55,11 @@ Overwrite Atom preferences with your own:
 ln -s $HOME/dotfiles/atom/* $HOME/.atom/
 ```
 
+### Erlang & Elixir
+
+Install [erlang-history](https://github.com/ferd/erlang-history) to enable history in the elixir & erlang interactive consoles.
+
+
 ### Everything else
 
 - `.bash_profile`

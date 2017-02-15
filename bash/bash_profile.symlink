@@ -4,8 +4,10 @@
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
 # Docker
-if ! [ -x "$(docker-machine -v)" ] && [ "$(docker-machine status default)" = "Running" ]; then
-  eval "$(docker-machine env default)" >&2
+# if ! [ -x "$(docker-machine -v)" ] && [ "$(docker-machine status default)" = "Running" ]; then
+#   eval "$(docker-machine env default)" >&2
+# fi
+
 # Enable rbenv shims and autocompletion
 if ! [ -x "$(rbenv -v)" ]; then
   eval "$(rbenv init -)" >&2

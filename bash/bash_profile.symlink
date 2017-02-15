@@ -6,9 +6,29 @@ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 # Docker
 if ! [ -x "$(docker-machine -v)" ] && [ "$(docker-machine status default)" = "Running" ]; then
   eval "$(docker-machine env default)" >&2
+# Enable rbenv shims and autocompletion
+if ! [ -x "$(rbenv -v)" ]; then
+  eval "$(rbenv init -)" >&2
 fi
 
-alias compose=docker-compose
+# Cache Rbenv downloaded packages
+export RUBY_BUILD_CACHE_PATH="~/.rbenv/cache"
+
+# Enable pyenv shims and autocompletion
+if which pyenv > /dev/null; then
+  eval "$(pyenv init -)";
+fi
+
+# Enable pyenv-virtualenv
+if which pyenv-virtualenv-init > /dev/null; then
+  eval "$(pyenv virtualenv-init -)";
+fi
+
+# pip should only run if there is a virtualenv currently activated
+# export PIP_REQUIRE_VIRTUALENV=true
+
+export NVM_DIR="/Users/pdionne/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 ###########################
 
@@ -27,14 +47,6 @@ export SCM_CHECK=true
 # Editor preferences
 export EDITOR="atom -w"
 export GIT_EDITOR='atom -w'
-
-# Enable rbenv shims and autocompletion
-if ! [ -x "$(rbenv -v)" ]; then
-  eval "$(rbenv init -)" >&2
-fi
-
-# Cache Rbenv downloaded packages
-export RUBY_BUILD_CACHE_PATH="~/.rbenv/cache"
 
 # Specify up to date certificates
 # export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt

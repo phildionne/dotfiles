@@ -26,11 +26,15 @@
 
 '.platform-darwin atom-text-editor:not([mini])':
   'shift-cmd-R': 'editor:auto-indent',
-  'alt-cmd-9': 'editor:outdent-selected-rows'
+  'alt-cmd-9': 'editor:outdent-selected-rows',
+  'alt-cmd-0': 'editor:indent-selected-rows'
 
 'atom-text-editor[data-grammar="text html erb"]:not([mini])':
   'tab': 'emmet:expand-abbreviation-with-tab',
-  'ctrl-=': 'rails-snippets:toggleErb'
+  'ctrl-=': 'erb-snippets:erb_tags'
 
 'atom-text-editor[data-grammar="text html mustache"]:not([mini])':
-    'tab': 'emmet:expand-abbreviation-with-tab'
+  'tab': 'emmet:expand-abbreviation-with-tab'
+
+'atom-text-editor[data-grammar~="jsx"]:not([mini])':
+  'tab': 'emmet:expand-abbreviation-with-tab'

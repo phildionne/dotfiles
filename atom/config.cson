@@ -3,17 +3,33 @@
     disabledPackages: [
       "background-tips"
       "linter-scss-lint"
+      "minimap"
+      "linter-jshint"
+      "linter-rubocop"
+      "react"
+      "linter-elixirc"
+      "language-haml"
     ]
+    telemetryConsent: "limited"
   editor:
-    fontSize: 13
     invisibles: {}
     scrollPastEnd: true
   emmet: {}
   "exception-reporting":
     userId: "e530aebc-bbd5-2398-0efd-a881b18d06f1"
   linter:
+    gutterEnabled: false
     showErrorInline: false
-  "linter-jshint": {}
+    underlineIssues: false
+  "linter-elixirc":
+    elixircPath: "/usr/local/bin/elixirc"
+    mixPath: "/usr/local/bin/mix"
+  "linter-eslint": {}
+  "linter-jshint":
+    lintInlineJavaScript: true
+    lintJSXFiles: true
+  "linter-rubocop":
+    command: "/Users/pdionne/.rbenv/versions/2.3.0/bin/rubocop"
   "merge-conflicts":
     gitPath: "/usr/bin/git"
   minimap: {}

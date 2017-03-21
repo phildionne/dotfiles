@@ -7,23 +7,13 @@ cd & git clone https://github.com/phildionne/dotfiles
 Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins. Mines are:
 
 #### Aliases
-- Bundler
 - General
-- Git
 
 #### Plugins
 none
 
 #### Completions
-- Brew
 - Defaults
-- Gem
-- Git
-- Grunt
-- Gulp
-- Rake
-- SSH
-- npm
 
 ### Apps
 

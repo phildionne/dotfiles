@@ -36,6 +36,19 @@ skype \
 slack \
 spectacle
 ```
+
+### Utilities
+
+Use [brew](https://brew.sh/):
+
+```bash
+brew install curl \
+hub \
+pyenv \
+rbenv
+```
+
+Install [nvm](https://github.com/creationix/nvm) for managing Node versions.
 ```
 
 ### Atom

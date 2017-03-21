@@ -21,20 +21,21 @@ Use [brew cask](https://github.com/caskroom/homebrew-cask):
 
 ```bash
 brew cask install appcleaner \
+atom \
+dropbox \
 evernote \
 github-desktop \
 google-chrome \
 google-drive \
+harvest \
 iterm2 \
-nylas-n1 \
 postgres \
 postico \
+sketch \
 skype \
 slack \
-spectacle \
-transmit \
-virtualbox \
-vlc
+spectacle
+```
 ```
 
 ### Atom

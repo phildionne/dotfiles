@@ -1,107 +1,71 @@
+# Sets reasonable macOS defaults.
+#
+# Or, in other words, set shit how I like in macOS.
+#
+# The original idea (and a couple settings) were grabbed from:
+#   https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+#
+# Run ./set-defaults.sh and you'll be good to go.
+
+# Disable press-and-hold for keys in favor of key repeat.
+defaults write -g ApplePressAndHoldEnabled -bool false
+
+# Set a really fast key repeat.
+defaults write NSGlobalDomain KeyRepeat -int 1
+
+
 ################################################################################
 # Finder                                                                       #
 ################################################################################
 
-# Expand save panel by default
+# Always open everything in Finder's list view. This is important.
+defaults write com.apple.Finder FXPreferredViewStyle clmv
+
+# Show the ~/Library folder.
+chflags nohidden ~/Library
+
+# Set the Finder prefs for showing a few different volumes on the Desktop.
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+# Enable the expand save panel by default
 defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
-# Expand print panel by default
+# Enable the expand print panel by default
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
-
-# Disable the “Are you sure you want to open this application?” dialog
-defaults write com.apple.LaunchServices LSQuarantine -bool false
 
 # Disable shadow in screenshots
 defaults write com.apple.screencapture disable-shadow -bool true
 
-# Disable window animations and Get Info animations
-defaults write com.apple.finder DisableAllAnimations -bool true
-
-# Show all filename extensions
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-# Allow text selection in Quick Look
-defaults write com.apple.finder QLEnableTextSelection -bool true
-
-# Disable the warning when changing a file extension
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
-# Avoid creating .DS_Store files on network volumes
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-
-# Enable snap-to-grid for desktop icons
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-
 # Disable the warning before emptying the Trash
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
-# Show the ~/Library folder
-chflags nohidden ~/Library
-
-################################################################################
-# Keyboard                                                                     #
-################################################################################
-
-# Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-
-# Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 0
-
-# Enable full keyboard access for all controls
-# Essentially allows tabbing in modal dialogs
-defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
-
-################################################################################
-# Safari                                                                       #
-################################################################################
-
-# Enable Safari’s debug menu
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-
-################################################################################
-# Itunes                                                                       #
-################################################################################
-
-# Disable the Ping sidebar in iTunes
-defaults write com.apple.iTunes disablePingSidebar -bool true
-
-# Disable all the other Ping stuff in iTunes
-defaults write com.apple.iTunes disablePing -bool true
-
-# Make ⌘ + F focus the search input in iTunes
-# Essentially, it switches the full screen shortcut with the search shortcut
-# To use these commands in another language, browse iTunes package contents,
-# open Contents/Resources/your-language.lproj/Localizable.strings, then look
-# for kMenuItemFullScreen and kHiddenMenuItemTargetSearch.
-defaults write com.apple.iTunes NSUserKeyEquivalents -dict-add "Passer en mode plein écran" "@~F"
-defaults write com.apple.iTunes NSUserKeyEquivalents -dict-add "Zone de recherche cible" "@F"
-
-################################################################################
-# Mail                                                                         #
-################################################################################
-
-# Disable send and reply animations in Mail.app
-defaults write com.apple.Mail DisableReplyAnimations -bool true
-defaults write com.apple.Mail DisableSendAnimations -bool true
-
-# Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
 
 ##############################################################################
 # System/misc
 ##############################################################################
 
-# Check for software updates daily, not just once per week
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
-
 # Disable auto-correct
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
-# Use plain text mode for new TextEdit documents
-defaults write com.apple.TextEdit RichText -int 0
+# Disable animations when opening and closing windows.
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+
+# Disable animations when opening a Quick Look window.
+defaults write -g QLPanelAnimationDuration -float 0
+
+# Accelerated playback when adjusting the window size (Cocoa applications).
+defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+
+# Disable animation when opening the Info window in Finder (cmd⌘ + i).
+defaults write com.apple.finder DisableAllAnimations -bool true
+
+# Disable animations when you open an application from the Dock.
+defaults write com.apple.dock launchanim -bool false
+
+# Make all animations faster that are used by Mission Control.
+defaults write com.apple.dock expose-animation-duration -float 0.1
+
+# Disable the delay when you hide the Dock
+defaults write com.apple.Dock autohide-delay -float 0

@@ -92,6 +92,6 @@ Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-
 1. Enable [firewall](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#firewall)
 2. Disable [spotlight suggestions](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#spotlight-suggestions)
 3. Configure [hosts file](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#hosts-file); I use [this one](http://someonewhocares.org/hosts/zero/hosts).
-4. Use latest OpenSSL: `brew install openssl && brew link --force openssl`
+4. Use latest OpenSSL: `brew install openssl`
 5. Use curl with openssl: `brew install curl --with-openssl && brew link --force curl`
 6. Deactivate Chrome's Flash plugin by visiting `chrome://plugins/`

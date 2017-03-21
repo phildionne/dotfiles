@@ -49,6 +49,16 @@ rbenv
 ```
 
 Install [nvm](https://github.com/creationix/nvm) for managing Node versions.
+
+### Docker
+
+Install docker with Virtual Box:
+
+```bash
+brew cask install virtualbox
+brew install docker docker-machine
+
+docker-machine create defaul
 ```
 
 ### Atom

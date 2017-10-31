@@ -1,6 +1,7 @@
 [user]
 	name = Philippe Dionne
 	email = dionne.phil@gmail.com
+	signingkey = 4AA4CC79879FBD44
 [github]
 	user = phildionne
 [core]
@@ -62,3 +63,7 @@
 	clean = git lfs clean %f
 	smudge = git lfs smudge %f
 	required = true
+[commit]
+	gpgsign = false
+[gpg]
+	program = /usr/local/bin/gpg

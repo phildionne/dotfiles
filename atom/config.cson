@@ -2,13 +2,12 @@
   core:
     disabledPackages: [
       "background-tips"
-      "linter-scss-lint"
-      "minimap"
       "linter-jshint"
-      "linter-rubocop"
       "react"
       "linter-elixirc"
       "language-haml"
+      "linter-rubocop"
+      "erb-snippets"
     ]
     telemetryConsent: "limited"
   editor:
@@ -17,19 +16,24 @@
   emmet: {}
   "exception-reporting":
     userId: "e530aebc-bbd5-2398-0efd-a881b18d06f1"
-  linter:
-    gutterEnabled: false
-    showErrorInline: false
-    underlineIssues: false
+  "language-babel":
+    disableWhenNoBabelrcFileInPath: false
+  linter: {}
   "linter-elixirc":
     elixircPath: "/usr/local/bin/elixirc"
     mixPath: "/usr/local/bin/mix"
   "linter-eslint": {}
+  "linter-js-standard":
+    checkStyleDevDependencies: true
   "linter-jshint":
     lintInlineJavaScript: true
     lintJSXFiles: true
   "linter-rubocop":
-    command: "/Users/pdionne/.rbenv/versions/2.3.0/bin/rubocop"
+    command: "/Users/pdionne/.rbenv/versions/2.4.1/bin/rubocop"
+  "linter-scss-lint":
+    disableWhenNoConfigFileInPath: true
+  "linter-ui-default":
+    panelHeight: 69
   "merge-conflicts":
     gitPath: "/usr/bin/git"
   minimap: {}
@@ -39,5 +43,9 @@
     hideIgnoredNames: true
   welcome:
     showOnStartup: false
+  whitespace: {}
+".html.ruby.text":
+  editor:
+    autoIndent: false
 "linter-scss-lint":
   executablePath: "/Users/pdionne/.rbenv/shims/scss-lint"

@@ -36,5 +36,8 @@
 'atom-text-editor[data-grammar="text html mustache"]:not([mini])':
   'tab': 'emmet:expand-abbreviation-with-tab'
 
+'atom-text-editor[data-grammar="text html ruby"]:not([mini])':
+  'tab': 'emmet:expand-abbreviation-with-tab'
+
 'atom-text-editor[data-grammar~="jsx"]:not([mini])':
   'tab': 'emmet:expand-abbreviation-with-tab'

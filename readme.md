@@ -22,19 +22,23 @@ Use [brew cask](https://github.com/caskroom/homebrew-cask):
 ```bash
 brew cask install appcleaner \
 atom \
+dash \
 dropbox \
 evernote \
-github-desktop \
+github \
 google-chrome \
-google-drive \
+gpg \
 harvest \
 iterm2 \
+keybase \
 postgres \
 postico \
+postman \
 sketch \
 skype \
 slack \
-spectacle
+spectacle \
+spotify
 ```
 
 ### Utilities

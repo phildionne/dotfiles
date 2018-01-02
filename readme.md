@@ -66,7 +66,7 @@ Install docker with Virtual Box:
 brew cask install virtualbox
 brew install docker docker-machine
 
-docker-machine create defaul
+docker-machine create default
 ```
 
 ### Atom

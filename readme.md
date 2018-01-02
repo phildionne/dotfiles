@@ -46,10 +46,14 @@ spotify
 Use [brew](https://brew.sh/):
 
 ```bash
-brew install curl \
-hub \
-pyenv \
-rbenv
+brew install curl hub
+```
+
+### Package managers
+
+```bash
+brew install pyenv rbenv jenv
+brew install yarn --without-node
 ```
 
 Install [nvm](https://github.com/creationix/nvm) for managing Node versions.

@@ -32,6 +32,12 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
+# Enable jenv
+if which jenv > /dev/null; then
+# if ! [ -x "$(jenv -v)" ]; then
+  eval "$(jenv init -)" >&2
+fi
+
 ###########################
 
 # Path to the bash it configuration

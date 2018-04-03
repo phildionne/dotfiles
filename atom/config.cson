@@ -7,7 +7,9 @@
       "linter-elixirc"
       "language-haml"
       "linter-rubocop"
-      "erb-snippets"
+      "linter-solium"
+      "linter-scss-lint"
+      "hyperclick"
     ]
     telemetryConsent: "limited"
   editor:
@@ -32,13 +34,20 @@
     command: "/Users/pdionne/.rbenv/versions/2.4.1/bin/rubocop"
   "linter-scss-lint":
     disableWhenNoConfigFileInPath: true
+  "linter-stylelint": {}
   "linter-ui-default":
-    panelHeight: 69
+    panelHeight: 54
+    showPanel: true
   "merge-conflicts":
     gitPath: "/usr/bin/git"
   minimap: {}
   "one-dark-ui": {}
   "one-light-ui": {}
+  "prettier-atom":
+    prettierOptions:
+      semi: false
+    useEslint: true
+    useStylelint: true
   "tree-view":
     hideIgnoredNames: true
   welcome:

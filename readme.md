@@ -127,3 +127,4 @@ Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-
 4. Use latest OpenSSL: `brew install openssl`
 5. Use curl with openssl: `brew install curl --with-openssl && brew link --force curl`
 6. Deactivate Chrome's Flash plugin by visiting `chrome://plugins/`
+7. Use CloudFlare's DNS [1.1.1.1](https://1.1.1.1/)

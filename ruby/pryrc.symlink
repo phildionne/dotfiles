@@ -1,10 +1,11 @@
+#!/usr/bin/ruby
+
 Pry.config.history.file = "~/.irb_history"
 
 begin
   require 'awesome_print'
-  Pry.config.print = proc { |output, value| output.puts value.ai }
-rescue LoadError => err
-  puts "no awesome_print :("
+  AwesomePrint.pry!
+rescue LoadError
 end
 
 class Object

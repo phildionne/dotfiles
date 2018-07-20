@@ -16,9 +16,9 @@ fi
 # Cache Rbenv downloaded packages
 export RUBY_BUILD_CACHE_PATH="~/.rbenv/cache"
 
-# Enable pyenv shims and autocompletion
-if which pyenv > /dev/null; then
-  eval "$(pyenv init -)";
+# Enable pyenv
+if ! [ -x "$(pyenv -v)" ]; then
+  eval "$(pyenv init -)"; >&2
 fi
 
 # Enable pyenv-virtualenv
@@ -35,8 +35,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # Enable jenv
 if which jenv > /dev/null; then
-# if ! [ -x "$(jenv -v)" ]; then
-  eval "$(jenv init -)" >&2
+  eval "$(jenv init -)";
 fi
 
 ###########################

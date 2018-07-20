@@ -6,10 +6,11 @@
       "react"
       "linter-elixirc"
       "language-haml"
-      "linter-rubocop"
       "linter-solium"
       "linter-scss-lint"
       "hyperclick"
+      "linter-rubocop"
+      "teletype"
     ]
     telemetryConsent: "limited"
   editor:
@@ -20,7 +21,10 @@
     userId: "e530aebc-bbd5-2398-0efd-a881b18d06f1"
   "language-babel":
     disableWhenNoBabelrcFileInPath: false
-  linter: {}
+  linter:
+    lintOnChange: false
+    lintOnOpen: false
+    lintPreviewTabs: false
   "linter-elixirc":
     elixircPath: "/usr/local/bin/elixirc"
     mixPath: "/usr/local/bin/mix"
@@ -31,13 +35,13 @@
     lintInlineJavaScript: true
     lintJSXFiles: true
   "linter-rubocop":
-    command: "/Users/pdionne/.rbenv/versions/2.4.1/bin/rubocop"
+    command: "/Users/pdionne/.rbenv/shims/rubocop"
+    disableWhenNoConfigFile: true
   "linter-scss-lint":
     disableWhenNoConfigFileInPath: true
   "linter-stylelint": {}
   "linter-ui-default":
     panelHeight: 54
-    showPanel: true
   "merge-conflicts":
     gitPath: "/usr/bin/git"
   minimap: {}

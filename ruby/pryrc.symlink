@@ -2,6 +2,10 @@
 
 Pry.config.history.file = "~/.irb_history"
 
+if Pry::Prompt[:rails]
+  Pry.config.prompt = Pry::Prompt[:rails][:value]
+end
+
 begin
   require 'awesome_print'
   AwesomePrint.pry!

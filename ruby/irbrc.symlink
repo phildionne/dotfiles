@@ -16,6 +16,8 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 
 IRB.conf[:AUTO_INDENT] = true
 
+IRB.conf[:BACK_TRACE_LIMIT] = 100
+
 class Object
   def interesting_methods
     case self.class

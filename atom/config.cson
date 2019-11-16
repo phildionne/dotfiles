@@ -10,15 +10,28 @@
       "linter-scss-lint"
       "hyperclick"
       "linter-rubocop"
-      "teletype"
+      "aligner-javascript"
     ]
+    ignoredNames: [
+      ".git"
+      "yarn.lock"
+      ".DS_Store"
+    ]
+    openEmptyEditorOnStart: false
+    packagesWithKeymapsDisabled: []
     telemetryConsent: "limited"
   editor:
+    fontFamily: "Menlo"
     invisibles: {}
     scrollPastEnd: true
   emmet: {}
   "exception-reporting":
     userId: "e530aebc-bbd5-2398-0efd-a881b18d06f1"
+  "fuzzy-finder":
+    scoringSystem: "fast"
+    useRipGrep: true
+  gist: {}
+  "git-diff": {}
   "language-babel":
     disableWhenNoBabelrcFileInPath: false
   linter:
@@ -42,6 +55,9 @@
   "linter-stylelint": {}
   "linter-ui-default":
     panelHeight: 54
+    showPanel: true
+  "markdown-preview":
+    useGitHubStyle: true
   "merge-conflicts":
     gitPath: "/usr/bin/git"
   minimap: {}
@@ -53,6 +69,7 @@
     useEslint: true
     useStylelint: true
   "tree-view":
+    alwaysOpenExisting: true
     hideIgnoredNames: true
   welcome:
     showOnStartup: false

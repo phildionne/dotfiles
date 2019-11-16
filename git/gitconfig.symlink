@@ -22,15 +22,16 @@
 	remote = green
 [alias]
 	b = branch
+	branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
 	c = commit -m
 	ca = commit -a -m
 	co = checkout
 	p = push
+	plog = "log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[34m%an" --abbrev-commit --date=relative"
 	pr = pull --rebase
-	st = status -bs
-	plog="log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s%x20%x1b[34m%an" --abbrev-commit --date=relative"
-	verbs="!git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr"
 	remote = remote --verbose
+	st = status -bs
+	verbs = "!git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr"
 [push]
 	default = tracking
 [rebase]

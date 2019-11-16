@@ -20,25 +20,34 @@ none
 Use [brew cask](https://github.com/caskroom/homebrew-cask):
 
 ```bash
-brew cask install appcleaner \
+brew cask install \
+appcleaner \
 atom \
+authy \
+bitwarden \
 dash \
 dropbox \
-evernote \
 github \
+google-backup-and-sync \
 google-chrome \
-gpg \
-harvest \
 iterm2 \
 keybase \
+ngrok \
+openrefine \
 postgres \
 postico \
 postman \
+sequel-pro \
 sketch \
 skype \
-slack \
+slack      \
 spectacle \
-spotify
+spotify \
+the-unarchiver \
+transmission \
+visual-studio-code \
+vlc \
+webtorrent
 ```
 
 ### Utilities
@@ -60,13 +69,10 @@ Install [nvm](https://github.com/creationix/nvm) for managing Node versions.
 
 ### Docker
 
-Install docker with Virtual Box:
+Install docker:
 
 ```bash
-brew cask install virtualbox
-brew install docker docker-machine
-
-docker-machine create default
+brew cask install docker kitematic
 ```
 
 ### Atom

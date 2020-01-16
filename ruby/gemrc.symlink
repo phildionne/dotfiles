@@ -4,6 +4,5 @@
 :sources:
 - https://rubygems.org/
 :update_sources: true
-:verbose: true
-benchmark: false
-gem: --no-document --no-ri --no-rdoc
+:install: --no-document
+:update: --no-document

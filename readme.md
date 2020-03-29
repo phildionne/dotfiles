@@ -3,6 +3,10 @@
 cd & git clone https://github.com/phildionne/dotfiles
 ```
 
+## Shell
+
+*Note:* Starting with Catalina, OSX will use Zsh as its default shell, which you should strongly consider adopting. The following bash-based setup is discouraged.
+
 ### Bash
 Install [bash-it](https://github.com/revans/bash-it) and pick useful completions and plugins. Mines are:
 
@@ -15,64 +19,90 @@ none
 #### Completions
 - Defaults
 
-### Apps
-
-Use [brew cask](https://github.com/caskroom/homebrew-cask):
-
-```bash
-brew cask install \
-appcleaner \
-atom \
-authy \
-bitwarden \
-dash \
-dropbox \
-github \
-google-backup-and-sync \
-google-chrome \
-iterm2 \
-keybase \
-ngrok \
-openrefine \
-postgres \
-postico \
-postman \
-sequel-pro \
-sketch \
-skype \
-slack      \
-spectacle \
-spotify \
-the-unarchiver \
-transmission \
-visual-studio-code \
-vlc \
-webtorrent
-```
-
 ### Utilities
 
 Use [brew](https://brew.sh/):
 
 ```bash
-brew install curl hub
+brew install \
+  hub \
+  asdf \
+  doctl \
+  yarn \
+  tmux \
+  overmind \
+  redis
 ```
 
-### Package managers
+* [hub](https://github.com/github/hub) for interacting with the GitHub API
+* [asdf](https://github.com/asdf-vm/asdf) for managing programming language versions
+* [yarn](https://yarnpkg.com/) for managing JavaScript packages
+* [doctl](https://github.com/digitalocean/doctl) for interacting with the Digital Ocean API
+* [overmind](https://github.com/DarthSim/overmind) for managing Procfile-based applications
+* [tmux](https://tmux.github.io/) for saving project state and switching between projects
+* [redis](http://redis.io/) for storing key-value data
+
+## Apps
+
+Use [brew cask](https://github.com/caskroom/homebrew-cask):
+
+### Development
 
 ```bash
-brew install pyenv rbenv jenv
-brew install yarn --without-node
+brew cask install \
+  github \
+  dash \
+  iterm2 \
+  ngrok \
+  postman
+
+brew cask install visual-studio-code # or
+brew cask install atom
 ```
 
-Install [nvm](https://github.com/creationix/nvm) for managing Node versions.
+* [Github Desktop](https://desktop.github.com/)
+* [Dash](https://kapeli.com/dash)
+* [iterm2](https://www.iterm2.com/)
+* [ngrok](https://ngrok.com/)
+* [Postman](https://www.postman.com/)
+
+### Database
+
+* [Postgres.app](https://postgresapp.com/) PostgreSQL database
+* [Sequel](https://www.sequelpro.com/) MySQL GUI
+* [Postico](https://eggerapps.at/postico/) PostgreSQL GUI
+* [Base](https://menial.co.uk/base/) SQLite3 GUI
+
+```bash
+brew cask install \
+  postgres \
+  sequel-pro \
+  postico \
+  base
+```
+
+### Other
+
+```bash
+brew cask install \
+  appcleaner \
+  bitwarden \
+  dropbox \
+  google-backup-and-sync \
+  google-chrome \
+  sketch \
+  slack      \
+  rectangle \
+  spotify \
+  the-unarchiver
+```
 
 ### Docker
 
 Install docker:
 
 ```bash
-brew cask install docker kitematic
+brew cask install docker
 ```
 
 ### Atom
@@ -86,7 +116,6 @@ ln -s $HOME/dotfiles/atom/* $HOME/.atom/
 ### Erlang & Elixir
 
 Install [erlang-history](https://github.com/ferd/erlang-history) to enable history in the elixir & erlang interactive consoles.
-
 
 ### Everything else
 
@@ -115,7 +144,7 @@ Set OSX defaults:
 source $HOME/dotfiles/osx/set-defaults.sh
 ```
 
-Allow to [write](http://apple.stackexchange.com/questions/152661/write-to-ntfs-formated-drives-on-yosemite) to ntfs formated drives:
+*optional* - Allow to [write](http://apple.stackexchange.com/questions/152661/write-to-ntfs-formated-drives-on-yosemite) to ntfs formated drives:
 
 ```bash
 brew install homebrew/fuse/ntfs-3g

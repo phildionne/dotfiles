@@ -3,11 +3,6 @@
 # Postgres.app postgresql
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
-# Docker
-# if ! [ -x "$(docker-machine -v)" ] && [ "$(docker-machine status default)" = "Running" ]; then
-#   eval "$(docker-machine env default)" >&2
-# fi
-
 # Enable ASDF
 . $(brew --prefix asdf)/asdf.sh
 . $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
@@ -40,9 +35,6 @@ alias git=hub
 
 # Don't check mail when opening terminal.
 unset MAILCHECK
-
-# Set this to false to turn off version control status checking within the prompt for all themes
-export SCM_CHECK=true
 
 # Load Bash It
 source $BASH_IT/bash_it.sh

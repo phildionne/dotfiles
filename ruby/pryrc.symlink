@@ -1,19 +1,11 @@
 #!/usr/bin/ruby
 
-Pry.config.history.file = "~/.irb_history"
-
 if Pry::Prompt[:rails]
   Pry.config.prompt = Pry::Prompt[:rails][:value]
 end
 
-begin
-  require 'awesome_print'
-  AwesomePrint.pry!
-rescue LoadError
-end
-
 class Object
-  def interesting_methods
+  def im
     case self.class
     when Class
       self.public_methods.sort - Object.public_methods
@@ -23,4 +15,5 @@ class Object
       self.public_methods.sort - Object.new.public_methods
     end
   end
+  alias :interesting_methods :im
 end

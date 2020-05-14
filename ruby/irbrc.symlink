@@ -1,25 +1,10 @@
 #!/usr/bin/ruby
+
 require 'irb/completion'
 require 'irb/ext/save-history'
-require 'rubygems'
-
-begin
-  require 'awesome_print'
-  AwesomePrint.irb!
-rescue LoadError
-end
-
-IRB.conf[:SAVE_HISTORY] = 1000
-IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
-
-IRB.conf[:PROMPT_MODE] = :SIMPLE
-
-IRB.conf[:AUTO_INDENT] = true
-
-IRB.conf[:BACK_TRACE_LIMIT] = 100
 
 class Object
-  def interesting_methods
+  def im
     case self.class
     when Class
       self.public_methods.sort - Object.public_methods
@@ -29,4 +14,5 @@ class Object
       self.public_methods.sort - Object.new.public_methods
     end
   end
+  alias :interesting_methods :im
 end

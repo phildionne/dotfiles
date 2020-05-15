@@ -20,6 +20,7 @@ export ZSH_THEME=""
 
 plugins=(
   bundler
+  zsh-interactive-cd
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -37,6 +38,9 @@ export GIT_EDITOR='atom -w'
 
 # Enable ASDF
 . $(brew --prefix asdf)/asdf.sh
+
+# Enable fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Use Hub, Github's little friend
 alias git=hub

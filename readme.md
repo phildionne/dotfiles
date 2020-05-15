@@ -1,4 +1,5 @@
 ## Getting started
+
 ```bash
 cd & git clone https://github.com/phildionne/dotfiles
 ```
@@ -10,6 +11,7 @@ cd & git clone https://github.com/phildionne/dotfiles
 Install [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh) and pick useful plugins. Mines are:
 
 - [bundler](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bundler)
+- [zsh-interactive-cd](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-interactive-cd)
 
 ### Theme
 
@@ -18,6 +20,11 @@ Use [Pure](https://github.com/sindresorhus/pure)
 ```bash
 yarn global add pure-prompt
 ```
+
+### Dependencies
+
+- [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh)
+- [fzf](https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew) required by `zsh-interactive-cd`
 
 ## Utilities
 

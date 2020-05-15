@@ -42,6 +42,16 @@ brew install \
 * [tmux](https://tmux.github.io/) for saving project state and switching between projects
 * [redis](http://redis.io/) for storing key-value data
 
+## Languages
+
+```bash
+asdf plugin add ruby
+asdf plugin add nodejs
+
+asdf install ruby latest
+asdf install nodejs latest
+```
+
 ## Apps
 
 Use [brew cask](https://github.com/caskroom/homebrew-cask):
@@ -80,6 +90,18 @@ brew cask install \
   postico \
   base
 ```
+
+#### Postgres.app
+
+Configure your `$PATH` to use the included command line tools:
+
+```bash
+sudo mkdir -p /etc/paths.d &&
+echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
+```
+
+See:
+- https://postgresapp.com/documentation/install.html
 
 ### Other
 
@@ -156,9 +178,9 @@ sudo ln -s /usr/local/sbin/mount_ntfs /sbin/mount_ntfs
 Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide).
 
 1. Enable [firewall](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#firewall)
-2. Disable [spotlight suggestions](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#spotlight-suggestions)
-3. Configure [hosts file](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#hosts-file); I use [this one](http://someonewhocares.org/hosts/zero/hosts).
-4. Use latest OpenSSL: `brew install openssl`
-5. Use curl with openssl: `brew install curl --with-openssl && brew link --force curl`
-6. Deactivate Chrome's Flash plugin by visiting `chrome://plugins/`
-7. Use CloudFlare's DNS [1.1.1.1](https://1.1.1.1/)
+3. Enable [FileVault](https://github.com/drduh/macOS-Security-and-Privacy-Guide#full-disk-encryption)
+3. Disable [spotlight suggestions](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#spotlight-suggestions)
+4. Configure [PGP/GPG](https://github.com/drduh/macOS-Security-and-Privacy-Guide#pgpgpg)
+5. Use latest OpenSSL: `brew install openssl`
+6. Use curl with openssl: `brew install curl --with-openssl && brew link --force curl`
+7. Use [NextDNS](https://nextdns.io)

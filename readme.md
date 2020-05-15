@@ -15,11 +15,13 @@ Install [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh) and pick useful plugins. M
 
 ### Theme
 
-Use [Pure](https://github.com/sindresorhus/pure)
+Use [Pure](https://github.com/sindresorhus/pure) with the [snazzy](https://github.com/sindresorhus/iterm2-snazzy) theme.
 
 ```bash
 yarn global add pure-prompt
 ```
+
+Install [snazzy](https://github.com/sindresorhus/iterm2-snazzy#install) for iterm2.
 
 ### Dependencies
 

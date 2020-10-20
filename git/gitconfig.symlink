@@ -7,6 +7,7 @@
 [core]
 	editor = atom --wait
 	excludesfile = ~/.global_ignore
+	attributesfile = ~/.gitattributes
 [color]
 	diff = auto
 	status = auto

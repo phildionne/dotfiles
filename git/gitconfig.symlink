@@ -6,7 +6,7 @@
 	user = phildionne
 [core]
 	editor = atom --wait
-	excludesfile = ~/.global_ignore
+	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 [color]
 	diff = auto

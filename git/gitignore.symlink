@@ -3,13 +3,9 @@
 .AppleDouble
 .LSOverride
 Icon
+
 # Files that might appear on external disk
 Thumbs.db
 .Spotlight-V100
 .Trashes
 .sass-cache
-
-# SublimeText project files
-*.sublime-project
-*.sublime-workspace
-

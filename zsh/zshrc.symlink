@@ -32,10 +32,6 @@ export PURE_CMD_MAX_EXEC_TIME=3600
 # note: Must be after oh-my-zsh activation
 prompt pure
 
-# Editor preferences
-export EDITOR="atom -w"
-export GIT_EDITOR='atom -w'
-
 # Enable ASDF
 . $(brew --prefix asdf)/asdf.sh
 

@@ -5,7 +5,7 @@
 [github]
 	user = phildionne
 [core]
-	editor = atom --wait
+	editor = code --wait
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 [color]

@@ -174,7 +174,24 @@ Set OSX defaults:
 source $HOME/dotfiles/osx/set-defaults.sh
 ```
 
-*optional* - Allow to [write](http://apple.stackexchange.com/questions/152661/write-to-ntfs-formated-drives-on-yosemite) to ntfs formated drives:
+#### Quick Look
+
+Adds support for:
+
+- Preview source code files with syntax highlighting
+- Preview plain text files without or with unknown file extension
+- Preview Markdown files
+- Preview JSON files
+
+```bash
+brew install qlcolorcode qlstephen qlmarkdown quicklook-json
+```
+
+See: https://github.com/sindresorhus/quick-look-plugins
+
+#### Other
+
+_optional_ - Allow to [write](http://apple.stackexchange.com/questions/152661/write-to-ntfs-formated-drives-on-yosemite) to ntfs formated drives:
 
 ```bash
 brew install homebrew/fuse/ntfs-3g

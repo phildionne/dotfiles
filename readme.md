@@ -43,13 +43,13 @@ brew install \
   redis
 ```
 
-* [hub](https://github.com/github/hub) for interacting with the GitHub API
-* [asdf](https://github.com/asdf-vm/asdf) for managing programming language versions
-* [yarn](https://yarnpkg.com/) for managing JavaScript packages
-* [doctl](https://github.com/digitalocean/doctl) for interacting with the Digital Ocean API
-* [overmind](https://github.com/DarthSim/overmind) for managing Procfile-based applications
-* [tmux](https://tmux.github.io/) for saving project state and switching between projects
-* [redis](http://redis.io/) for storing key-value data
+- [hub](https://github.com/github/hub) for interacting with the GitHub API
+- [asdf](https://github.com/asdf-vm/asdf) for managing programming language versions
+- [yarn](https://yarnpkg.com/) for managing JavaScript packages
+- [doctl](https://github.com/digitalocean/doctl) for interacting with the Digital Ocean API
+- [overmind](https://github.com/DarthSim/overmind) for managing Procfile-based applications
+- [tmux](https://tmux.github.io/) for saving project state and switching between projects
+- [redis](http://redis.io/) for storing key-value data
 
 ## Languages
 
@@ -79,18 +79,18 @@ brew cask install visual-studio-code # or
 brew cask install atom
 ```
 
-* [Github Desktop](https://desktop.github.com/)
-* [Dash](https://kapeli.com/dash)
-* [iterm2](https://www.iterm2.com/)
-* [ngrok](https://ngrok.com/)
-* [Postman](https://www.postman.com/)
+- [Github Desktop](https://desktop.github.com/)
+- [Dash](https://kapeli.com/dash)
+- [iterm2](https://www.iterm2.com/)
+- [ngrok](https://ngrok.com/)
+- [Postman](https://www.postman.com/)
 
 ### Database
 
-* [Postgres.app](https://postgresapp.com/) PostgreSQL database
-* [Sequel](https://www.sequelpro.com/) MySQL GUI
-* [Postico](https://eggerapps.at/postico/) PostgreSQL GUI
-* [Base](https://menial.co.uk/base/) SQLite3 GUI
+- [Postgres.app](https://postgresapp.com/) PostgreSQL database
+- [Sequel](https://www.sequelpro.com/) MySQL GUI
+- [Postico](https://eggerapps.at/postico/) PostgreSQL GUI
+- [Base](https://menial.co.uk/base/) SQLite3 GUI
 
 ```bash
 brew cask install \
@@ -110,6 +110,7 @@ echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/pat
 ```
 
 See:
+
 - https://postgresapp.com/documentation/install.html
 
 ### Other
@@ -204,7 +205,7 @@ sudo ln -s /usr/local/sbin/mount_ntfs /sbin/mount_ntfs
 Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide).
 
 1. Enable [firewall](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#firewall)
-3. Enable [FileVault](https://github.com/drduh/macOS-Security-and-Privacy-Guide#full-disk-encryption)
+2. Enable [FileVault](https://github.com/drduh/macOS-Security-and-Privacy-Guide#full-disk-encryption)
 3. Disable [spotlight suggestions](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#spotlight-suggestions)
 4. Configure [PGP/GPG](https://github.com/drduh/macOS-Security-and-Privacy-Guide#pgpgpg)
 5. Use latest OpenSSL: `brew install openssl`

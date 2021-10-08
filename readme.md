@@ -34,7 +34,6 @@ Use [brew](https://brew.sh/):
 
 ```bash
 brew install \
-  hub \
   asdf \
   doctl \
   yarn \
@@ -43,13 +42,24 @@ brew install \
   redis
 ```
 
-- [hub](https://github.com/github/hub) for interacting with the GitHub API
 - [asdf](https://github.com/asdf-vm/asdf) for managing programming language versions
 - [yarn](https://yarnpkg.com/) for managing JavaScript packages
 - [doctl](https://github.com/digitalocean/doctl) for interacting with the Digital Ocean API
 - [overmind](https://github.com/DarthSim/overmind) for managing Procfile-based applications
 - [tmux](https://tmux.github.io/) for saving project state and switching between projects
 - [redis](http://redis.io/) for storing key-value data
+
+## Git
+
+- [hub](https://github.com/github/hub) for interacting with the GitHub API
+- [Git Credentials Manager](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git#git-credential-manager-core)
+
+```bash
+brew install hub
+
+brew tap microsoft/git
+brew install --cask git-credential-manager-core
+```
 
 ## Languages
 

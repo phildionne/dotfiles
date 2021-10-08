@@ -75,8 +75,7 @@ brew cask install \
   ngrok \
   postman
 
-brew cask install visual-studio-code # or
-brew cask install atom
+brew cask install visual-studio-code
 ```
 
 - [Github Desktop](https://desktop.github.com/)
@@ -135,14 +134,6 @@ Install docker:
 
 ```bash
 brew cask install docker
-```
-
-### Atom
-
-Overwrite Atom preferences with your own:
-
-```bash
-ln -s $HOME/dotfiles/atom/* $HOME/.atom/
 ```
 
 ### Erlang & Elixir

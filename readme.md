@@ -78,14 +78,13 @@ Use [brew cask](https://github.com/caskroom/homebrew-cask):
 ### Development
 
 ```bash
-brew cask install \
+brew install --cask \
+  visual-studio-code \
   github \
   dash \
   iterm2 \
   ngrok \
   postman
-
-brew cask install visual-studio-code
 ```
 
 - [Github Desktop](https://desktop.github.com/)
@@ -102,8 +101,8 @@ brew cask install visual-studio-code
 - [Base](https://menial.co.uk/base/) SQLite3 GUI
 
 ```bash
-brew cask install \
-  postgres \
+brew install --cask \
+  postgres-unofficial \
   sequel-pro \
   postico \
   base
@@ -125,11 +124,10 @@ See:
 ### Other
 
 ```bash
-brew cask install \
+brew install --cask \
   appcleaner \
   bitwarden \
   dropbox \
-  google-backup-and-sync \
   google-chrome \
   sketch \
   slack      \
@@ -143,7 +141,7 @@ brew cask install \
 Install docker:
 
 ```bash
-brew cask install docker
+brew install --cask docker
 ```
 
 ### Erlang & Elixir

@@ -4,33 +4,36 @@
 cd & git clone https://github.com/phildionne/dotfiles
 ```
 
+## Brew
+
+Install [brew](https://brew.sh/)
+
 ## Shell
 
 ### Zsh
 
-Install [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh) and pick useful plugins. Mines are:
+While latest macOS versions have Zsh already installed, it's best to install it with brew to get the latest and keep it updated.
+
+```bash
+brew install zsh
+```
+
+Then install [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh) and pick useful plugins. Mines are:
 
 - [bundler](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bundler)
-- [zsh-interactive-cd](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-interactive-cd)
+- [zsh-interactive-cd](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-interactive-cd) (requires [fzf](https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew))
 
 ### Theme
 
 Use [Pure](https://github.com/sindresorhus/pure) with the [snazzy](https://github.com/sindresorhus/iterm2-snazzy) theme.
 
 ```bash
-yarn global add pure-prompt
+brew install pure
 ```
 
 Install [snazzy](https://github.com/sindresorhus/iterm2-snazzy#install) for iterm2.
 
-### Dependencies
-
-- [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh)
-- [fzf](https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew) required by `zsh-interactive-cd`
-
 ## Utilities
-
-Use [brew](https://brew.sh/):
 
 ```bash
 brew install \
@@ -87,6 +90,7 @@ brew install --cask \
   postman
 ```
 
+- [Visual Studio Code](https://code.visualstudio.com/)
 - [Github Desktop](https://desktop.github.com/)
 - [Dash](https://kapeli.com/dash)
 - [iterm2](https://www.iterm2.com/)
@@ -184,7 +188,11 @@ Adds support for:
 - Preview JSON files
 
 ```bash
-brew install qlcolorcode qlstephen qlmarkdown quicklook-json
+brew install \
+  qlcolorcode \
+  qlstephen \
+  qlmarkdown \
+  quicklook-json
 ```
 
 See: https://github.com/sindresorhus/quick-look-plugins

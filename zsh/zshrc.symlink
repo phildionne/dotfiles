@@ -39,6 +39,8 @@ source $ZSH/oh-my-zsh.sh
 prompt pure
 
 # Enable ASDF
+export NODEJS_CHECK_SIGNATURES=no
+
 . $(brew --prefix asdf)/asdf.sh
 
 # Enable fzf

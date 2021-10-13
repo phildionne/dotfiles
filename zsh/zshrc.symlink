@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
 autoload -U promptinit; promptinit
+# Homebrew
+## Enable brew
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Homebrew completion
+## Enable completion
 # see: https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
 # note: Must be before oh-my-zsh activation
 if type brew &>/dev/null; then

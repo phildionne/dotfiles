@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-autoload -U promptinit; promptinit
 # Homebrew
 ## Enable brew
 eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -26,12 +25,12 @@ plugins=(
   zsh-interactive-cd
 )
 
+autoload -U promptinit; promptinit
+
 source $ZSH/oh-my-zsh.sh
 
 # Pure
-# see: https://github.com/sindresorhus/pure#options
-export PURE_CMD_MAX_EXEC_TIME=3600
-
+# see: https://github.com/sindresorhus/pure
 # note: Must be after oh-my-zsh activation
 prompt pure
 

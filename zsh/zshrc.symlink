@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 # Homebrew
-## Enable brew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+## Enable brew on M1 macs, this is not required for other macs
+if [[ $(brew --prefix) == "/opt/homebrew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 ## Enable completion
 # see: https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh

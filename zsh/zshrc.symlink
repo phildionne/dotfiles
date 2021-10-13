@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 # Homebrew
-## Enable brew on M1 macs, this is not required for other macs
-if [[ $(brew --prefix) == "/opt/homebrew" ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+## Enable brew on M1 macs & others
+if [ "$(arch)" = "arm64" ]; then
+  eval $(/opt/homebrew/bin/brew shellenv);
+else
+  eval $(/usr/local/bin/brew shellenv);
 fi
 
 ## Enable completion

@@ -46,6 +46,9 @@ export NODEJS_CHECK_SIGNATURES=no
 # Enable fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Support globally installed Yarn packages
+export PATH="$PATH:$(yarn global bin)"
+
 # Use Hub, Github's little friend
 alias git=hub
 

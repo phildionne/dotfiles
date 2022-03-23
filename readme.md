@@ -8,6 +8,21 @@ cd & git clone https://github.com/phildionne/dotfiles
 
 Install [brew](https://brew.sh/)
 
+```bash
+# Upgrade outdated casks and outdated, unpinned formulae
+brew upgrade
+
+# Remove stale lock files and outdated downloads for all formulae and casks, and remove old versions of installed formulae
+# -s Scrub the cache, including downloads for even the latest versions.
+brew cleanup -s
+
+# Uninstall formulae that were only installed as a dependency of another formula and are now no longer needed
+brew autoremove
+
+# Upgrade outdated casks
+brew upgrade $(brew outdated --cask --greedy --quiet)
+```
+
 ## Shell
 
 ### Zsh

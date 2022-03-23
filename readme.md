@@ -133,11 +133,14 @@ brew install --cask \
   bitwarden \
   dropbox \
   google-chrome \
+  messenger \
   sketch \
   slack      \
   rectangle \
   spotify \
-  the-unarchiver
+  the-unarchiver \
+  vlc \
+  webtorrent \
 ```
 
 ### Docker

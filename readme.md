@@ -170,14 +170,6 @@ rake install
 
 ### OSX
 
-#### Defaults
-
-Set OSX defaults:
-
-```bash
-source $HOME/dotfiles/osx/set-defaults.sh
-```
-
 #### Quick Look
 
 Adds support for:

@@ -41,7 +41,7 @@ prompt pure
 # Enable ASDF
 export NODEJS_CHECK_SIGNATURES=no
 
-. $(brew --prefix asdf)/asdf.sh
+. $(brew --prefix asdf)/libexec/asdf.sh
 
 # Enable fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

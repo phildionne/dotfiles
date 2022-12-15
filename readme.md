@@ -23,7 +23,7 @@ brew autoremove
 brew upgrade $(brew outdated --cask --greedy --quiet)
 ```
 
-## Shell
+## Terminal
 
 ### Zsh
 
@@ -33,20 +33,13 @@ While latest macOS versions have Zsh already installed, it's best to install it 
 brew install zsh
 ```
 
-Then install [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh) and pick useful plugins. Mines are:
+### Warp
 
-- [bundler](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/bundler)
-- [zsh-interactive-cd](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/zsh-interactive-cd) (requires [fzf](https://github.com/junegunn/fzf#using-homebrew-or-linuxbrew))
-
-### Theme
-
-Use [Pure](https://github.com/sindresorhus/pure) with the [snazzy](https://github.com/sindresorhus/iterm2-snazzy) theme.
+Then install [Warp](https://warp.dev).
 
 ```bash
-brew install pure
+brew install warp
 ```
-
-Install [snazzy](https://github.com/sindresorhus/iterm2-snazzy#install) for iterm2.
 
 ## Utilities
 
@@ -100,7 +93,6 @@ brew install --cask \
   visual-studio-code \
   github \
   dash \
-  iterm2 \
   ngrok \
   postman
 ```
@@ -108,7 +100,6 @@ brew install --cask \
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Github Desktop](https://desktop.github.com/)
 - [Dash](https://kapeli.com/dash)
-- [iterm2](https://www.iterm2.com/)
 - [ngrok](https://ngrok.com/)
 - [Postman](https://www.postman.com/)
 
@@ -149,13 +140,12 @@ brew install --cask \
   dropbox \
   google-chrome \
   messenger \
-  sketch \
-  slack      \
+  slack \
   rectangle \
   spotify \
   the-unarchiver \
   vlc \
-  webtorrent \
+  webtorrent
 ```
 
 ### Docker

@@ -141,7 +141,7 @@ brew install --cask \
   google-chrome \
   messenger \
   slack \
-  rectangle \
+  raycast \
   spotify \
   the-unarchiver \
   vlc \

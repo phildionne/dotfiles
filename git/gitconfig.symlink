@@ -34,7 +34,7 @@
 	st = status -bs
 	verbs = "!git log --pretty=format:'%s' | cut -d \" \" -f 1 | sort | uniq -c | sort -nr"
 [push]
-	default = tracking
+	default = current
 [rebase]
 	autosquash = true
 [merge]
@@ -73,6 +73,6 @@
 [credential "https://dev.azure.com"]
 	useHttpPath = true
 [credential]
-	helper = 
-	helper = 
+	helper =
+	helper =
 	helper = /usr/local/share/gcm-core/git-credential-manager

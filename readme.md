@@ -176,9 +176,23 @@ cd ~/dotfiles
 rake install
 ```
 
-### OSX
+## Drivers
 
-#### Quick Look
+Install [homebrew-cask-drivers](https://github.com/Homebrew/homebrew-cask-drivers)
+
+```bash
+brew tap homebrew/cask-drivers
+```
+
+Install [Display Link](https://www.synaptics.com/products/displaylink-graphics/downloads) to support two screens on a M1:
+
+```bash
+brew install --cask displaylink
+```
+
+## OSX
+
+### Quick Look
 
 Adds support for:
 
@@ -197,7 +211,7 @@ brew install \
 
 See: https://github.com/sindresorhus/quick-look-plugins
 
-#### Other
+### Other
 
 _optional_ - Allow to [write](http://apple.stackexchange.com/questions/152661/write-to-ntfs-formated-drives-on-yosemite) to ntfs formated drives:
 
@@ -207,7 +221,7 @@ sudo mv /sbin/mount_ntfs /sbin/mount_ntfs.original
 sudo ln -s /usr/local/sbin/mount_ntfs /sbin/mount_ntfs
 ```
 
-#### Security
+### Security
 
 Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide).
 

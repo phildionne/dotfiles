@@ -70,9 +70,10 @@
 	gpgsign = false
 [gpg]
 	program = /usr/local/bin/gpg
+[credential]
+	helper = 
+	helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://dev.azure.com"]
 	useHttpPath = true
-[credential]
-	helper =
-	helper =
-	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://git.heroku.com"]
+	provider = generic

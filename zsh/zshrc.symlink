@@ -17,15 +17,28 @@ export ZSH_THEME=""
 source $ZSH/oh-my-zsh.sh
 
 # Enable ASDF
-export NODEJS_CHECK_SIGNATURES=no
-
-. $(brew --prefix asdf)/libexec/asdf.sh
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 # Support globally installed Yarn packages
 export PATH="$PATH:$(yarn global bin)"
 
+# Use orbstack over docker-desktop
+export PATH="$PATH:~/.orbstack/bin"
+
 # Use Hub, Github's little friend
 alias git=hub
 
+
+# Utilities
+alias ..="cd .."
+alias ...="cd ..."
+
 # Don't check mail when opening terminal.
 unset MAILCHECK
+
+# bun completions
+[ -s "/Users/pdionne/.bun/_bun" ] && source "/Users/pdionne/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

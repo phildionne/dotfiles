@@ -8,22 +8,15 @@ cd & git clone https://github.com/phildionne/dotfiles
 
 Install [brew](https://brew.sh/)
 
-```bash
-# Upgrade outdated casks and outdated, unpinned formulae
-brew upgrade
-
-# Remove stale lock files and outdated downloads for all formulae and casks, and remove old versions of installed formulae
-# -s Scrub the cache, including downloads for even the latest versions.
-brew cleanup -s
-
-# Uninstall formulae that were only installed as a dependency of another formula and are now no longer needed
-brew autoremove
-
-# Upgrade outdated casks
-brew upgrade $(brew outdated --cask --greedy --quiet)
-```
-
 ## Terminal
+
+### Iterm2
+
+Use Iterm2
+
+```bash
+brew install --cask iterm2
+```
 
 ### Zsh
 
@@ -33,46 +26,35 @@ While latest macOS versions have Zsh already installed, it's best to install it 
 brew install zsh
 ```
 
-### Warp
+### Pure
 
-Then install [Warp](https://warp.dev).
-
-```bash
-brew install warp
-```
-
-## Utilities
+Use the [Pure](https://github.com/sindresorhus/pure) prompt
 
 ```bash
-brew install \
-  asdf \
-  doctl \
-  yarn \
-  tmux \
-  overmind \
-  redis
+brew install pure
 ```
 
-- [asdf](https://github.com/asdf-vm/asdf) for managing programming language versions
-- [yarn](https://yarnpkg.com/) for managing JavaScript packages
-- [doctl](https://github.com/digitalocean/doctl) for interacting with the Digital Ocean API
-- [overmind](https://github.com/DarthSim/overmind) for managing Procfile-based applications
-- [tmux](https://tmux.github.io/) for saving project state and switching between projects
-- [redis](http://redis.io/) for storing key-value data
+- Use the [snazzy theme](https://github.com/sindresorhus/iterm2-snazzy) with iTerm2
+- Use [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
-## Git
+## ASDF
 
-- [hub](https://github.com/github/hub) for interacting with the GitHub API
-- [Git Credentials Manager](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git#git-credential-manager-core)
+Use [asdf](https://github.com/asdf-vm/asdf) for managing programming language versions
 
 ```bash
-brew install hub
-
-brew tap microsoft/git
-brew install --cask git-credential-manager-core
+brew install asdf
 ```
 
-## Languages
+Then add asdf to your path:
+
+```bash
+# ~/.zshrc
+
+# Enable ASDF
+export PATH="${ASD_DATA_DIR:-$HOME/.asdf}/shims:$PATH"%
+```
+
+Install some plugins:
 
 ```bash
 asdf plugin add ruby
@@ -80,6 +62,14 @@ asdf plugin add nodejs
 
 asdf install ruby latest
 asdf install nodejs latest
+```
+
+## GitHub CLI
+
+Use [gh](https://cli.github.com/) for interacting with the GitHub API
+
+```bash
+brew install gh
 ```
 
 ## Apps
@@ -92,16 +82,12 @@ Use [brew cask](https://github.com/caskroom/homebrew-cask):
 brew install --cask \
   visual-studio-code \
   github \
-  dash \
-  ngrok \
-  postman
+  dash
 ```
 
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Github Desktop](https://desktop.github.com/)
 - [Dash](https://kapeli.com/dash)
-- [ngrok](https://ngrok.com/)
-- [Postman](https://www.postman.com/)
 
 ### Database
 
@@ -148,46 +134,24 @@ brew install --cask \
   webtorrent
 ```
 
-### Docker
+### Orbstack
 
-Install docker:
+Install orbstack:
 
 ```bash
-brew install --cask docker
+brew install --cask orbstack
 ```
-
-### Erlang & Elixir
-
-Install [erlang-history](https://github.com/ferd/erlang-history) to enable history in the elixir & erlang interactive consoles.
 
 ### Everything else
 
 - `.git_config`
 - `.global_ignore`
-- `.gemrc`
-- `.irbrc`
-- `.pryrc`
-- `.rspec`
 
 Create symlinks to your dotfiles in `~`.
 
 ```bash
 cd ~/dotfiles
 rake install
-```
-
-## Drivers
-
-Install [homebrew-cask-drivers](https://github.com/Homebrew/homebrew-cask-drivers)
-
-```bash
-brew tap homebrew/cask-drivers
-```
-
-Install [Display Link](https://www.synaptics.com/products/displaylink-graphics/downloads) to support two screens on a M1:
-
-```bash
-brew install --cask displaylink
 ```
 
 ## OSX

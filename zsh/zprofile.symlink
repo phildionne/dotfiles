@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# OrbStack command-line tools and integration
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
+# Enable ASDF
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# Support globally installed Yarn packages
+export PATH="$PATH:$(yarn global bin)"

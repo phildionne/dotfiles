@@ -175,24 +175,10 @@ brew install \
 
 See: https://github.com/sindresorhus/quick-look-plugins
 
-### Other
-
-_optional_ - Allow to [write](http://apple.stackexchange.com/questions/152661/write-to-ntfs-formated-drives-on-yosemite) to ntfs formated drives:
-
-```bash
-brew install homebrew/fuse/ntfs-3g
-sudo mv /sbin/mount_ntfs /sbin/mount_ntfs.original
-sudo ln -s /usr/local/sbin/mount_ntfs /sbin/mount_ntfs
-```
-
 ### Security
 
-Make you mac secure; mostly taken from [this guide](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide).
+Make you mac secure; taken from [this guide](https://github.com/drduh/macOS-Security-and-Privacy-Guide). These are the absolute basics:
 
-1. Enable [firewall](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#firewall)
-2. Enable [FileVault](https://github.com/drduh/macOS-Security-and-Privacy-Guide#full-disk-encryption)
-3. Disable [spotlight suggestions](https://github.com/drduh/OS-X-Yosemite-Security-and-Privacy-Guide#spotlight-suggestions)
-4. Configure [PGP/GPG](https://github.com/drduh/macOS-Security-and-Privacy-Guide#pgpgpg)
-5. Use latest OpenSSL: `brew install openssl`
-6. Use curl with openssl: `brew install curl --with-openssl && brew link --force curl`
-7. Use [NextDNS](https://nextdns.io)
+1. Enable [firewall](https://github.com/drduh/macOS-Security-and-Privacy-Guide?tab=readme-ov-file#firewall)
+2. Enable [FileVault](https://github.com/drduh/macOS-Security-and-Privacy-Guide?tab=readme-ov-file#filevault)
+3. Use [NextDNS](https://nextdns.io)

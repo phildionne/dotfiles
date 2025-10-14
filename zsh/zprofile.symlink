@@ -8,5 +8,5 @@ source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 # Enable ASDF
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
-# Support globally installed Yarn packages
-export PATH="$PATH:$(yarn global bin)"
+# Support globally installed pnpm packages
+export PATH="$PATH:$(pnpm bin -g)"

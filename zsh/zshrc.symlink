@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export LC_ALL=en_CA.UTF-8
+
 # Enable pure prompt
 autoload -U promptinit; promptinit
 prompt pure
@@ -12,4 +14,12 @@ alias ...="cd ..."
 unset MAILCHECK
 
 # Enable zsh-syntax-highlighting
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Use pnpm
+export PNPM_HOME="/Users/pdionne/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+alias pn="pnpm"

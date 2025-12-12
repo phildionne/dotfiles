@@ -37,31 +37,27 @@ brew install pure
 - Use the [snazzy theme](https://github.com/sindresorhus/iterm2-snazzy) with iTerm2
 - Use [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
-## ASDF
+## Mise
 
-Use [asdf](https://github.com/asdf-vm/asdf) for managing programming language versions
+Use [mise](https://mise.jdx.dev/) for managing programming language versions
 
 ```bash
-brew install asdf
+brew install mise
 ```
 
-Then add asdf to your path:
+Then activate it:
 
 ```bash
 # ~/.zshrc
 
-# Enable ASDF
-export PATH="${ASD_DATA_DIR:-$HOME/.asdf}/shims:$PATH"%
+# Enable Mise
+eval "$(mise activate zsh)"
 ```
 
-Install some plugins:
+Install runtimes:
 
 ```bash
-asdf plugin add ruby
-asdf plugin add nodejs
-
-asdf install ruby latest
-asdf install nodejs latest
+mise use node@latest
 ```
 
 ## GitHub CLI

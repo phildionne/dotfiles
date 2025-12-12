@@ -5,8 +5,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # OrbStack command-line tools and integration
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
-# Enable ASDF
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+# Enable mise
+eval "$(mise activate zsh)"
 
-# Support globally installed pnpm packages
-export PATH="$PATH:$(pnpm bin -g)"

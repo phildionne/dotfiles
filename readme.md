@@ -60,17 +60,24 @@ Install runtimes:
 mise use node@latest
 ```
 
-## GitHub CLI
+## Agents
 
-Use [gh](https://cli.github.com/) for interacting with the GitHub API
+Install OpenAi codex
 
 ```bash
-brew install gh
+brew install codex
 ```
 
-## Apps
+Useful list of MCP servers:
 
-Use [brew cask](https://github.com/caskroom/homebrew-cask):
+- [chrome-devtools](https://github.com/ChromeDevTools/chrome-devtools-mcp)
+- [context7](https://github.com/upstash/context7)
+- [next-devtools](https://github.com/vercel/next-devtools-mcp)
+- [playwright](https://github.com/microsoft/playwright-mcp)
+- [mapbox](https://github.com/mapbox/mcp-server)
+- [vercel](https://vercel.com/docs/mcp/vercel-mcp)
+
+## Apps
 
 ### Development
 
@@ -78,15 +85,18 @@ Use [brew cask](https://github.com/caskroom/homebrew-cask):
 brew install --cask \
   visual-studio-code \
   github \
+  gh \
   dash
 ```
 
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Github Desktop](https://desktop.github.com/)
+- [gh](https://cli.github.com/)
 - [Dash](https://kapeli.com/dash)
 
 ### Database
 
+- [Supabase](https://supabase.com/)
 - [Postgres.app](https://postgresapp.com/) PostgreSQL database
 - [Sequel](https://www.sequelpro.com/) MySQL GUI
 - [Postico](https://eggerapps.at/postico/) PostgreSQL GUI
@@ -94,19 +104,11 @@ brew install --cask \
 
 ```bash
 brew install --cask \
+  supabase \
   postgres-unofficial \
   sequel-pro \
   postico \
   base
-```
-
-#### Postgres.app
-
-Configure your `$PATH` to use the included command line tools:
-
-```bash
-sudo mkdir -p /etc/paths.d &&
-echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp
 ```
 
 See:
@@ -119,11 +121,8 @@ See:
 brew install --cask \
   appcleaner \
   bitwarden \
-  dropbox \
   google-chrome \
-  messenger \
   slack \
-  raycast \
   spotify \
   the-unarchiver \
   vlc \

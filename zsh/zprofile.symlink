@@ -1,10 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -x /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 # OrbStack command-line tools and integration
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+if [[ -r "$HOME/.orbstack/shell/init.zsh" ]]; then
+  source "$HOME/.orbstack/shell/init.zsh"
+fi
 
 # Enable mise
-eval "$(mise activate zsh)"
-
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi

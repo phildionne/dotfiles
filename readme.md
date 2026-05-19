@@ -1,179 +1,105 @@
-## Getting started
+## Dotfiles
+
+This is my personal macOS development baseline for shell, Git, Homebrew apps, and editor tooling.
+
+## New Mac Setup
+
+1. Install Homebrew:
 
 ```bash
-cd & git clone https://github.com/phildionne/dotfiles
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Brew
-
-Install [brew](https://brew.sh/)
-
-## Terminal
-
-### Iterm2
-
-Use Iterm2
+2. Clone the repo:
 
 ```bash
-brew install --cask iterm2
+cd ~
+git clone https://github.com/phildionne/dotfiles
+cd dotfiles
 ```
 
-### Zsh
-
-While latest macOS versions have Zsh already installed, it's best to install it with brew to get the latest and keep it updated.
+3. Install the baseline tools and apps:
 
 ```bash
-brew install zsh
+brew bundle install --file=osx/Brewfile
 ```
 
-### Pure
-
-Use the [Pure](https://github.com/sindresorhus/pure) prompt
+4. Link the managed dotfiles:
 
 ```bash
-brew install pure
-```
-
-- Use the [snazzy theme](https://github.com/sindresorhus/iterm2-snazzy) with iTerm2
-- Use [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-
-## Mise
-
-Use [mise](https://mise.jdx.dev/) for managing programming language versions
-
-```bash
-brew install mise
-```
-
-Then activate it:
-
-```bash
-# ~/.zshrc
-
-# Enable Mise
-eval "$(mise activate zsh)"
-```
-
-Install runtimes:
-
-```bash
-mise use node@latest
-```
-
-## Agents
-
-Install OpenAi codex
-
-```bash
-brew install codex
-```
-
-Useful list of MCP servers:
-
-- [chrome-devtools](https://github.com/ChromeDevTools/chrome-devtools-mcp)
-- [context7](https://github.com/upstash/context7)
-- [next-devtools](https://github.com/vercel/next-devtools-mcp)
-- [playwright](https://github.com/microsoft/playwright-mcp)
-- [mapbox](https://github.com/mapbox/mcp-server)
-- [vercel](https://vercel.com/docs/mcp/vercel-mcp)
-
-## Apps
-
-### Development
-
-```bash
-brew install --cask \
-  visual-studio-code \
-  github \
-  gh \
-  dash
-```
-
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Github Desktop](https://desktop.github.com/)
-- [gh](https://cli.github.com/)
-- [Dash](https://kapeli.com/dash)
-
-### Database
-
-- [Supabase](https://supabase.com/)
-- [Postgres.app](https://postgresapp.com/) PostgreSQL database
-- [Sequel](https://www.sequelpro.com/) MySQL GUI
-- [Postico](https://eggerapps.at/postico/) PostgreSQL GUI
-- [Base](https://menial.co.uk/base/) SQLite3 GUI
-
-```bash
-brew install --cask \
-  supabase \
-  postgres-unofficial \
-  sequel-pro \
-  postico \
-  base
-```
-
-See:
-
-- https://postgresapp.com/documentation/install.html
-
-### Other
-
-```bash
-brew install --cask \
-  appcleaner \
-  bitwarden \
-  google-chrome \
-  slack \
-  spotify \
-  the-unarchiver \
-  vlc \
-  webtorrent
-```
-
-### Orbstack
-
-Install orbstack:
-
-```bash
-brew install --cask orbstack
-```
-
-### Everything else
-
-- `.git_config`
-- `.global_ignore`
-
-Create symlinks to your dotfiles in `~`.
-
-```bash
-cd ~/dotfiles
 rake install
 ```
 
-## OSX
-
-### Quick Look
-
-Adds support for:
-
-- Preview source code files with syntax highlighting
-- Preview plain text files without or with unknown file extension
-- Preview Markdown files
-- Preview JSON files
+5. Open a new terminal and verify the setup:
 
 ```bash
-brew install \
-  qlcolorcode \
-  qlstephen \
-  qlmarkdown \
-  quicklook-json
+cd ~/dotfiles
+rake doctor
 ```
 
-See: https://github.com/sindresorhus/quick-look-plugins
+## Managed Files
 
-### Security
+`rake install` links the explicit inventory in the `Rakefile`:
 
-Make you mac secure; taken from [this guide](https://github.com/drduh/macOS-Security-and-Privacy-Guide). These are the absolute basics:
+- `~/.gitattributes`
+- `~/.gitconfig`
+- `~/.hushlogin`
+- `~/.zprofile`
+- `~/.zshrc`
 
-1. Enable [firewall](https://github.com/drduh/macOS-Security-and-Privacy-Guide?tab=readme-ov-file#firewall)
-2. Enable [FileVault](https://github.com/drduh/macOS-Security-and-Privacy-Guide?tab=readme-ov-file#filevault)
-3. Use [NextDNS](https://nextdns.io)
+The installer is intentionally symlink-based so edits in `~/dotfiles` are reflected immediately in the active shell and Git configuration.
+
+## Baseline Tools And Apps
+
+The exact install list lives in `osx/Brewfile`.
+
+### Terminal And Shell
+
+- iTerm2 with zsh.
+- Pure prompt with zsh syntax highlighting.
+- `mise` for runtime management.
+- `eza` and `bat` as nicer defaults for `ls` and `cat`.
+
+### Development Tools
+
+- GitHub CLI, Git LFS, ripgrep, dotenvx, sshpass, Terraform, and OpenSSL.
+- Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs.
+- OrbStack, ngrok, Postico, Cyberduck, and Dash.
+- VS Code, GitHub Desktop, and the Fira Code Nerd Font.
+
+### Desktop Apps
+
+- AppCleaner, Bitwarden, Google Chrome, Google Drive, Raycast, Slack, Spotify, Superwhisper, The Unarchiver, VLC, WebTorrent, and Zoom.
+- Codex and ChatGPT Atlas for agent-assisted development.
+
+### VS Code Extensions
+
+- Core editing: EditorConfig, ESLint, Prettier, Stylelint, Sort Lines, Change Case, Pretty TypeScript Errors.
+- Git and GitHub: GitLens, GitHub theme, GitHub Pull Requests.
+- Languages and data: Python, Pylance, Black, isort, Pylint, GraphQL, Tailwind CSS, TOML, dotenv, Jinja, djLint, XML, CSV, SVG preview, SQL formatter.
+- Containers and collaboration: Docker, Dev Containers, Live Share.
+- AI/editor tools: Copilot Chat, ChatGPT, OXC.
+
+### Agent And MCP Notes
+
+Codex is installed as part of the Brewfile, while user-specific agent auth, logs, memories, and plugins live outside this repo. Useful MCP servers to keep in mind when rebuilding or extending the agent setup:
+
+- Chrome DevTools
+- Context7
+- Next DevTools
+- Playwright
+- Mapbox
+- Vercel
+
+## Shell Layout
+
+- `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise`.
+- `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Bun, Turso, and direnv.
+- Optional integrations are guarded so a fresh shell can start before every tool is configured.
+
+## Tooling Policy
+
+- Homebrew is the app and CLI package baseline.
+- `mise` manages language/runtime versions and can use latest-by-default tools.
+- `brew bundle check --file=osx/Brewfile` should pass on the primary machine.
+- `rake doctor` is the quick drift check before relying on this repo for a rebuild.

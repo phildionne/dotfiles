@@ -5,9 +5,7 @@ export LC_ALL=en_CA.UTF-8
 # Enable pure prompt
 autoload -U promptinit
 promptinit
-if prompt -l | grep -qx pure; then
-  prompt pure
-fi
+prompt pure
 
 # Utilities
 alias ..="cd .."
@@ -33,9 +31,6 @@ case ":$PATH:" in
 esac
 alias pn="pnpm"
 
-export HOMEBREW_NO_ENV_FILTERING=1
-
-export HOMEBREW_SHELL=zsh
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 

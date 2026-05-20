@@ -1,7 +1,7 @@
 [user]
 	name = Philippe Dionne
 	email = dionne.phil@gmail.com
-	signingkey = 4AA4CC79879FBD44
+	signingkey = ~/.ssh/id_ed25519_signing.pub
 [github]
 	user = phildionne
 [core]
@@ -67,9 +67,9 @@
 	process = git-lfs filter-process
 	required = true
 [commit]
-	gpgsign = false
+	gpgsign = true
 [gpg]
-	program = /usr/local/bin/gpg
+	format = ssh
 [credential "https://github.com"]
 	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential

@@ -1,6 +1,6 @@
 ## Dotfiles
 
-This is my personal macOS development baseline for shell, Git, Homebrew apps, and editor tooling.
+This is my personal macOS development baseline for Apple Silicon Macs: shell, Git, Homebrew apps, and editor tooling.
 
 ## New Mac Setup
 
@@ -9,6 +9,8 @@ This is my personal macOS development baseline for shell, Git, Homebrew apps, an
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
+
+This repo assumes Apple Silicon Homebrew at `/opt/homebrew/bin/brew`.
 
 2. Clone the repo:
 
@@ -30,22 +32,30 @@ brew bundle install --file=osx/Brewfile
 rake install
 ```
 
-5. Open a new terminal and verify the setup:
+5. Configure the iTerm2 profile manually:
+
+- Use iTerm2 as the supported terminal. Apple Terminal is not managed by this repo.
+- Set the profile font to `Fira Code Nerd Font`.
+- Use the Snazzy color theme, or the current manually configured equivalent.
+
+6. Open a new iTerm2 window and verify the setup:
 
 ```bash
 cd ~/dotfiles
 rake doctor
 ```
 
+If `rake doctor` reports incomplete SSH signing, restore the signing key from Bitwarden using the SSH signing setup below and run it again.
+
 ## Managed Files
 
 `rake install` links the explicit inventory in the `Rakefile`:
 
-- `~/.gitattributes`
-- `~/.gitconfig`
-- `~/.hushlogin`
-- `~/.zprofile`
-- `~/.zshrc`
+- `git/gitattributes.symlink` -> `~/.gitattributes`
+- `git/gitconfig.symlink` -> `~/.gitconfig`
+- `osx/hushlogin.symlink` -> `~/.hushlogin`
+- `zsh/zprofile.symlink` -> `~/.zprofile`
+- `zsh/zshrc.symlink` -> `~/.zshrc`
 
 The installer is intentionally symlink-based so edits in `~/dotfiles` are reflected immediately in the active shell and Git configuration.
 
@@ -63,9 +73,41 @@ The exact install list lives in `osx/Brewfile`.
 ### Development Tools
 
 - GitHub CLI, Git LFS, ripgrep, dotenvx, sshpass, Terraform, and OpenSSL.
+- SSH commit signing with key material stored in Bitwarden and GitHub CLI key upload.
 - Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs.
 - OrbStack, ngrok, Postico, Cyberduck, and Dash.
 - VS Code, GitHub Desktop, and the Fira Code Nerd Font.
+
+## SSH Signing
+
+Git is configured to sign commits with `~/.ssh/id_ed25519_signing.pub`. Bitwarden stores the key material, but it is not used as an SSH agent.
+
+On a new Mac, copy the private key and public key from Bitwarden into local files:
+
+```bash
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+$EDITOR ~/.ssh/id_ed25519_signing
+$EDITOR ~/.ssh/id_ed25519_signing.pub
+chmod 600 ~/.ssh/id_ed25519_signing
+chmod 644 ~/.ssh/id_ed25519_signing.pub
+```
+
+Add the public key to GitHub as a signing key:
+
+```bash
+gh auth refresh -h github.com -s admin:ssh_signing_key
+gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing --title "$(hostname)-signing"
+```
+
+Verify signing:
+
+```bash
+git commit -S --allow-empty -m "Verify signed commit"
+git cat-file -p HEAD | grep -A5 '^gpgsig'
+```
+
+After pushing a signed commit, GitHub should show it as verified.
 
 ### Desktop Apps
 
@@ -95,6 +137,7 @@ Codex is installed as part of the Brewfile, while user-specific agent auth, logs
 
 - `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise`.
 - `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Bun, Turso, and direnv.
+- iTerm2 profile appearance is documented as a manual setup step; no iTerm2 profile JSON, plist, or Apple Terminal settings are managed here.
 - Optional integrations are guarded so a fresh shell can start before every tool is configured.
 
 ## Tooling Policy
@@ -102,4 +145,4 @@ Codex is installed as part of the Brewfile, while user-specific agent auth, logs
 - Homebrew is the app and CLI package baseline.
 - `mise` manages language/runtime versions and can use latest-by-default tools.
 - `brew bundle check --file=osx/Brewfile` should pass on the primary machine.
-- `rake doctor` is the quick drift check before relying on this repo for a rebuild.
+- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies symlinks, required commands, Pure prompt loading, documentation coverage, and Brewfile drift.

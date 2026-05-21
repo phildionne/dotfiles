@@ -12,7 +12,7 @@ if [[ -r "$HOME/.orbstack/shell/init.zsh" ]]; then
   source "$HOME/.orbstack/shell/init.zsh"
 fi
 
-# Enable mise
+# Enable mise shims for login and non-interactive command runners.
 if command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate zsh)"
+  eval "$(mise activate zsh --shims)"
 fi

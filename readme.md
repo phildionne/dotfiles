@@ -135,14 +135,14 @@ Codex is installed as part of the Brewfile, while user-specific agent auth, logs
 
 ## Shell Layout
 
-- `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise`.
-- `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Bun, Turso, and direnv.
+- `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise` shims for non-interactive command runners.
+- `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Bun, Turso, `mise` activation, and direnv.
 - iTerm2 profile appearance is documented as a manual setup step; no iTerm2 profile JSON, plist, or Apple Terminal settings are managed here.
 - Optional integrations are guarded so a fresh shell can start before every tool is configured.
 
 ## Tooling Policy
 
 - Homebrew is the app and CLI package baseline.
-- `mise` manages language/runtime versions and can use latest-by-default tools.
+- `mise` manages language/runtime versions and can use latest-by-default tools. Login shells expose shims, while interactive zsh uses normal activation so project versions take effect when moving between repos.
 - `brew bundle check --file=osx/Brewfile` should pass on the primary machine.
 - `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies symlinks, required commands, Pure prompt loading, documentation coverage, and Brewfile drift.

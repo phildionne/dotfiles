@@ -41,6 +41,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # turso
 [[ -r "$HOME/.turso/env" ]] && source "$HOME/.turso/env"
 
+# Enable mise for interactive project-local tool versions.
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+
 # direnv
 if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook zsh)"

@@ -32,13 +32,11 @@ brew bundle install --file=osx/Brewfile
 rake install
 ```
 
-5. Configure the iTerm2 profile manually:
+5. Use Ghostty as the supported terminal.
 
-- Use iTerm2 as the supported terminal. Apple Terminal is not managed by this repo.
-- Set the profile font to `Fira Code Nerd Font`.
-- Use the Snazzy color theme, or the current manually configured equivalent.
+The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and leaves font, shell integration, keybindings, and behavior on Ghostty defaults. Apple Terminal is not managed by this repo.
 
-6. Open a new iTerm2 window and verify the setup:
+6. Open a new Ghostty window and verify the setup:
 
 ```bash
 cd ~/dotfiles
@@ -53,6 +51,7 @@ If `rake doctor` reports incomplete SSH signing, restore the signing key from Bi
 
 - `git/gitattributes.symlink` -> `~/.gitattributes`
 - `git/gitconfig.symlink` -> `~/.gitconfig`
+- `ghostty/config.ghostty.symlink` -> `~/.config/ghostty/config.ghostty`
 - `osx/hushlogin.symlink` -> `~/.hushlogin`
 - `zsh/zprofile.symlink` -> `~/.zprofile`
 - `zsh/zshrc.symlink` -> `~/.zshrc`
@@ -65,7 +64,8 @@ The exact install list lives in `osx/Brewfile`.
 
 ### Terminal And Shell
 
-- iTerm2 with zsh.
+- Ghostty with zsh.
+- Snazzy Soft theme with Ghostty defaults for font, shell integration, keybindings, and behavior.
 - Pure prompt with zsh syntax highlighting.
 - `mise` for runtime management.
 - `eza` and `bat` as nicer defaults for `ls` and `cat`.
@@ -76,7 +76,7 @@ The exact install list lives in `osx/Brewfile`.
 - SSH commit signing with key material stored in Bitwarden and GitHub CLI key upload.
 - Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs.
 - OrbStack, ngrok, Postico, Cyberduck, and Dash.
-- VS Code, GitHub Desktop, and the Fira Code Nerd Font.
+- VS Code and GitHub Desktop.
 
 ## SSH Signing
 
@@ -137,12 +137,14 @@ Codex is installed as part of the Brewfile, while user-specific agent auth, logs
 
 - `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise` shims for non-interactive command runners.
 - `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Bun, Turso, `mise` activation, and direnv.
-- iTerm2 profile appearance is documented as a manual setup step; no iTerm2 profile JSON, plist, or Apple Terminal settings are managed here.
+- `ghostty/config.ghostty.symlink`: Ghostty config managed at `~/.config/ghostty/config.ghostty`. The macOS-specific Ghostty config path is intentionally left unmanaged and must not exist, because Ghostty loads it after the XDG config.
+- Apple Terminal settings are not managed here.
 - Optional integrations are guarded so a fresh shell can start before every tool is configured.
 
 ## Tooling Policy
 
 - Homebrew is the app and CLI package baseline.
+- Ghostty is validated at `/Applications/Ghostty.app/Contents/MacOS/ghostty`.
 - `mise` manages language/runtime versions and can use latest-by-default tools. Login shells expose shims, while interactive zsh uses normal activation so project versions take effect when moving between repos.
-- `brew bundle check --file=osx/Brewfile` should pass on the primary machine.
-- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies symlinks, required commands, Pure prompt loading, documentation coverage, and Brewfile drift.
+- `brew bundle check --no-upgrade --file=osx/Brewfile` should pass on the primary machine; this checks presence without enforcing available upgrades.
+- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies symlinks, required commands, the Ghostty app bundle, the single managed Ghostty config, Pure prompt loading, documentation coverage, and Brewfile presence.

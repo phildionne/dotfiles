@@ -6,11 +6,15 @@ require 'shellwords'
 DOTFILES_ROOT = File.expand_path(__dir__)
 HOMEBREW_PREFIX = '/opt/homebrew'.freeze
 HOMEBREW_BIN = File.join(HOMEBREW_PREFIX, 'bin/brew').freeze
+GHOSTTY_APP_BIN = '/Applications/Ghostty.app/Contents/MacOS/ghostty'.freeze
+GHOSTTY_XDG_CONFIG = '.config/ghostty/config.ghostty'.freeze
+GHOSTTY_MACOS_CONFIG = 'Library/Application Support/com.mitchellh.ghostty/config.ghostty'.freeze
 SSH_SIGNING_KEY = '.ssh/id_ed25519_signing.pub'.freeze
 
 LINKABLES = {
   'git/gitattributes.symlink' => '.gitattributes',
   'git/gitconfig.symlink' => '.gitconfig',
+  'ghostty/config.ghostty.symlink' => GHOSTTY_XDG_CONFIG,
   'osx/hushlogin.symlink' => '.hushlogin',
   'zsh/zprofile.symlink' => '.zprofile',
   'zsh/zshrc.symlink' => '.zshrc'
@@ -36,15 +40,17 @@ DOCS_REQUIRED_STRINGS = (
     'rake doctor',
     'Apple Silicon',
     HOMEBREW_BIN,
+    GHOSTTY_APP_BIN,
+    GHOSTTY_XDG_CONFIG,
     SSH_SIGNING_KEY,
     'gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing'
   ]
 ).freeze
 
 DOCS_REQUIRED_CONCEPTS = [
+  ['Ghostty'],
+  ['Snazzy Soft'],
   ['Pure'],
-  ['iTerm2'],
-  ['Fira Code Nerd Font'],
   ['Apple Terminal', 'not managed'],
   ['SSH', 'signing']
 ].freeze
@@ -77,6 +83,22 @@ def expand_home(path)
   path.sub(/\A~/, ENV.fetch('HOME'))
 end
 
+def ghostty_macos_config_path
+  link_target(GHOSTTY_MACOS_CONFIG)
+end
+
+def remove_empty_ghostty_macos_config
+  config_path = ghostty_macos_config_path
+  return unless File.exist?(config_path) || File.symlink?(config_path)
+
+  if File.file?(config_path) && File.zero?(config_path)
+    FileUtils.rm_f(config_path)
+    puts "Removed empty Ghostty macOS config #{config_path}"
+  else
+    abort "Refusing to overwrite Ghostty macOS config #{config_path}; move it manually so #{GHOSTTY_XDG_CONFIG} is the only managed config"
+  end
+end
+
 def docs_check_failures(readme)
   missing = []
 
@@ -98,6 +120,8 @@ task :install do
   skip_all = ENV['SKIP'] == '1'
   overwrite_all = ENV['OVERWRITE'] == '1'
   backup_all = ENV['BACKUP'] == '1'
+
+  remove_empty_ghostty_macos_config
 
   LINKABLES.each do |source, target_name|
     overwrite = false
@@ -139,7 +163,7 @@ task :install do
   end
 end
 
-desc "Check managed symlinks, required commands, and Brewfile drift."
+desc "Check managed symlinks, required commands, and Brewfile presence."
 task :doctor do
   failures = []
   readme = File.read(File.join(DOTFILES_ROOT, 'readme.md'))
@@ -148,6 +172,18 @@ task :doctor do
     puts "ok homebrew #{HOMEBREW_BIN}"
   else
     failures << "#{HOMEBREW_BIN} is missing or not executable"
+  end
+
+  if File.executable?(GHOSTTY_APP_BIN)
+    puts "ok ghostty #{GHOSTTY_APP_BIN}"
+  else
+    failures << "#{GHOSTTY_APP_BIN} is missing or not executable"
+  end
+
+  if File.exist?(ghostty_macos_config_path) || File.symlink?(ghostty_macos_config_path)
+    failures << "Ghostty macOS config #{ghostty_macos_config_path} exists; remove it so #{GHOSTTY_XDG_CONFIG} is the only managed config"
+  else
+    puts 'ok ghostty single managed config'
   end
 
   LINKABLES.each do |source, target_name|
@@ -217,8 +253,8 @@ task :doctor do
     failures << 'git commit.gpgsign is not true'
   end
 
-  unless system({ 'HOMEBREW_NO_AUTO_UPDATE' => '1' }, 'brew', 'bundle', 'check', '--file=osx/Brewfile')
-    failures << 'brew bundle check failed for osx/Brewfile'
+  unless system({ 'HOMEBREW_NO_AUTO_UPDATE' => '1' }, 'brew', 'bundle', 'check', '--no-upgrade', '--file=osx/Brewfile')
+    failures << 'brew bundle presence check failed for osx/Brewfile'
   end
 
   if failures.empty?

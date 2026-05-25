@@ -34,7 +34,7 @@ rake install
 
 5. Use Ghostty as the supported terminal.
 
-The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and leaves font, shell integration, keybindings, and behavior on Ghostty defaults. Apple Terminal is not managed by this repo.
+The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and leaves font, shell integration, keybindings, and behavior on Ghostty defaults. Apple Terminal stays on macOS defaults outside this baseline.
 
 6. Open a new Ghostty window and verify the setup:
 
@@ -45,6 +45,8 @@ rake doctor
 
 If `rake doctor` reports incomplete SSH signing, restore the signing key from Bitwarden using the SSH signing setup below and run it again.
 
+If `rake doctor` reports missing Codex auth, run `codex login`. Codex auth stays machine-local.
+
 ## Managed Files
 
 `rake install` links the explicit inventory in the `Rakefile`:
@@ -52,6 +54,11 @@ If `rake doctor` reports incomplete SSH signing, restore the signing key from Bi
 - `git/gitattributes.symlink` -> `~/.gitattributes`
 - `git/gitconfig.symlink` -> `~/.gitconfig`
 - `ghostty/config.ghostty.symlink` -> `~/.config/ghostty/config.ghostty`
+- `codex/config.local.toml` -> `~/.codex/config.toml`
+- `codex/mcp.json.symlink` -> `~/.codex/.mcp.json`
+- `codex/agents.symlink` -> `~/.codex/agents`
+- `codex/prompts.symlink` -> `~/.codex/prompts`
+- `codex/rules.symlink` -> `~/.codex/rules`
 - `osx/hushlogin.symlink` -> `~/.hushlogin`
 - `zsh/zprofile.symlink` -> `~/.zprofile`
 - `zsh/zshrc.symlink` -> `~/.zshrc`
@@ -124,7 +131,28 @@ After pushing a signed commit, GitHub should show it as verified.
 
 ### Agent And MCP Notes
 
-Codex is installed as part of the Brewfile, while user-specific agent auth, logs, memories, and plugins live outside this repo. Useful MCP servers to keep in mind when rebuilding or extending the agent setup:
+Codex is installed as part of the Brewfile. This repo manages the Codex product baseline, MCP pointer, agents, prompts, and command rules:
+
+- `codex/config.template.toml`: portable product defaults for model choice, sandbox behavior, MCP servers, feature flags, plugins, desktop preferences, memories, and agent limits.
+- `codex/config.local.toml`: machine-local config generated from the template and linked to `~/.codex/config.toml`.
+- `~/.codex/.mcp.json`
+- `~/.codex/agents`
+- `~/.codex/prompts`
+- `~/.codex/rules`
+
+Computer-specific Codex settings live in `codex/config.local.toml`: trusted projects, writable roots, notification helpers, local runtime paths, marketplace cache paths, and per-path desktop preferences. Codex auth stays local to each machine at `~/.codex/auth.json`. Logs, sessions, SQLite state, caches, generated images, memories, plugins, and `node_modules` live in the local Codex home.
+
+Codex skills live in the `agent-skills` repo. Dotfiles covers the Codex config surface, while `agent-skills` is the source of truth for user-managed skills.
+
+The tracked Codex template carries product choices without machine paths. Keep bearer tokens and API secrets in local auth, environment setup, or service-specific login flows. Codex may update trusted project paths, marketplace timestamps, or desktop preferences in the local config.
+
+Verify Codex config health with:
+
+```bash
+codex --strict-config doctor --summary --ascii
+```
+
+Useful MCP servers to keep in mind when rebuilding or extending the agent setup:
 
 - Chrome DevTools
 - Context7
@@ -137,8 +165,8 @@ Codex is installed as part of the Brewfile, while user-specific agent auth, logs
 
 - `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise` shims for non-interactive command runners.
 - `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Bun, Turso, `mise` activation, and direnv.
-- `ghostty/config.ghostty.symlink`: Ghostty config managed at `~/.config/ghostty/config.ghostty`. The macOS-specific Ghostty config path is intentionally left unmanaged and must not exist, because Ghostty loads it after the XDG config.
-- Apple Terminal settings are not managed here.
+- `ghostty/config.ghostty.symlink`: Ghostty config managed at `~/.config/ghostty/config.ghostty`. The XDG config is the single Ghostty config source, because Ghostty loads the macOS-specific config path after it.
+- Apple Terminal settings stay on macOS defaults.
 - Optional integrations are guarded so a fresh shell can start before every tool is configured.
 
 ## Tooling Policy
@@ -147,4 +175,4 @@ Codex is installed as part of the Brewfile, while user-specific agent auth, logs
 - Ghostty is validated at `/Applications/Ghostty.app/Contents/MacOS/ghostty`.
 - `mise` manages language/runtime versions and can use latest-by-default tools. Login shells expose shims, while interactive zsh uses normal activation so project versions take effect when moving between repos.
 - `brew bundle check --no-upgrade --file=osx/Brewfile` should pass on the primary machine; this checks presence without enforcing available upgrades.
-- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies symlinks, required commands, the Ghostty app bundle, the single managed Ghostty config, Pure prompt loading, documentation coverage, and Brewfile presence.
+- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies symlinks, required commands, the Ghostty app bundle, the single managed Ghostty config, Codex local-only auth, Pure prompt loading, documentation coverage, and Brewfile presence.

@@ -10,8 +10,27 @@ GHOSTTY_APP_BIN = '/Applications/Ghostty.app/Contents/MacOS/ghostty'.freeze
 GHOSTTY_XDG_CONFIG = '.config/ghostty/config.ghostty'.freeze
 GHOSTTY_MACOS_CONFIG = 'Library/Application Support/com.mitchellh.ghostty/config.ghostty'.freeze
 SSH_SIGNING_KEY = '.ssh/id_ed25519_signing.pub'.freeze
+CODEX_AUTH_JSON = '.codex/auth.json'.freeze
+CODEX_LOCAL_CONFIG = 'codex/config.local.toml'.freeze
+CODEX_TEMPLATE_CONFIG = 'codex/config.template.toml'.freeze
+CODEX_SCANNED_CONFIGS = [CODEX_TEMPLATE_CONFIG, CODEX_LOCAL_CONFIG].freeze
+CODEX_TEMPLATE_PORTABILITY_PATTERNS = [
+  [/^\[projects\./, '[projects.*]'],
+  [/^notify\s*=/, 'notify'],
+  [/writable_roots/, 'writable_roots'],
+  [/^\[marketplaces\./, '[marketplaces.*]'],
+  [/node_repl/, 'node_repl'],
+  [/perPath/, 'desktop per-path preferences'],
+  [%r{/Users/}, '/Users paths'],
+  [%r{/Applications/}, '/Applications paths']
+].freeze
 
 LINKABLES = {
+  CODEX_LOCAL_CONFIG => '.codex/config.toml',
+  'codex/mcp.json.symlink' => '.codex/.mcp.json',
+  'codex/agents.symlink' => '.codex/agents',
+  'codex/prompts.symlink' => '.codex/prompts',
+  'codex/rules.symlink' => '.codex/rules',
   'git/gitattributes.symlink' => '.gitattributes',
   'git/gitconfig.symlink' => '.gitconfig',
   'ghostty/config.ghostty.symlink' => GHOSTTY_XDG_CONFIG,
@@ -43,15 +62,21 @@ DOCS_REQUIRED_STRINGS = (
     GHOSTTY_APP_BIN,
     GHOSTTY_XDG_CONFIG,
     SSH_SIGNING_KEY,
+    CODEX_AUTH_JSON,
+    CODEX_TEMPLATE_CONFIG,
+    'agent-skills',
+    'codex --strict-config doctor --summary --ascii',
     'gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing'
   ]
 ).freeze
 
 DOCS_REQUIRED_CONCEPTS = [
+  ['Codex'],
   ['Ghostty'],
   ['Snazzy Soft'],
   ['Pure'],
-  ['Apple Terminal', 'not managed'],
+  ['Apple Terminal', 'defaults'],
+  ['agent-skills', 'skills'],
   ['SSH', 'signing']
 ].freeze
 
@@ -85,6 +110,56 @@ end
 
 def ghostty_macos_config_path
   link_target(GHOSTTY_MACOS_CONFIG)
+end
+
+def codex_skill_paths
+  Dir.glob(File.join(DOTFILES_ROOT, 'codex', 'skills*'))
+end
+
+def prepare_codex_local_config
+  local_config_path = File.join(DOTFILES_ROOT, CODEX_LOCAL_CONFIG)
+  return if File.exist?(local_config_path)
+
+  template_config_path = File.join(DOTFILES_ROOT, CODEX_TEMPLATE_CONFIG)
+  abort "#{CODEX_TEMPLATE_CONFIG} is missing; cannot create #{CODEX_LOCAL_CONFIG}" unless File.file?(template_config_path)
+
+  FileUtils.cp(template_config_path, local_config_path)
+  puts "Created #{CODEX_LOCAL_CONFIG} from #{CODEX_TEMPLATE_CONFIG}"
+end
+
+def codex_config_secret_failures
+  failures = []
+
+  CODEX_SCANNED_CONFIGS.each do |relative_config_path|
+    config_path = File.join(DOTFILES_ROOT, relative_config_path)
+    unless File.file?(config_path)
+      failures << "#{relative_config_path} is missing"
+      next
+    end
+
+    File.readlines(config_path).each_with_index do |line, index|
+      next if line.match?(/\A\s*(#|$)/)
+      next unless line.match?(/Bearer\s+\S{16,}|ghp_[A-Za-z0-9_]{16,}|sk-[A-Za-z0-9_-]{16,}/)
+
+      failures << "#{relative_config_path}:#{index + 1} appears to contain a secret token"
+    end
+  end
+
+  failures
+end
+
+def codex_template_portability_failures
+  template_config_path = File.join(DOTFILES_ROOT, CODEX_TEMPLATE_CONFIG)
+  return ["#{CODEX_TEMPLATE_CONFIG} is missing"] unless File.file?(template_config_path)
+
+  failures = []
+  File.readlines(template_config_path).each_with_index do |line, index|
+    CODEX_TEMPLATE_PORTABILITY_PATTERNS.each do |pattern, label|
+      failures << "#{CODEX_TEMPLATE_CONFIG}:#{index + 1} contains #{label}" if line.match?(pattern)
+    end
+  end
+
+  failures
 end
 
 def remove_empty_ghostty_macos_config
@@ -122,6 +197,7 @@ task :install do
   backup_all = ENV['BACKUP'] == '1'
 
   remove_empty_ghostty_macos_config
+  prepare_codex_local_config
 
   LINKABLES.each do |source, target_name|
     overwrite = false
@@ -131,6 +207,11 @@ task :install do
     target = link_target(target_name)
 
     if File.exist?(target) || File.symlink?(target)
+      if File.symlink?(target) && File.readlink(target) == source_path
+        puts "Already linked #{target}"
+        next
+      end
+
       if skip_all
         puts "Skipping #{target}"
         next
@@ -199,6 +280,35 @@ task :doctor do
       failures << "#{target} is missing"
     end
   end
+
+  if LINKABLES.any? { |source, target_name| source.start_with?('codex/skills') || target_name.start_with?('.codex/skills') }
+    failures << 'Codex skills must not be managed by this dotfiles inventory; use the agent-skills repo'
+  else
+    puts 'ok codex skills unmanaged by dotfiles inventory'
+  end
+
+  if codex_skill_paths.empty?
+    puts 'ok no codex skills stored in dotfiles'
+  else
+    failures << "Codex skill paths are present in dotfiles: #{codex_skill_paths.join(', ')}"
+  end
+
+  codex_auth_path = link_target(CODEX_AUTH_JSON)
+  if File.symlink?(codex_auth_path)
+    failures << "#{codex_auth_path} must remain local-only and must not be a symlink"
+  elsif File.file?(codex_auth_path)
+    puts "ok codex auth local-only #{codex_auth_path}"
+  else
+    failures << "#{codex_auth_path} is missing; run codex login after setup"
+  end
+
+  codex_secret_failures = codex_config_secret_failures
+  failures.concat(codex_secret_failures)
+  puts 'ok codex config secret scan' if codex_secret_failures.empty?
+
+  codex_template_failures = codex_template_portability_failures
+  failures.concat(codex_template_failures)
+  puts 'ok codex template portable' if codex_template_failures.empty?
 
   REQUIRED_COMMANDS.each do |command|
     if system("command -v #{Shellwords.escape(command)} >/dev/null 2>&1")

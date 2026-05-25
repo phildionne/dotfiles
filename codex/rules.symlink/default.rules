@@ -1,0 +1,203 @@
+# # Broad allowlist, with prompts for higher-risk subcommands.
+# # Note: `pattern` is an exact argv prefix match; flags that appear later may not be caught.
+
+# # --- Prompt rules (higher-risk operations) ---
+
+# prefix_rule(
+#   pattern = ["git", [
+#     "reset",
+#     "clean",
+#     "push",
+#     "rebase",
+#     "filter-branch",
+#     "filter-repo",
+#     "gc",
+#     "reflog",
+#     "branch",
+#     "tag",
+#     "submodule",
+#   ]],
+#   decision = "prompt",
+#   justification = "Potentially destructive git operations (history/working tree/refs).",
+# )
+
+# prefix_rule(
+#   pattern = ["docker", "system", "prune"],
+#   decision = "prompt",
+#   justification = "May delete images/containers/volumes depending on flags.",
+# )
+
+# prefix_rule(
+#   pattern = ["docker", "builder", "prune"],
+#   decision = "prompt",
+#   justification = "May delete build cache.",
+# )
+
+# prefix_rule(
+#   pattern = ["docker", ["image", "volume", "network", "container"], "prune"],
+#   decision = "prompt",
+#   justification = "May delete Docker resources.",
+# )
+
+# prefix_rule(
+#   pattern = ["docker", ["rm", "rmi"]],
+#   decision = "prompt",
+#   justification = "Deletes containers/images (often with -f).",
+# )
+
+# prefix_rule(
+#   pattern = ["docker", "volume", "rm"],
+#   decision = "prompt",
+#   justification = "Deletes Docker volumes.",
+# )
+
+# prefix_rule(
+#   pattern = ["docker", "compose", ["down", "rm"]],
+#   decision = "prompt",
+#   justification = "May remove containers and (with -v/--volumes) volumes.",
+# )
+
+# # --- pnpm safe allowlist (no prompt) ---
+
+# prefix_rule(pattern=["pnpm", "run", "typecheck"], decision="allow")
+# prefix_rule(pattern=["pnpm", "run", "lint"], decision="allow")
+
+# prefix_rule(
+#   pattern = ["pnpm", ["dlx", "exec", "run", "install", "rebuild"]],
+#   decision = "prompt",
+#   justification = "May execute arbitrary code or lifecycle scripts.",
+# )
+
+# prefix_rule(
+#   pattern = ["pnpm", "store", ["prune", "clear"]],
+#   decision = "prompt",
+#   justification = "Clears pnpm store (can be slow/disruptive).",
+# )
+
+# prefix_rule(
+#   pattern = ["dotenvx", "run"],
+#   decision = "prompt",
+#   justification = "Runs a subprocess with secrets loaded in env.",
+# )
+
+# prefix_rule(
+#   pattern = ["psql", ["-c", "--command", "-f", "--file"]],
+#   decision = "prompt",
+#   justification = "Executes SQL non-interactively; can be destructive.",
+# )
+
+# prefix_rule(
+#   pattern = ["ssh", ["-L", "-R", "-D", "-J"]],
+#   decision = "prompt",
+#   justification = "Port forwarding / proxying / jump hosts can be risky.",
+# )
+
+# prefix_rule(
+#   pattern = ["bash", ["-c", "-lc"]],
+#   decision = "prompt",
+#   justification = "Executes an arbitrary command string.",
+# )
+
+# prefix_rule(
+#   pattern = ["python", "-c"],
+#   decision = "prompt",
+#   justification = "Executes an arbitrary Python one-liner.",
+# )
+
+# prefix_rule(
+#   pattern = ["python3", "-c"],
+#   decision = "prompt",
+#   justification = "Executes an arbitrary Python one-liner.",
+# )
+
+# prefix_rule(
+#   pattern = ["python", "-m", "pip"],
+#   decision = "prompt",
+#   justification = "Installs packages / runs installers (arbitrary code execution).",
+# )
+
+# prefix_rule(
+#   pattern = ["python3", "-m", "pip"],
+#   decision = "prompt",
+#   justification = "Installs packages / runs installers (arbitrary code execution).",
+# )
+
+# # NOTE: curl risks are often flag-order dependent; this only prompts when the risky flag
+# # is the first argument after `curl`.
+# prefix_rule(
+#   pattern = ["curl", [
+#     "-T",
+#     "--upload-file",
+#     "--data-binary",
+#     "-F",
+#     "--form",
+#     "--form-string",
+#     "-u",
+#     "--user",
+#     "-b",
+#     "--cookie",
+#     "-c",
+#     "--cookie-jar",
+#   ]],
+#   decision = "prompt",
+#   justification = "Potential data upload / credential / cookie handling.",
+# )
+
+# # --- Allow rules (broad prefixes) ---
+
+# prefix_rule(pattern=["git"], decision="allow")
+# prefix_rule(pattern=["pnpm"], decision="allow")
+# prefix_rule(pattern=["docker"], decision="allow")
+# prefix_rule(pattern=["curl"], decision="allow")
+# prefix_rule(pattern=["dotenvx"], decision="allow")
+# prefix_rule(pattern=["ssh"], decision="allow")
+# prefix_rule(pattern=["psql"], decision="allow")
+# prefix_rule(pattern=["python"], decision="allow")
+# prefix_rule(pattern=["python3"], decision="allow")
+# prefix_rule(pattern=["bash"], decision="allow")
+prefix_rule(pattern=["git", "add"], decision="allow")
+prefix_rule(pattern=["git", "commit"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "run", "tester", "python", "runtests.py"], decision="allow")
+prefix_rule(pattern=["python3", "-m", "pip", "install"], decision="allow")
+prefix_rule(pattern=["docker", "build"], decision="allow")
+prefix_rule(pattern=["/bin/zsh", "-lc", "git add $(git diff --name-only --diff-filter=U)"], decision="allow")
+prefix_rule(pattern=["docker", "logs", "glows-api-smoke"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "tsx", "scripts/debug-width-enrichment.ts", "--river-id", "1e3e737e-9602-4f09-bae8-33e27a4ac3da"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "pnpm", "exec", "tsx", "scripts/debug-width-enrichment.ts", "--river-id", "1e3e737e-9602-4f09-bae8-33e27a4ac3da"], decision="allow")
+prefix_rule(pattern=["pnpm", "test:e2e"], decision="allow")
+prefix_rule(pattern=["bin/scripts/docker/compose", "run", "tester", "python", "runtests.py"], decision="allow")
+prefix_rule(pattern=["gh", "api"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "ps"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f /tmp/explain_searchriver_primary_mistassini.sql"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f /tmp/explain_searchriver_primary_saintjean.sql"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select id, grhq_start_segm_id, grhq_end_segm_id from public.sections where grhq_start_segm_id is not null and grhq_end_segm_id is not null limit 5;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select column_name from information_schema.columns where table_schema=public and table_name=sections order by ordinal_position;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select id, \\\"grhqStartSegmId\\\", \\\"grhqEndSegmId\\\" from public.sections where \\\"grhqStartSegmId\\\" is not null and \\\"grhqEndSegmId\\\" is not null limit 5;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f /tmp/explain_fetch_grhq_segments.sql"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f /tmp/explain_fetch_grhq_segments_narrow.sql"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -tA -c \"select geojson::text from public.rivers where id = $$2d4aa637-8320-4460-a794-4efd3a2da011$$\" > /tmp/river-2d4aa637.geojson.json && wc -c /tmp/river-2d4aa637.geojson.json"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -tA -c \"select geojson::text from public.rivers where id = \\$\\$2d4aa637-8320-4460-a794-4efd3a2da011\\$\\$\" > /tmp/river-2d4aa637.geojson.json && wc -c /tmp/river-2d4aa637.geojson.json && head -c 120 /tmp/river-2d4aa637.geojson.json"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "--env-file", ".env.development", "logs", "--no-color", "--tail=30", "pgboss-dashboard"], decision="allow")
+prefix_rule(pattern=["pnpm", "run", "test:e2e", "--", "tests/map.spec.ts", "tests/admin/sections-create.spec.ts", "tests/admin/sections-edit.spec.ts"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "--env-file", ".env.development", "exec", "-T", "db", "psql", "-U", "postgres", "-d", "postgres", "-c", "select version from pgboss.version;"], decision="allow")
+prefix_rule(pattern=["curl", "-sS", "-o", "/tmp/job-detail.json", "-w", "%{http_code}\\n", "http://127.0.0.1:3001/queues/river-enrichment/jobs/a84d8929-7dcc-4c74-be1a-c9e9ec247e44.data"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "--env-file", ".env.development", "exec", "-T", "pgboss-dashboard", "sh", "-lc", "ls /app/node_modules/.pnpm | grep \"^pg-boss@\""], decision="allow")
+prefix_rule(pattern=["pnpm", "run", "test:e2e", "--", "tests/map.spec.ts"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "--env-file", ".env.development", "exec", "-T", "pgboss-dashboard", "sh", "-lc", "sed -n \"5280,5365p\" /app/node_modules/.pnpm/@pg-boss+dashboard@*/node_modules/@pg-boss/dashboard/build/server/assets/server-build.js"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "--env-file", ".env.development", "exec", "-T", "pgboss-dashboard", "node", "-e", "(async()=>{const mod=await import('pg-boss'); const Ctor=mod.PgBoss||mod.default; const boss=new Ctor({connectionString:'postgresql://postgres:postgres@db:5432/postgres',schema:'pgboss',schedule:false,supervise:false,migrate:false,createSchema:false}); await boss.start(); const rows=await boss.findJobs('river-enrichment',{id:'c8783cd2-28ce-4e73-87af-466df7db467c'}); console.log('ok',rows.length); await boss.stop();})().catch(e=>{console.error('ERR',e); process.exit(1)})"], decision="allow")
+prefix_rule(pattern=["pnpm", "run", "test:e2e"], decision="allow")
+prefix_rule(pattern=["curl", "-sS", "-o", "/tmp/job-detail.json", "-w"], decision="allow")
+prefix_rule(pattern=["uv", "run", "ruff"], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select id, name, state, retrycount, createdon, startedon, completedon from pgboss.job where name = river-enrichment and data->>riverId = 3ed7888c-ef05-4f1b-bc88-45538da02a6f order by createdon desc limit 5;\""], decision="allow")
+prefix_rule(pattern=["/bin/zsh", "-lc", "dotenvx run -f .env.development -- sh -c \"psql \\\"$DATABASE_URL\\\" -v ON_ERROR_STOP=1 -c \\\"select id, enrichment_status, geom_elevation_drop, geom_slope, geojson is not null as has_geojson, updated_at from public.rivers where id = '3ed7888c-ef05-4f1b-bc88-45538da02a6f';\\\"\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=0 -c \"select id, name, state, retrycount, createdon, startedon, completedon from pgboss.job where name = river-enrichment and data->>riverId = 3ed7888c-ef05-4f1b-bc88-45538da02a6f order by createdon desc limit 1;\" -c \"select id, name, state, retrycount, createdon, startedon, completedon from pgboss.job where name = river-enrichment and data->>riverId = 3ed7888c-ef05-4f1b-bc88-45538da02a6f order by createdon desc limit 1;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select id, name, state, retrycount, createdon, startedon, completedon from pgboss.job where name = $$river-enrichment$$ and data->>$$riverId$$ = $$3ed7888c-ef05-4f1b-bc88-45538da02a6f$$ order by createdon desc limit 1;\" -c \"select id, enrichment_status, geom_elevation_drop, geom_slope, geojson is not null as has_geojson, updated_at from public.rivers where id = $$3ed7888c-ef05-4f1b-bc88-45538da02a6f$$::uuid;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select id, name, state, retrycount, createdon, startedon, completedon from pgboss.job where name = \\$\\$river-enrichment\\$\\$ and data->>\\$\\$riverId\\$\\$ = \\$\\$3ed7888c-ef05-4f1b-bc88-45538da02a6f\\$\\$ order by createdon desc limit 1;\" -c \"select id, enrichment_status, geom_elevation_drop, geom_slope, geojson is not null as has_geojson, updated_at from public.rivers where id = \\$\\$3ed7888c-ef05-4f1b-bc88-45538da02a6f\\$\\$::uuid;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select column_name from information_schema.columns where table_schema = pgboss and table_name = job order by ordinal_position;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"\\\\d pgboss.job\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select id, name, state, retry_count, created_on, started_on, completed_on from pgboss.job where name = 'river-enrichment' and data->>'riverId' = '3ed7888c-ef05-4f1b-bc88-45538da02a6f' order by created_on desc limit 1;\" -c \"select id, enrichment_status, geom_elevation_drop, geom_slope, geojson is not null as has_geojson, updated_at from public.rivers where id = '3ed7888c-ef05-4f1b-bc88-45538da02a6f'::uuid;\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"\\\\d public.rivers\""], decision="allow")
+prefix_rule(pattern=["dotenvx", "run", "-f", ".env.development", "--", "sh", "-c", "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -c \"select id, \\\"enrichmentStatus\\\", \\\"geomElevationDrop\\\", \\\"geomSlope\\\", geojson is not null as has_geojson, \\\"updatedAt\\\" from public.rivers where id = '3ed7888c-ef05-4f1b-bc88-45538da02a6f'::uuid;\""], decision="allow")
+prefix_rule(pattern=["curl", "-sS", "-X", "POST", "http://localhost:8000/elevation", "-H", "Content-Type: application/json", "-H", "X-API-Key: dev-local-key", "--data", "{\"points\":[{\"lat\":51.609117882,\"lng\":-64.309876367},{\"lat\":51.610383502,\"lng\":-64.308104335}]}"], decision="allow")
+prefix_rule(pattern=["psql", "postgresql://postgres:postgres@127.0.0.1:55432/postgres", "-v", "ON_ERROR_STOP=1", "-c", "select count(*) as rivers_with_geojson_missing_toponym from public.rivers where geojson is not null and (\\\"grhqToponyme\\\" is null or btrim(\\\"grhqToponyme\\\") = '');"], decision="allow")

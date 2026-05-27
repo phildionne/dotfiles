@@ -131,7 +131,7 @@ After pushing a signed commit, GitHub should show it as verified.
 
 ### Agent And MCP Notes
 
-Codex is installed as part of the Brewfile. This repo manages the Codex product baseline, MCP pointer, agents, prompts, and command rules:
+Codex is installed as part of the Brewfile. This repo manages the Codex product baseline, MCP pointer, agents, and prompts:
 
 - `codex/config.template.toml`: portable product defaults for model choice, sandbox behavior, MCP servers, feature flags, plugins, desktop preferences, memories, and agent limits.
 - `codex/config.local.toml`: machine-local config generated from the template and linked to `~/.codex/config.toml`.
@@ -143,6 +143,8 @@ Codex is installed as part of the Brewfile. This repo manages the Codex product 
 Computer-specific Codex settings live in `codex/config.local.toml`: trusted projects, writable roots, notification helpers, local runtime paths, marketplace cache paths, and per-path desktop preferences. Codex auth stays local to each machine at `~/.codex/auth.json`. Logs, sessions, SQLite state, caches, generated images, memories, plugins, and `node_modules` live in the local Codex home.
 
 Codex skills live in the `agent-skills` repo. Dotfiles covers the Codex config surface, while `agent-skills` is the source of truth for user-managed skills.
+
+Command rules are intentionally blank.
 
 The tracked Codex template carries product choices without machine paths. Keep bearer tokens and API secrets in local auth, environment setup, or service-specific login flows. Codex may update trusted project paths, marketplace timestamps, or desktop preferences in the local config.
 

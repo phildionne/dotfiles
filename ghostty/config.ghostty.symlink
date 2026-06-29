@@ -1,1 +1,5 @@
 theme = Snazzy Soft
+keybind = cmd+r=clear_screen
+working-directory = home
+window-inherit-working-directory = false
+tab-inherit-working-directory = true

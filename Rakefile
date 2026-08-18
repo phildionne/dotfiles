@@ -11,26 +11,9 @@ GHOSTTY_XDG_CONFIG = '.config/ghostty/config.ghostty'.freeze
 GHOSTTY_MACOS_CONFIG = 'Library/Application Support/com.mitchellh.ghostty/config.ghostty'.freeze
 SSH_SIGNING_KEY = '.ssh/id_ed25519_signing.pub'.freeze
 CODEX_AUTH_JSON = '.codex/auth.json'.freeze
-CODEX_LOCAL_CONFIG = 'codex/config.local.toml'.freeze
-CODEX_TEMPLATE_CONFIG = 'codex/config.template.toml'.freeze
-CODEX_SCANNED_CONFIGS = [CODEX_TEMPLATE_CONFIG, CODEX_LOCAL_CONFIG].freeze
-CODEX_TEMPLATE_PORTABILITY_PATTERNS = [
-  [/^\[projects\./, '[projects.*]'],
-  [/^notify\s*=/, 'notify'],
-  [/writable_roots/, 'writable_roots'],
-  [/^\[marketplaces\./, '[marketplaces.*]'],
-  [/node_repl/, 'node_repl'],
-  [/perPath/, 'desktop per-path preferences'],
-  [%r{/Users/}, '/Users paths'],
-  [%r{/Applications/}, '/Applications paths']
-].freeze
 
 LINKABLES = {
-  CODEX_LOCAL_CONFIG => '.codex/config.toml',
-  'codex/mcp.json.symlink' => '.codex/.mcp.json',
   'codex/agents.symlink' => '.codex/agents',
-  'codex/prompts.symlink' => '.codex/prompts',
-  'codex/rules.symlink' => '.codex/rules',
   'git/gitattributes.symlink' => '.gitattributes',
   'git/gitconfig.symlink' => '.gitconfig',
   'ghostty/config.ghostty.symlink' => GHOSTTY_XDG_CONFIG,
@@ -63,7 +46,6 @@ DOCS_REQUIRED_STRINGS = (
     GHOSTTY_XDG_CONFIG,
     SSH_SIGNING_KEY,
     CODEX_AUTH_JSON,
-    CODEX_TEMPLATE_CONFIG,
     'agent-skills',
     'codex --strict-config doctor --summary --ascii',
     'gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing'
@@ -116,52 +98,6 @@ def codex_skill_paths
   Dir.glob(File.join(DOTFILES_ROOT, 'codex', 'skills*'))
 end
 
-def prepare_codex_local_config
-  local_config_path = File.join(DOTFILES_ROOT, CODEX_LOCAL_CONFIG)
-  return if File.exist?(local_config_path)
-
-  template_config_path = File.join(DOTFILES_ROOT, CODEX_TEMPLATE_CONFIG)
-  abort "#{CODEX_TEMPLATE_CONFIG} is missing; cannot create #{CODEX_LOCAL_CONFIG}" unless File.file?(template_config_path)
-
-  FileUtils.cp(template_config_path, local_config_path)
-  puts "Created #{CODEX_LOCAL_CONFIG} from #{CODEX_TEMPLATE_CONFIG}"
-end
-
-def codex_config_secret_failures
-  failures = []
-
-  CODEX_SCANNED_CONFIGS.each do |relative_config_path|
-    config_path = File.join(DOTFILES_ROOT, relative_config_path)
-    unless File.file?(config_path)
-      failures << "#{relative_config_path} is missing"
-      next
-    end
-
-    File.readlines(config_path).each_with_index do |line, index|
-      next if line.match?(/\A\s*(#|$)/)
-      next unless line.match?(/Bearer\s+\S{16,}|ghp_[A-Za-z0-9_]{16,}|sk-[A-Za-z0-9_-]{16,}/)
-
-      failures << "#{relative_config_path}:#{index + 1} appears to contain a secret token"
-    end
-  end
-
-  failures
-end
-
-def codex_template_portability_failures
-  template_config_path = File.join(DOTFILES_ROOT, CODEX_TEMPLATE_CONFIG)
-  return ["#{CODEX_TEMPLATE_CONFIG} is missing"] unless File.file?(template_config_path)
-
-  failures = []
-  File.readlines(template_config_path).each_with_index do |line, index|
-    CODEX_TEMPLATE_PORTABILITY_PATTERNS.each do |pattern, label|
-      failures << "#{CODEX_TEMPLATE_CONFIG}:#{index + 1} contains #{label}" if line.match?(pattern)
-    end
-  end
-
-  failures
-end
-
 def remove_empty_ghostty_macos_config
   config_path = ghostty_macos_config_path
   return unless File.exist?(config_path) || File.symlink?(config_path)
@@ -197,8 +133,6 @@ task :install do
   backup_all = ENV['BACKUP'] == '1'
 
   remove_empty_ghostty_macos_config
-  prepare_codex_local_config
-
   LINKABLES.each do |source, target_name|
     overwrite = false
     backup = false
@@ -301,14 +235,6 @@ task :doctor do
   else
     failures << "#{codex_auth_path} is missing; run codex login after setup"
   end
-
-  codex_secret_failures = codex_config_secret_failures
-  failures.concat(codex_secret_failures)
-  puts 'ok codex config secret scan' if codex_secret_failures.empty?
-
-  codex_template_failures = codex_template_portability_failures
-  failures.concat(codex_template_failures)
-  puts 'ok codex template portable' if codex_template_failures.empty?
 
   REQUIRED_COMMANDS.each do |command|
     if system("command -v #{Shellwords.escape(command)} >/dev/null 2>&1")

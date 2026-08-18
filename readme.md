@@ -54,11 +54,7 @@ If `rake doctor` reports missing Codex auth, run `codex login`. Codex auth stays
 - `git/gitattributes.symlink` -> `~/.gitattributes`
 - `git/gitconfig.symlink` -> `~/.gitconfig`
 - `ghostty/config.ghostty.symlink` -> `~/.config/ghostty/config.ghostty`
-- `codex/config.local.toml` -> `~/.codex/config.toml`
-- `codex/mcp.json.symlink` -> `~/.codex/.mcp.json`
 - `codex/agents.symlink` -> `~/.codex/agents`
-- `codex/prompts.symlink` -> `~/.codex/prompts`
-- `codex/rules.symlink` -> `~/.codex/rules`
 - `osx/hushlogin.symlink` -> `~/.hushlogin`
 - `zsh/zprofile.symlink` -> `~/.zprofile`
 - `zsh/zshrc.symlink` -> `~/.zshrc`
@@ -131,22 +127,13 @@ After pushing a signed commit, GitHub should show it as verified.
 
 ### Agent And MCP Notes
 
-Codex is installed as part of the Brewfile. This repo manages the Codex product baseline, MCP pointer, agents, and prompts:
+Codex is installed as part of the Brewfile. The desktop app owns the machine-local `~/.codex/config.toml`, including MCP servers, plugins, trusted projects, writable roots, and desktop preferences. This repo manages only the custom agent definitions linked at `~/.codex/agents`.
 
-- `codex/config.template.toml`: portable product defaults for model choice, sandbox behavior, MCP servers, feature flags, plugins, desktop preferences, memories, and agent limits.
-- `codex/config.local.toml`: machine-local config generated from the template and linked to `~/.codex/config.toml`.
-- `~/.codex/.mcp.json`
-- `~/.codex/agents`
-- `~/.codex/prompts`
-- `~/.codex/rules`
+Codex auth stays local to each machine at `~/.codex/auth.json`. Logs, sessions, SQLite state, caches, generated images, memories, and plugins also remain in the local Codex home.
 
-Computer-specific Codex settings live in `codex/config.local.toml`: trusted projects, writable roots, notification helpers, local runtime paths, marketplace cache paths, and per-path desktop preferences. Codex auth stays local to each machine at `~/.codex/auth.json`. Logs, sessions, SQLite state, caches, generated images, memories, plugins, and `node_modules` live in the local Codex home.
+Codex skills live in the `agent-skills` repo. Dotfiles covers custom agent definitions, while `agent-skills` is the source of truth for user-managed skills.
 
-Codex skills live in the `agent-skills` repo. Dotfiles covers the Codex config surface, while `agent-skills` is the source of truth for user-managed skills.
-
-Command rules are intentionally blank.
-
-The tracked Codex template carries product choices without machine paths. Keep bearer tokens and API secrets in local auth, environment setup, or service-specific login flows. Codex may update trusted project paths, marketplace timestamps, or desktop preferences in the local config.
+Keep bearer tokens and API secrets in local auth, environment setup, or service-specific login flows. Do not symlink or track `~/.codex/config.toml`; the desktop app rewrites it as settings and integrations evolve.
 
 Verify Codex config health with:
 

@@ -40,11 +40,17 @@ Run the bundle in an interactive terminal. The Google Drive installer requires a
 rake install
 ```
 
-6. Use Ghostty as the supported terminal.
+6. Apply the selected macOS preferences after the apps are installed:
+
+```bash
+rake macos:apply
+```
+
+7. Use Ghostty as the supported terminal.
 
 The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and leaves font, shell integration, keybindings, and behavior on Ghostty defaults. Apple Terminal stays on macOS defaults outside this baseline.
 
-7. Open a new Ghostty window and verify the setup:
+8. Open a new Ghostty window and verify the setup:
 
 ```bash
 cd ~/dotfiles
@@ -68,6 +74,18 @@ If `rake doctor` reports missing Codex auth, run `codex login`. Codex auth stays
 - `zsh/zshrc.symlink` -> `~/.zshrc`
 
 The installer is intentionally symlink-based so edits in `~/dotfiles` are reflected immediately in the active shell and Git configuration.
+
+## macOS Preferences
+
+`rake macos:apply` runs `osx/preferences.sh` separately from `rake install`:
+
+- Finder opens new windows in column view and shows external drives and removable media on the desktop, but hides internal drives there.
+- Finder shows its sidebar with Favorites and Locations expanded and Tags collapsed.
+- The Dock auto-hides and uses 64-point icons.
+- Keyboard key repeat is set to `1` and delay until repeat to `10`, matching this Mac. Keyboard navigation is off; automatic capitalization and period substitution are on.
+- Pinned Dock apps are Google Chrome, ChatGPT (when installed), Ghostty, and System Settings, in that order. Other pinned apps are removed; the Downloads stack and other items on the folder side of the Dock are preserved.
+
+The task requires `dockutil`, installed by `osx/Brewfile`. Finder and Dock restart to display their changes; sign out and back in if keyboard changes do not take effect immediately. ChatGPT is optional because it is not part of the Brewfile.
 
 ## Baseline Tools And Apps
 

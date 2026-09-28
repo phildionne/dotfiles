@@ -26,6 +26,7 @@ REQUIRED_COMMANDS = %w[
   bat
   brew
   direnv
+  dockutil
   eza
   gh
   git
@@ -39,6 +40,7 @@ DOCS_REQUIRED_STRINGS = (
   LINKABLES.keys + [
     'brew bundle install --file=osx/Brewfile',
     'rake install',
+    'rake macos:apply',
     'rake doctor',
     'Apple Silicon',
     HOMEBREW_BIN,
@@ -175,6 +177,13 @@ task :install do
     end
     FileUtils.mkdir_p(File.dirname(target))
     FileUtils.ln_s(source_path, target)
+  end
+end
+
+namespace :macos do
+  desc "Apply the selected macOS preferences."
+  task :apply do
+    sh 'zsh', File.join(DOTFILES_ROOT, 'osx/preferences.sh')
   end
 end
 

@@ -20,23 +20,31 @@ git clone https://github.com/phildionne/dotfiles
 cd dotfiles
 ```
 
-3. Install the baseline tools and apps:
+3. Trust the third-party formulas used by the Brewfile. Homebrew requires this on a new Mac; trust only these named formulas rather than their entire taps:
+
+```bash
+brew trust --formula dotenvx/brew/dotenvx getsentry/tools/sentry hashicorp/tap/terraform heroku/brew/heroku hudochenkov/sshpass/sshpass libsql/sqld/sqld tursodatabase/tap/turso
+```
+
+4. Install the baseline tools and apps:
 
 ```bash
 brew bundle install --file=osx/Brewfile
 ```
 
-4. Link the managed dotfiles:
+Run the bundle in an interactive terminal. The Google Drive installer requires a macOS administrator password.
+
+5. Link the managed dotfiles:
 
 ```bash
 rake install
 ```
 
-5. Use Ghostty as the supported terminal.
+6. Use Ghostty as the supported terminal.
 
 The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and leaves font, shell integration, keybindings, and behavior on Ghostty defaults. Apple Terminal stays on macOS defaults outside this baseline.
 
-6. Open a new Ghostty window and verify the setup:
+7. Open a new Ghostty window and verify the setup:
 
 ```bash
 cd ~/dotfiles
@@ -99,6 +107,7 @@ chmod 644 ~/.ssh/id_ed25519_signing.pub
 Add the public key to GitHub as a signing key:
 
 ```bash
+gh auth login
 gh auth refresh -h github.com -s admin:ssh_signing_key
 gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing --title "$(hostname)-signing"
 ```
@@ -114,8 +123,8 @@ After pushing a signed commit, GitHub should show it as verified.
 
 ### Desktop Apps
 
-- AppCleaner, Bitwarden, Google Chrome, Google Drive, Raycast, Slack, Spotify, Superwhisper, The Unarchiver, VLC, WebTorrent, and Zoom.
-- Codex and ChatGPT Atlas for agent-assisted development.
+- AppCleaner, Bitwarden, Google Chrome, Google Drive, Raycast, Slack, Spotify, Superwhisper, The Unarchiver, VLC, and WebTorrent.
+- Codex CLI and the Codex desktop app for agent-assisted development. Homebrew manages them with separate `codex` and `codex-app` casks.
 
 ### VS Code Extensions
 

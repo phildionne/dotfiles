@@ -20,10 +20,18 @@ git clone https://github.com/phildionne/dotfiles
 cd dotfiles
 ```
 
-3. Trust the third-party formulas used by the Brewfile. Homebrew requires this on a new Mac; trust only these named formulas rather than their entire taps:
+3. Trust the third-party formulas and Tinycast tap used by the Brewfile. Homebrew requires this on a new Mac:
 
 ```bash
-brew trust --formula dotenvx/brew/dotenvx getsentry/tools/sentry hashicorp/tap/terraform heroku/brew/heroku hudochenkov/sshpass/sshpass libsql/sqld/sqld tursodatabase/tap/turso
+brew trust --formula \
+  dotenvx/brew/dotenvx \
+  getsentry/tools/sentry \
+  hashicorp/tap/terraform \
+  heroku/brew/heroku \
+  hudochenkov/sshpass/sshpass \
+  libsql/sqld/sqld \
+  tursodatabase/tap/turso
+brew trust --tap abue-ammar/tinycast
 ```
 
 4. Install the baseline tools and apps:
@@ -106,6 +114,7 @@ The exact install list lives in `osx/Brewfile`.
 - Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs.
 - OrbStack, ngrok, Postico, Cyberduck, and Dash.
 - VS Code and GitHub Desktop.
+- Tinycast, a native macOS launcher (requires macOS 26 or newer).
 
 ## SSH Signing
 

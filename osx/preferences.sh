@@ -40,7 +40,4 @@ fi
 dockutil --add '/Applications/Ghostty.app' --no-restart
 dockutil --add '/System/Applications/System Settings.app' --no-restart
 
-killall Finder
 killall Dock
-
-print 'Finish the Finder sidebar in Finder > Settings > Sidebar: Favorites = Applications, Downloads, Desktop, Documents (in that order).'

@@ -90,10 +90,11 @@ The installer is intentionally symlink-based so edits in `~/dotfiles` are reflec
 - Finder opens new windows in column view and shows external drives and removable media on the desktop, but hides internal drives there.
 - Finder shows its sidebar with Favorites and Locations expanded and Tags collapsed.
 - The Dock auto-hides and uses 64-point icons.
+- Spotlight's menu bar icon is hidden.
 - Keyboard key repeat is set to `1` and delay until repeat to `10`, matching this Mac. Keyboard navigation is off; automatic capitalization and period substitution are on.
 - Pinned Dock apps are Google Chrome, ChatGPT (when installed), Ghostty, and System Settings, in that order. Other pinned apps are removed; the Downloads stack and other items on the folder side of the Dock are preserved.
 
-The task requires `dockutil`, installed by `osx/Brewfile`. Finder and Dock restart to display their changes; sign out and back in if keyboard changes do not take effect immediately. ChatGPT is optional because it is not part of the Brewfile.
+The task requires `dockutil`, installed by `osx/Brewfile`. Dock and SystemUIServer restart to display their changes; sign out and back in if keyboard changes do not take effect immediately. ChatGPT is optional because it is not part of the Brewfile.
 
 ## Baseline Tools And Apps
 

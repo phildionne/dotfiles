@@ -24,6 +24,7 @@ defaults write com.apple.finder SidebarTagsSctionDisclosedState -bool false
 
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock tilesize -int 64
+defaults write com.apple.Spotlight 'NSStatusItem VisibleCC Item-0' -bool false
 
 defaults write -g KeyRepeat -int 1
 defaults write -g InitialKeyRepeat -int 10
@@ -41,3 +42,4 @@ dockutil --add '/Applications/Ghostty.app' --no-restart
 dockutil --add '/System/Applications/System Settings.app' --no-restart
 
 killall Dock
+killall SystemUIServer

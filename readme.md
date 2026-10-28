@@ -56,7 +56,7 @@ rake macos:apply
 
 7. Use Ghostty as the supported terminal.
 
-The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and leaves font, shell integration, keybindings, and behavior on Ghostty defaults. Apple Terminal stays on macOS defaults outside this baseline.
+The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and keeps font and shell integration at Ghostty defaults. Custom settings bind `Cmd+R` to clear the screen, start new windows in the home directory, and let new tabs inherit the current working directory. Apple Terminal stays on macOS defaults outside this baseline.
 
 8. Open a new Ghostty window and verify the setup:
 
@@ -103,19 +103,19 @@ The exact install list lives in `osx/Brewfile`.
 ### Terminal And Shell
 
 - Ghostty with zsh.
-- Snazzy Soft theme with Ghostty defaults for font, shell integration, keybindings, and behavior.
+- Snazzy Soft theme with default font and shell integration; tracked overrides for `Cmd+R` and window/tab working directories.
 - Pure prompt with zsh syntax highlighting.
-- `mise` for runtime management.
+- Homebrew-managed `mise` for runtime management. Avoid a second standalone copy in `~/.local/bin`.
 - `eza` and `bat` as nicer defaults for `ls` and `cat`.
 
 ### Development Tools
 
 - GitHub CLI, Git LFS, ripgrep, dotenvx, sshpass, Terraform, and OpenSSL.
 - SSH commit signing with key material stored in Bitwarden and GitHub CLI key upload.
-- Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs.
+- Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs; the Linear desktop app.
 - OrbStack, ngrok, Postico, Cyberduck, and Dash.
 - VS Code and GitHub Desktop.
-- Tinycast, a native macOS launcher (requires macOS 26 or newer).
+- Tinycast, a native macOS launcher.
 
 ## SSH Signing
 
@@ -151,7 +151,7 @@ After pushing a signed commit, GitHub should show it as verified.
 
 ### Desktop Apps
 
-- AppCleaner, Bitwarden, Google Chrome, Google Drive, Raycast, Slack, Spotify, Superwhisper, The Unarchiver, VLC, and WebTorrent.
+- AppCleaner, Bitwarden, Google Chrome, Google Drive, Slack, Spotify, Superwhisper, The Unarchiver, VLC, and WebTorrent.
 - Codex CLI and the Codex desktop app for agent-assisted development. Homebrew manages them with separate `codex` and `codex-app` casks.
 
 ### VS Code Extensions
@@ -159,8 +159,8 @@ After pushing a signed commit, GitHub should show it as verified.
 - Core editing: EditorConfig, ESLint, Prettier, Stylelint, Sort Lines, Change Case, Pretty TypeScript Errors.
 - Git and GitHub: GitLens, GitHub theme, GitHub Pull Requests.
 - Languages and data: Python, Pylance, Black, isort, Pylint, GraphQL, Tailwind CSS, TOML, dotenv, Jinja, djLint, XML, CSV, SVG preview, SQL formatter.
-- Containers and collaboration: Docker, Dev Containers, Live Share.
-- AI/editor tools: Copilot Chat, ChatGPT, OXC.
+- Containers and collaboration: Docker and Live Share.
+- Editor tools: OXC. Copilot Chat, ChatGPT, and Dev Containers extensions are not part of this baseline.
 
 ### Agent And MCP Notes
 
@@ -190,7 +190,7 @@ Useful MCP servers to keep in mind when rebuilding or extending the agent setup:
 ## Shell Layout
 
 - `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise` shims for non-interactive command runners.
-- `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Bun, Turso, `mise` activation, and direnv.
+- `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Turso, `mise` activation, and direnv.
 - `ghostty/config.ghostty.symlink`: Ghostty config managed at `~/.config/ghostty/config.ghostty`. The XDG config is the single Ghostty config source, because Ghostty loads the macOS-specific config path after it.
 - Apple Terminal settings stay on macOS defaults.
 - Optional integrations are guarded so a fresh shell can start before every tool is configured.

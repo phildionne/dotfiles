@@ -6,7 +6,6 @@
 	user = phildionne
 [core]
 	editor = code --wait
-	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 [color]
 	diff = auto
@@ -53,14 +52,6 @@
 	submodulesummary = true
 	relativePaths = false
 	showUntrackedFiles = all
-[filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
-[filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

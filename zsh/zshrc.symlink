@@ -9,7 +9,7 @@ prompt pure
 
 # Utilities
 alias ..="cd .."
-alias ...="cd ..."
+alias ...="cd ../.."
 command -v eza >/dev/null 2>&1 && alias ls="eza"
 command -v bat >/dev/null 2>&1 && alias cat="bat"
 
@@ -24,19 +24,12 @@ if command -v brew >/dev/null 2>&1; then
 fi
 
 # Use pnpm
-export PNPM_HOME="/Users/pdionne/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 alias pn="pnpm"
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # turso
 [[ -r "$HOME/.turso/env" ]] && source "$HOME/.turso/env"

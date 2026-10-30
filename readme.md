@@ -94,7 +94,7 @@ The links keep edits in `~/dotfiles` reflected immediately in the active shell a
 
 `mise bootstrap` applies macOS preferences and the required Dock app layout from `mise.toml`:
 
-- Finder opens new windows in column view, and shows external drives and removable media on the desktop, but hides internal drives there.
+- Finder shows hidden files, opens new windows in column view, and shows external drives and removable media on the desktop, but hides internal drives there.
 - Finder shows its sidebar with Favorites and Locations expanded and Tags collapsed.
 - The Dock auto-hides and uses 64-point icons.
 - Spotlight's menu bar icon is hidden.

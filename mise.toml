@@ -28,6 +28,7 @@ tilesize = 64.0
 
 [bootstrap.macos.finder]
 preferred_view_style = "column"
+show_all_files = true
 
 [bootstrap.macos.keyboard]
 key_repeat = 1

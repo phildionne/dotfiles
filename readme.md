@@ -20,9 +20,10 @@ git clone https://github.com/phildionne/dotfiles
 cd dotfiles
 ```
 
-3. Trust the third-party formulas and Tinycast tap used by the Brewfile. Homebrew requires this on a new Mac:
+3. Install mise from Homebrew, then trust the third-party formulas and Tinycast tap used by the Brewfile. Homebrew requires this trust on a new Mac:
 
 ```bash
+brew install mise
 brew trust --formula \
   dotenvx/brew/dotenvx \
   getsentry/tools/sentry \
@@ -34,31 +35,37 @@ brew trust --formula \
 brew trust --tap abue-ammar/tinycast
 ```
 
-4. Install the baseline tools and apps:
+4. Trust this checkout and preview the setup:
 
 ```bash
-brew bundle install --file=osx/Brewfile
+mise trust
+mise bootstrap --dry-run
 ```
 
-Run the bundle in an interactive terminal. The Google Drive installer requires a macOS administrator password.
+The preview shows declarative symlink and preference changes. Hooks are printed but not run, so it does not inspect the Homebrew bundle.
 
-5. Link the managed dotfiles:
+5. Apply the setup in an interactive terminal:
 
 ```bash
-rake install
+mise bootstrap --raw
 ```
 
-6. Apply the selected macOS preferences after the apps are installed:
+The pre-packages hook runs `brew bundle install --file=osx/Brewfile`. This installs the Brewfile, links the managed files, and applies the selected macOS defaults and Dock layout. The Google Drive installer requires a macOS administrator password. Hooks run again on each bootstrap; Homebrew bundle checks installed packages and mise skips declarative entries that already match.
+
+If a destination conflicts with a managed symlink, mise stops. Inspect that file, move or back it up yourself, then rerun the bootstrap. Avoid `--force-dotfiles` for this setup. The Ghostty macOS-specific config is removed only when empty; a nonempty one must be moved manually.
+
+To apply just one section later, run:
 
 ```bash
-rake macos:apply
+mise bootstrap --only dotfiles
+mise bootstrap --only macos-defaults
 ```
 
-7. Use Ghostty as the supported terminal.
+6. Use Ghostty as the supported terminal.
 
 The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and keeps font and shell integration at Ghostty defaults. Custom settings bind `Cmd+R` to clear the screen, start new windows in the home directory, and let new tabs inherit the current working directory. Apple Terminal stays on macOS defaults outside this baseline.
 
-8. Open a new Ghostty window and verify the setup:
+7. Open a new Ghostty window and verify the setup:
 
 ```bash
 cd ~/dotfiles
@@ -71,7 +78,7 @@ If `rake doctor` reports missing Codex auth, run `codex login`. Codex auth stays
 
 ## Managed Files
 
-`rake install` links the explicit inventory in the `Rakefile`:
+`mise bootstrap` links the explicit `[dotfiles]` inventory in `mise.toml`:
 
 - `git/gitattributes.symlink` -> `~/.gitattributes`
 - `git/gitconfig.symlink` -> `~/.gitconfig`
@@ -81,20 +88,20 @@ If `rake doctor` reports missing Codex auth, run `codex login`. Codex auth stays
 - `zsh/zprofile.symlink` -> `~/.zprofile`
 - `zsh/zshrc.symlink` -> `~/.zshrc`
 
-The installer is intentionally symlink-based so edits in `~/dotfiles` are reflected immediately in the active shell and Git configuration.
+The links keep edits in `~/dotfiles` reflected immediately in the active shell and Git configuration. The bootstrap does not manage Codex skills or machine-local auth.
 
 ## macOS Preferences
 
-`rake macos:apply` runs `osx/preferences.sh` separately from `rake install`:
+`mise bootstrap` applies macOS preferences and the required Dock app layout from `mise.toml`:
 
-- Finder opens new windows in column view and shows external drives and removable media on the desktop, but hides internal drives there.
+- Finder opens new windows in column view, and shows external drives and removable media on the desktop, but hides internal drives there.
 - Finder shows its sidebar with Favorites and Locations expanded and Tags collapsed.
 - The Dock auto-hides and uses 64-point icons.
 - Spotlight's menu bar icon is hidden.
 - Keyboard key repeat is set to `1` and delay until repeat to `10`, matching this Mac. Keyboard navigation is off; automatic capitalization and period substitution are on.
-- Pinned Dock apps are Google Chrome, ChatGPT (when installed), Ghostty, and System Settings, in that order. Other pinned apps are removed; the Downloads stack and other items on the folder side of the Dock are preserved.
+- Pinned Dock apps are Google Chrome, ChatGPT, Ghostty, and System Settings, in that order. Other pinned apps are removed; the Downloads stack and other items on the folder side of the Dock are preserved.
 
-The task requires `dockutil`, installed by `osx/Brewfile`. Dock and SystemUIServer restart to display their changes; sign out and back in if keyboard changes do not take effect immediately. ChatGPT is optional because it is not part of the Brewfile.
+All pinned apps, including ChatGPT, are installed by the Brewfile or provided by macOS. Dock and SystemUIServer restart to display changes; sign out and back in if keyboard changes do not take effect immediately.
 
 ## Baseline Tools And Apps
 
@@ -151,7 +158,7 @@ After pushing a signed commit, GitHub should show it as verified.
 
 ### Desktop Apps
 
-- AppCleaner, Bitwarden, Google Chrome, Google Drive, Slack, Spotify, Superwhisper, The Unarchiver, VLC, and WebTorrent.
+- AppCleaner, Bitwarden, ChatGPT, Google Chrome, Google Drive, Slack, Spotify, Superwhisper, The Unarchiver, VLC, and WebTorrent.
 - Codex CLI and the Codex desktop app for agent-assisted development. Homebrew manages them with separate `codex` and `codex-app` casks.
 
 ### VS Code Extensions
@@ -201,4 +208,6 @@ Useful MCP servers to keep in mind when rebuilding or extending the agent setup:
 - Ghostty is validated at `/Applications/Ghostty.app/Contents/MacOS/ghostty`.
 - `mise` manages language/runtime versions and can use latest-by-default tools. Login shells expose shims, while interactive zsh uses normal activation so project versions take effect when moving between repos.
 - `brew bundle check --no-upgrade --file=osx/Brewfile` should pass on the primary machine; this checks presence without enforcing available upgrades.
-- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies symlinks, required commands, the Ghostty app bundle, the single managed Ghostty config, Codex local-only auth, Pure prompt loading, documentation coverage, and Brewfile presence.
+- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies mise-managed symlinks and defaults, required commands, the Ghostty app bundle, the single managed Ghostty config, Codex local-only auth, Pure prompt loading, documentation coverage, and Brewfile presence.
+
+Run `python3 tests/bootstrap.py` to check linking, conflict handling, and Ghostty protection in a temporary home without changing this Mac.

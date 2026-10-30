@@ -1,0 +1,55 @@
+[dotfiles]
+"~/.codex/agents" = { source = "codex/agents.symlink", mode = "symlink" }
+"~/.gitattributes" = { source = "git/gitattributes.symlink", mode = "symlink" }
+"~/.gitconfig" = { source = "git/gitconfig.symlink", mode = "symlink" }
+"~/.config/ghostty/config.ghostty" = { source = "ghostty/config.ghostty.symlink", mode = "symlink" }
+"~/.hushlogin" = { source = "osx/hushlogin.symlink", mode = "symlink" }
+"~/.zprofile" = { source = "zsh/zprofile.symlink", mode = "symlink" }
+"~/.zshrc" = { source = "zsh/zshrc.symlink", mode = "symlink" }
+
+[bootstrap.hooks]
+# Bundle must finish before linking files or applying preferences that need apps.
+pre-packages = 'cd "{{ config_root }}" && brew bundle install --file=osx/Brewfile'
+pre-dotfiles = 'cd "{{ config_root }}" && rake setup:ghostty'
+post-defaults = ["killall Dock || true", "killall SystemUIServer || true"]
+
+[bootstrap.macos.dock]
+autohide = true
+apps = [
+  "/Applications/Google Chrome.app",
+  "/Applications/ChatGPT.app",
+  "/Applications/Ghostty.app",
+  "/System/Applications/System Settings.app",
+]
+
+# Dock stores its icon size as a real number.
+[bootstrap.macos.defaults."com.apple.dock"]
+tilesize = 64.0
+
+[bootstrap.macos.finder]
+preferred_view_style = "column"
+
+[bootstrap.macos.keyboard]
+key_repeat = 1
+initial_key_repeat = 10
+automatic_capitalization = true
+
+[bootstrap.macos.defaults."com.apple.finder"]
+ShowExternalHardDrivesOnDesktop = true
+ShowHardDrivesOnDesktop = false
+ShowRemovableMediaOnDesktop = true
+ShowSidebar = true
+SidebarPlacesSectionDisclosedState = true
+SidebarDevicesSectionDisclosedState = true
+SidebarTagsSctionDisclosedState = false
+
+[bootstrap.macos.defaults."com.apple.Spotlight"]
+"NSStatusItem VisibleCC Item-0" = false
+
+[bootstrap.macos.defaults.NSGlobalDomain]
+AppleKeyboardUIMode = 0
+NSAutomaticPeriodSubstitutionEnabled = true
+
+[tasks.bootstrap]
+description = "Show the remaining machine-local setup checks"
+run = "echo 'Open a new Ghostty window and run: cd {{ config_root }} && rake doctor'"

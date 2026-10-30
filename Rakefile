@@ -2,6 +2,8 @@
 require 'fileutils'
 require 'rake'
 require 'shellwords'
+require 'json'
+require 'open3'
 
 DOTFILES_ROOT = File.expand_path(__dir__)
 HOMEBREW_PREFIX = '/opt/homebrew'.freeze
@@ -12,21 +14,10 @@ GHOSTTY_MACOS_CONFIG = 'Library/Application Support/com.mitchellh.ghostty/config
 SSH_SIGNING_KEY = '.ssh/id_ed25519_signing.pub'.freeze
 CODEX_AUTH_JSON = '.codex/auth.json'.freeze
 
-LINKABLES = {
-  'codex/agents.symlink' => '.codex/agents',
-  'git/gitattributes.symlink' => '.gitattributes',
-  'git/gitconfig.symlink' => '.gitconfig',
-  'ghostty/config.ghostty.symlink' => GHOSTTY_XDG_CONFIG,
-  'osx/hushlogin.symlink' => '.hushlogin',
-  'zsh/zprofile.symlink' => '.zprofile',
-  'zsh/zshrc.symlink' => '.zshrc'
-}.freeze
-
 REQUIRED_COMMANDS = %w[
   bat
   brew
   direnv
-  dockutil
   eza
   gh
   git
@@ -37,10 +28,10 @@ REQUIRED_COMMANDS = %w[
 ].freeze
 
 DOCS_REQUIRED_STRINGS = (
-  LINKABLES.keys + [
+  [
     'brew bundle install --file=osx/Brewfile',
-    'rake install',
-    'rake macos:apply',
+    'mise bootstrap',
+    'mise trust',
     'rake doctor',
     'Apple Silicon',
     HOMEBREW_BIN,
@@ -66,21 +57,6 @@ DOCS_REQUIRED_CONCEPTS = [
 
 def link_target(target)
   File.join(ENV.fetch('HOME'), target)
-end
-
-def backup_target(target)
-  backup = "#{target}.backup"
-  return backup unless File.exist?(backup) || File.symlink?(backup)
-
-  "#{backup}.#{Time.now.strftime('%Y%m%d%H%M%S')}"
-end
-
-def remove_target(target)
-  if File.directory?(target) && !File.symlink?(target)
-    abort "Refusing to overwrite directory #{target}; use BACKUP=1 or move it manually"
-  end
-
-  FileUtils.rm_f(target)
 end
 
 def git_config_value(key)
@@ -128,62 +104,10 @@ def docs_check_failures(readme)
   missing
 end
 
-desc "Hook our dotfiles into system-standard positions."
-task :install do
-  skip_all = ENV['SKIP'] == '1'
-  overwrite_all = ENV['OVERWRITE'] == '1'
-  backup_all = ENV['BACKUP'] == '1'
-
-  remove_empty_ghostty_macos_config
-  LINKABLES.each do |source, target_name|
-    overwrite = false
-    backup = false
-
-    source_path = File.join(DOTFILES_ROOT, source)
-    target = link_target(target_name)
-
-    if File.exist?(target) || File.symlink?(target)
-      if File.symlink?(target) && File.readlink(target) == source_path
-        puts "Already linked #{target}"
-        next
-      end
-
-      if skip_all
-        puts "Skipping #{target}"
-        next
-      end
-
-      unless skip_all || overwrite_all || backup_all
-        puts "File already exists: #{target}, what do you want to do? [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all"
-        case STDIN.gets.chomp
-        when 'o' then overwrite = true
-        when 'b' then backup = true
-        when 'O' then overwrite_all = true
-        when 'B' then backup_all = true
-        when 'S'
-          skip_all = true
-          next
-        when 's' then next
-        else
-          puts "Skipping #{target}"
-          next
-        end
-      end
-      if backup || backup_all
-        FileUtils.mv(target, backup_target(target))
-      elsif overwrite || overwrite_all
-        remove_target(target)
-      end
-    end
-    FileUtils.mkdir_p(File.dirname(target))
-    FileUtils.ln_s(source_path, target)
-  end
-end
-
-namespace :macos do
-  desc "Apply the selected macOS preferences."
-  task :apply do
-    sh 'zsh', File.join(DOTFILES_ROOT, 'osx/preferences.sh')
+namespace :setup do
+  desc "Remove an empty secondary Ghostty config; refuse one containing settings."
+  task :ghostty do
+    remove_empty_ghostty_macos_config
   end
 end
 
@@ -210,24 +134,28 @@ task :doctor do
     puts 'ok ghostty single managed config'
   end
 
-  LINKABLES.each do |source, target_name|
-    target = link_target(target_name)
-    expected = File.join(DOTFILES_ROOT, source)
-    actual = File.symlink?(target) ? File.readlink(target) : nil
-
-    if actual == expected
-      puts "ok symlink #{target} -> #{actual}"
-    elsif File.exist?(target)
-      failures << "#{target} exists but does not point to #{expected}"
+  begin
+    dot_status, dot_error, dot_result = Open3.capture3('mise', '-C', DOTFILES_ROOT, 'dot', 'status', '--json', '--missing')
+    if dot_result.success?
+      puts 'ok mise managed symlinks'
     else
-      failures << "#{target} is missing"
+      failures << "mise dot status failed: #{dot_error}#{dot_status}"
     end
+
+    unless dot_status.empty?
+      entries = JSON.parse(dot_status).fetch('files')
+      if entries.any? { |entry| expand_home(entry.fetch('target')).start_with?(link_target('.codex/skills')) || expand_home(entry.fetch('source', '').to_s).start_with?(File.join(DOTFILES_ROOT, 'codex/skills')) }
+        failures << 'Codex skills must not be managed by this dotfiles inventory; use the agent-skills repo'
+      else
+        puts 'ok codex skills unmanaged by dotfiles inventory'
+      end
+    end
+  rescue Errno::ENOENT, JSON::ParserError, KeyError => error
+    failures << "mise symlink check failed: #{error.message}"
   end
 
-  if LINKABLES.any? { |source, target_name| source.start_with?('codex/skills') || target_name.start_with?('.codex/skills') }
-    failures << 'Codex skills must not be managed by this dotfiles inventory; use the agent-skills repo'
-  else
-    puts 'ok codex skills unmanaged by dotfiles inventory'
+  unless system('mise', '-C', DOTFILES_ROOT, 'bootstrap', 'macos', 'defaults', 'status', '--missing')
+    failures << 'mise macOS defaults drift check failed'
   end
 
   if codex_skill_paths.empty?
@@ -310,4 +238,4 @@ task :doctor do
   end
 end
 
-task :default => 'install'
+task :default => 'doctor'

@@ -8,6 +8,7 @@ This is my personal macOS development baseline for Apple Silicon Macs: shell, Gi
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 ```
 
 This repo assumes Apple Silicon Homebrew at `/opt/homebrew/bin/brew`.

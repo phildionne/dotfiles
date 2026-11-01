@@ -1,4 +1,4 @@
-# Totally stolen from https://github.com/holman/dotfiles
+# Based on https://github.com/holman/dotfiles
 require 'fileutils'
 require 'rake'
 require 'shellwords'

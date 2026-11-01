@@ -1,19 +1,21 @@
-## Dotfiles
+# Dotfiles
 
-This is my personal macOS development baseline for Apple Silicon Macs: shell, Git, Homebrew apps, and editor tooling.
+macOS development configuration for Apple Silicon Macs.
 
-## New Mac Setup
+## Setup
 
-1. Install Homebrew:
+Run these steps in order in Terminal. Complete each installer, editor, and browser prompt before continuing.
+
+### 1. Install Homebrew
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 ```
 
-This repo assumes Apple Silicon Homebrew at `/opt/homebrew/bin/brew`.
+Homebrew runs at `/opt/homebrew/bin/brew`. The `shellenv` command adds it to the current shell's PATH.
 
-2. Clone the repo:
+### 2. Clone the repository
 
 ```bash
 cd ~
@@ -21,7 +23,7 @@ git clone https://github.com/phildionne/dotfiles
 cd dotfiles
 ```
 
-3. Install mise from Homebrew, then trust the third-party formulas and Tinycast tap used by the Brewfile. Homebrew requires this trust on a new Mac:
+### 3. Install mise and trust the package sources
 
 ```bash
 brew install mise
@@ -36,173 +38,176 @@ brew trust --formula \
 brew trust --tap abue-ammar/tinycast
 ```
 
-4. Trust this checkout and preview the setup:
+### 4. Apply the configuration
+
+Trust the checkout and preview the changes:
 
 ```bash
 mise trust
 mise bootstrap --dry-run
 ```
 
-The preview shows declarative symlink and preference changes. Hooks are printed but not run, so it does not inspect the Homebrew bundle.
+The preview prints hooks without executing them. It does not check package installation state.
 
-5. Apply the setup in an interactive terminal:
+Run bootstrap in an interactive terminal:
 
 ```bash
 mise bootstrap --raw
 ```
 
-The pre-packages hook runs `brew bundle install --file=osx/Brewfile --no-upgrade --verbose`. Bootstrap installs missing packages, links the managed files, and applies the selected macOS defaults and Dock layout. Homebrew upgrades dependencies when required by a new installation. The Google Drive installer requires a macOS administrator password. Hooks run on every bootstrap, while mise skips declarative entries that already match.
+Bootstrap applies the configuration in this order:
 
-The post-packages hook runs `mise use --global node npm:vercel npm:neonctl`. It registers and installs Node, Vercel CLI, and Neon CLI as global mise tools.
+1. Install Homebrew packages.
+2. Register and install global mise tools.
+3. Link managed files.
+4. Apply macOS preferences and the Dock layout.
 
-If a destination conflicts with a managed symlink, mise stops. Inspect that file, move or back it up yourself, then rerun the bootstrap. Avoid `--force-dotfiles` for this setup. The Ghostty macOS-specific config is removed only when empty; a nonempty one must be moved manually.
+The Google Drive installer requires a macOS administrator password.
 
-To apply just one section later, run:
+Back up conflicting destination files before rerunning bootstrap. Do not use `--force-dotfiles`.
+
+### 5. Configure SSH signing
+
+Open a new Ghostty window to load the managed shell configuration.
+
+Git signs commits with `~/.ssh/id_ed25519_signing.pub`. GitHub verifies pushed commits against the registered public key.
+
+Sign in to Bitwarden. Restore the private and public signing keys into the files opened below. Save and close each file before continuing:
 
 ```bash
-mise bootstrap --only dotfiles
-mise bootstrap --only macos-defaults
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+touch ~/.ssh/id_ed25519_signing ~/.ssh/id_ed25519_signing.pub
+chmod 600 ~/.ssh/id_ed25519_signing
+chmod 644 ~/.ssh/id_ed25519_signing.pub
+nano ~/.ssh/id_ed25519_signing
+nano ~/.ssh/id_ed25519_signing.pub
 ```
 
-6. Use Ghostty as the supported terminal.
+Sign in to GitHub and list its registered signing keys:
 
-The Ghostty config is symlink-managed at `~/.config/ghostty/config.ghostty`, uses the Snazzy Soft theme, and keeps font and shell integration at Ghostty defaults. Custom settings bind `Cmd+R` to clear the screen, start new windows in the home directory, and let new tabs inherit the current working directory. Apple Terminal stays on macOS defaults outside this baseline.
+```bash
+gh auth login
+gh auth refresh -h github.com -s admin:ssh_signing_key
+gh ssh-key list --type signing
+```
 
-7. Open a new Ghostty window and verify the setup:
+Confirm that the restored public key is listed. If it is absent, register it with `gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing --title "$(hostname)-signing"`.
+
+### 6. Authenticate Codex
+
+```bash
+codex login
+```
+
+### 7. Verify the setup
 
 ```bash
 cd ~/dotfiles
 rake doctor
 ```
 
-If `rake doctor` reports incomplete SSH signing, restore the signing key from Bitwarden using the SSH signing setup below and run it again.
+## Packages and runtimes
 
-If `rake doctor` reports missing Codex auth, run `codex login`. Codex auth stays machine-local.
+| Scope | Manager | Source of truth |
+| --- | --- | --- |
+| Applications and CLI packages | Homebrew | `osx/Brewfile` |
+| Node, Vercel CLI, and Neon CLI | mise | `mise.toml` package hooks |
+| Project runtime versions | mise | Each project's mise configuration |
 
-## Managed Files
+The Homebrew hook runs `brew bundle install --file=osx/Brewfile --no-upgrade --verbose`. It installs missing packages. Homebrew upgrades dependencies when required by a new installation.
 
-`mise bootstrap` links the explicit `[dotfiles]` inventory in `mise.toml`:
+The mise hook runs `mise use --global node npm:vercel npm:neonctl`. It reuses installed versions and selects the latest version for missing tools. The npm backend gives each CLI a separate installation directory.
 
-- `git/gitattributes.symlink` -> `~/.gitattributes`
-- `git/gitconfig.symlink` -> `~/.gitconfig`
-- `ghostty/config.ghostty.symlink` -> `~/.config/ghostty/config.ghostty`
-- `codex/agents.symlink` -> `~/.codex/agents`
-- `osx/hushlogin.symlink` -> `~/.hushlogin`
-- `zsh/zprofile.symlink` -> `~/.zprofile`
-- `zsh/zshrc.symlink` -> `~/.zshrc`
+## Managed files
 
-The links keep edits in `~/dotfiles` reflected immediately in the active shell and Git configuration. The bootstrap does not manage Codex skills or machine-local auth.
+The `[dotfiles]` section in `mise.toml` defines these symlinks:
 
-## macOS Preferences
+| Repository source | Destination |
+| --- | --- |
+| `git/gitattributes.symlink` | `~/.gitattributes` |
+| `git/gitconfig.symlink` | `~/.gitconfig` |
+| `ghostty/config.ghostty.symlink` | `~/.config/ghostty/config.ghostty` |
+| `codex/agents.symlink` | `~/.codex/agents` |
+| `osx/hushlogin.symlink` | `~/.hushlogin` |
+| `zsh/zprofile.symlink` | `~/.zprofile` |
+| `zsh/zshrc.symlink` | `~/.zshrc` |
 
-`mise bootstrap` applies macOS preferences and the required Dock app layout from `mise.toml`:
+Edit the repository sources to update the linked configuration.
 
-- Finder shows hidden files, opens new windows in column view, and shows external drives and removable media on the desktop, but hides internal drives there.
-- Finder shows its sidebar with Favorites and Locations expanded and Tags collapsed.
-- The Dock auto-hides and uses 64-point icons.
-- Spotlight's menu bar icon is hidden.
-- Keyboard key repeat is set to `1` and delay until repeat to `10`, matching this Mac. Keyboard navigation is off; automatic capitalization and period substitution are on.
-- Pinned Dock apps are Google Chrome, ChatGPT, Ghostty, and System Settings, in that order. Other pinned apps are removed; the Downloads stack and other items on the folder side of the Dock are preserved.
+## Terminal and shell
 
-All pinned apps, including ChatGPT, are installed by the Brewfile or provided by macOS. Dock and SystemUIServer restart to display changes; sign out and back in if keyboard changes do not take effect immediately.
+### Ghostty
 
-## Baseline Tools And Apps
+Ghostty is the supported terminal. Its executable is `/Applications/Ghostty.app/Contents/MacOS/ghostty`.
 
-The Homebrew install list lives in `osx/Brewfile`; `mise.toml` declares the global Node and CLI setup.
+| Setting | Value |
+| --- | --- |
+| Theme | Snazzy Soft |
+| Font and shell integration | Ghostty defaults |
+| `Cmd+R` | Clear the screen |
+| New window directory | Home directory |
+| New tab directory | Current working directory |
 
-### Terminal And Shell
+`~/.config/ghostty/config.ghostty` is the sole configuration source. Bootstrap removes an empty secondary macOS config and rejects one containing settings.
 
-- Ghostty with zsh.
-- Snazzy Soft theme with default font and shell integration; tracked overrides for `Cmd+R` and window/tab working directories.
-- Pure prompt with zsh syntax highlighting.
-- Homebrew-managed `mise` for runtime management. Avoid a second standalone copy in `~/.local/bin`.
-- `eza` and `bat` as nicer defaults for `ls` and `cat`.
+### zsh
 
-### Development Tools
+| File | Responsibility |
+| --- | --- |
+| `zsh/zprofile.symlink` | Homebrew environment, OrbStack integration, and mise shims for login shells |
+| `zsh/zshrc.symlink` | Pure prompt, syntax highlighting, aliases, completions, pnpm, Turso, mise activation, and direnv |
 
-- GitHub CLI, Git LFS, ripgrep, dotenvx, sshpass, Terraform, and OpenSSL.
-- SSH commit signing with key material stored in Bitwarden and GitHub CLI key upload.
-- Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs; the Linear desktop app.
-- OrbStack, ngrok, Postico, and Cyberduck.
-- VS Code and GitHub Desktop.
-- Tinycast, a native macOS launcher.
+Login shells expose mise shims. Interactive shells activate project runtime versions as directories change.
 
-## SSH Signing
+Apple Terminal uses macOS defaults.
 
-Git is configured to sign commits with `~/.ssh/id_ed25519_signing.pub`. Bitwarden stores the key material, but it is not used as an SSH agent.
+## macOS preferences
 
-On a new Mac, copy the private key and public key from Bitwarden into local files:
+`mise.toml` defines the preferences and Dock layout.
 
-```bash
-mkdir -p ~/.ssh
-chmod 700 ~/.ssh
-$EDITOR ~/.ssh/id_ed25519_signing
-$EDITOR ~/.ssh/id_ed25519_signing.pub
-chmod 600 ~/.ssh/id_ed25519_signing
-chmod 644 ~/.ssh/id_ed25519_signing.pub
-```
+| Area | Configuration |
+| --- | --- |
+| Finder windows | Hidden files visible; column view; sidebar visible |
+| Finder desktop | External drives and removable media visible; internal drives hidden |
+| Finder sidebar | Favorites and Locations expanded; Tags collapsed |
+| Dock | Auto-hide enabled; 64-point icons |
+| Pinned applications | Google Chrome, ChatGPT, Ghostty, System Settings, in that order |
+| Dock folders | Existing folder-side items preserved |
+| Spotlight | Menu bar icon hidden |
+| Keyboard repeat | Key repeat `1`; initial delay `10` |
+| Keyboard navigation | Disabled |
+| Text entry | Automatic capitalization and period substitution enabled |
 
-Add the public key to GitHub as a signing key:
+All pinned applications must exist before preferences are applied. Bootstrap restarts Dock and SystemUIServer. Sign out and back in to activate keyboard changes.
 
-```bash
-gh auth login
-gh auth refresh -h github.com -s admin:ssh_signing_key
-gh ssh-key add ~/.ssh/id_ed25519_signing.pub --type signing --title "$(hostname)-signing"
-```
+## Codex
 
-Verify signing:
+Homebrew installs Codex CLI (`codex`) and ChatGPT (`chatgpt`).
 
-```bash
-git commit -S --allow-empty -m "Verify signed commit"
-git cat-file -p HEAD | grep -A5 '^gpgsig'
-```
+| Configuration | Owner |
+| --- | --- |
+| Custom agent definitions | `codex/agents.symlink` |
+| User-managed skills | `agent-skills` repository |
+| `~/.codex/config.toml` | Desktop app; machine-local |
+| `~/.codex/auth.json` | Local authentication |
+| Sessions, logs, caches, and plugins | Local Codex home |
 
-After pushing a signed commit, GitHub should show it as verified.
+Keep `~/.codex/config.toml` as a local file. Store secrets in local authentication, environment variables, or service login flows.
 
-### Desktop Apps
+## Verification
 
-- AppCleaner, Bitwarden, ChatGPT, Google Chrome, Google Drive, Slack, Spotify, Superwhisper, The Unarchiver, VLC, and WebTorrent.
-- Codex CLI for agent-assisted development, installed with the `codex` cask.
+| Check | Command |
+| --- | --- |
+| Machine configuration | `rake doctor` |
+| Homebrew package presence | `brew bundle check --no-upgrade --file=osx/Brewfile` |
+| Codex configuration | `codex --strict-config doctor --summary --ascii` |
+| Bootstrap behavior in a temporary home | `python3 tests/bootstrap.py` |
 
-### Agent And MCP Notes
-
-Codex is installed as part of the Brewfile. The desktop app owns the machine-local `~/.codex/config.toml`, including MCP servers, plugins, trusted projects, writable roots, and desktop preferences. This repo manages only the custom agent definitions linked at `~/.codex/agents`.
-
-Codex auth stays local to each machine at `~/.codex/auth.json`. Logs, sessions, SQLite state, caches, generated images, memories, and plugins also remain in the local Codex home.
-
-Codex skills live in the `agent-skills` repo. Dotfiles covers custom agent definitions, while `agent-skills` is the source of truth for user-managed skills.
-
-Keep bearer tokens and API secrets in local auth, environment setup, or service-specific login flows. Do not symlink or track `~/.codex/config.toml`; the desktop app rewrites it as settings and integrations evolve.
-
-Verify Codex config health with:
+Apply individual configuration sections with:
 
 ```bash
-codex --strict-config doctor --summary --ascii
+mise bootstrap --only packages --raw
+mise bootstrap --only dotfiles
+mise bootstrap --only macos-defaults --raw
 ```
-
-Useful MCP servers to keep in mind when rebuilding or extending the agent setup:
-
-- Chrome DevTools
-- Context7
-- Next DevTools
-- Playwright
-- Mapbox
-- Vercel
-
-## Shell Layout
-
-- `zsh/zprofile.symlink`: login-shell setup for Homebrew, OrbStack, and `mise` shims for non-interactive command runners.
-- `zsh/zshrc.symlink`: interactive shell setup for locale, Pure prompt, aliases, completions, pnpm, Turso, `mise` activation, and direnv.
-- `ghostty/config.ghostty.symlink`: Ghostty config managed at `~/.config/ghostty/config.ghostty`. The XDG config is the single Ghostty config source, because Ghostty loads the macOS-specific config path after it.
-- Apple Terminal settings stay on macOS defaults.
-- Optional integrations are guarded so a fresh shell can start before every tool is configured.
-
-## Tooling Policy
-
-- Homebrew manages applications and CLI packages; mise manages Node, Vercel CLI, and Neon CLI.
-- Ghostty is validated at `/Applications/Ghostty.app/Contents/MacOS/ghostty`.
-- `mise` manages language/runtime versions and can use latest-by-default tools. Login shells expose shims, while interactive zsh uses normal activation so project versions take effect when moving between repos.
-- `brew bundle check --no-upgrade --file=osx/Brewfile` should pass on the primary machine; this checks presence without enforcing available upgrades.
-- `rake doctor` is the quick drift check before relying on this repo for a rebuild. It verifies mise-managed symlinks and defaults, required commands, the Ghostty app bundle, the single managed Ghostty config, Codex local-only auth, Pure prompt loading, documentation coverage, and Brewfile presence.
-
-Run `python3 tests/bootstrap.py` to check linking, conflict handling, and Ghostty protection in a temporary home without changing this Mac.

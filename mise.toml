@@ -54,5 +54,5 @@ AppleKeyboardUIMode = 0
 NSAutomaticPeriodSubstitutionEnabled = true
 
 [tasks.bootstrap]
-description = "Show the remaining machine-local setup checks"
-run = "echo 'Open a new Ghostty window and run: cd {{ config_root }} && rake doctor'"
+description = "Show authentication and verification instructions"
+run = "echo 'Open a new Ghostty window and complete the SSH signing and Codex authentication steps in {{ config_root }}/readme.md'"

@@ -50,7 +50,9 @@ The preview shows declarative symlink and preference changes. Hooks are printed 
 mise bootstrap --raw
 ```
 
-The pre-packages hook runs `brew bundle install --file=osx/Brewfile`. This installs the Brewfile, links the managed files, and applies the selected macOS defaults and Dock layout. The Google Drive installer requires a macOS administrator password. Hooks run again on each bootstrap; Homebrew bundle checks installed packages and mise skips declarative entries that already match.
+The pre-packages hook runs `brew bundle install --file=osx/Brewfile --no-upgrade --verbose`. Bootstrap installs missing packages, links the managed files, and applies the selected macOS defaults and Dock layout. Homebrew upgrades dependencies when required by a new installation. The Google Drive installer requires a macOS administrator password. Hooks run on every bootstrap, while mise skips declarative entries that already match.
+
+The post-packages hook runs `mise use --global node npm:vercel npm:neonctl`. It registers and installs Node, Vercel CLI, and Neon CLI as global mise tools.
 
 If a destination conflicts with a managed symlink, mise stops. Inspect that file, move or back it up yourself, then rerun the bootstrap. Avoid `--force-dotfiles` for this setup. The Ghostty macOS-specific config is removed only when empty; a nonempty one must be moved manually.
 
@@ -105,7 +107,7 @@ All pinned apps, including ChatGPT, are installed by the Brewfile or provided by
 
 ## Baseline Tools And Apps
 
-The exact install list lives in `osx/Brewfile`.
+The Homebrew install list lives in `osx/Brewfile`; `mise.toml` declares the global Node and CLI setup.
 
 ### Terminal And Shell
 
@@ -196,7 +198,7 @@ Useful MCP servers to keep in mind when rebuilding or extending the agent setup:
 
 ## Tooling Policy
 
-- Homebrew is the app and CLI package baseline.
+- Homebrew manages applications and CLI packages; mise manages Node, Vercel CLI, and Neon CLI.
 - Ghostty is validated at `/Applications/Ghostty.app/Contents/MacOS/ghostty`.
 - `mise` manages language/runtime versions and can use latest-by-default tools. Login shells expose shims, while interactive zsh uses normal activation so project versions take effect when moving between repos.
 - `brew bundle check --no-upgrade --file=osx/Brewfile` should pass on the primary machine; this checks presence without enforcing available upgrades.

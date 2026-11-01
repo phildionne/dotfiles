@@ -55,4 +55,27 @@ with tempfile.TemporaryDirectory(prefix="dotfiles-check-") as directory:
     assert not (home / ".codex/auth.json").exists()
     assert not (home / ".codex/skills").exists()
 
+    # Package hooks must register tools globally, only after Homebrew succeeds.
+    hooks = home / "hook-bin"
+    hooks.mkdir()
+    log = home / "hooks.log"
+    for command in ("brew", "mise"):
+        executable = hooks / command
+        executable.write_text(
+            '#!/bin/sh\n'
+            'printf "%s\\n" "${0##*/} $*" >> "$DOTFILES_HOOK_LOG"\n'
+            'exit "${DOTFILES_HOOK_EXIT:-0}"\n'
+        )
+        executable.chmod(0o755)
+    env.update(PATH=f"{hooks}:{env['PATH']}", DOTFILES_HOOK_LOG=str(log))
+    run(MISE, "bootstrap", "--only", "packages", "--yes")
+    calls = log.read_text().splitlines()
+    assert len(calls) == 2 and calls[0].startswith("brew bundle install "), calls
+    assert calls[1] == "mise use --global node npm:vercel npm:neonctl", calls
+    log.unlink()
+    env["DOTFILES_HOOK_EXIT"] = "1"
+    run(MISE, "bootstrap", "--only", "packages", "--yes", success=False)
+    calls = log.read_text().splitlines()
+    assert len(calls) == 1 and calls[0].startswith("brew bundle install "), calls
+
 print("bootstrap checks passed")

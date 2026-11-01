@@ -8,8 +8,10 @@
 "~/.zshrc" = { source = "zsh/zshrc.symlink", mode = "symlink" }
 
 [bootstrap.hooks]
-# Bundle must finish before linking files or applying preferences that need apps.
-pre-packages = 'cd "{{ config_root }}" && brew bundle install --file=osx/Brewfile'
+# Install applications before linking files and applying Dock preferences.
+pre-packages = 'cd "{{ config_root }}" && brew bundle install --file=osx/Brewfile --no-upgrade --verbose'
+# Register machine-wide tools so they also work outside this checkout.
+post-packages = 'mise use --global node npm:vercel npm:neonctl'
 pre-dotfiles = 'cd "{{ config_root }}" && rake setup:ghostty'
 post-defaults = ["killall Dock || true", "killall SystemUIServer || true"]
 

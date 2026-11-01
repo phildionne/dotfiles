@@ -181,6 +181,14 @@ task :doctor do
     end
   end
 
+  { 'node' => 'node', 'npm:vercel' => 'vercel', 'npm:neonctl' => 'neonctl' }.each do |tool, command|
+    if system('mise', '-C', ENV.fetch('HOME'), 'which', command, '--tool', tool, out: File::NULL)
+      puts "ok mise tool #{tool}"
+    else
+      failures << "missing mise tool: #{tool}; run mise bootstrap --only packages --raw"
+    end
+  end
+
   if system('zsh', '-lic', '[[ $PROMPT == *prompt_pure* ]]')
     puts 'ok zsh prompt Pure'
   else
@@ -226,7 +234,7 @@ task :doctor do
     failures << 'git commit.gpgsign is not true'
   end
 
-  unless system({ 'HOMEBREW_NO_AUTO_UPDATE' => '1' }, 'brew', 'bundle', 'check', '--no-upgrade', '--file=osx/Brewfile')
+  unless system({ 'HOMEBREW_NO_AUTO_UPDATE' => '1' }, HOMEBREW_BIN, 'bundle', 'check', '--no-upgrade', '--file=osx/Brewfile')
     failures << 'brew bundle presence check failed for osx/Brewfile'
   end
 

@@ -120,7 +120,7 @@ The exact install list lives in `osx/Brewfile`.
 - GitHub CLI, Git LFS, ripgrep, dotenvx, sshpass, Terraform, and OpenSSL.
 - SSH commit signing with key material stored in Bitwarden and GitHub CLI key upload.
 - Heroku, Railway, Vercel, Sentry, Supabase, Neon, Turso, and Google Cloud CLIs; the Linear desktop app.
-- OrbStack, ngrok, Postico, Cyberduck, and Dash.
+- OrbStack, ngrok, Postico, and Cyberduck.
 - VS Code and GitHub Desktop.
 - Tinycast, a native macOS launcher.
 
@@ -159,15 +159,7 @@ After pushing a signed commit, GitHub should show it as verified.
 ### Desktop Apps
 
 - AppCleaner, Bitwarden, ChatGPT, Google Chrome, Google Drive, Slack, Spotify, Superwhisper, The Unarchiver, VLC, and WebTorrent.
-- Codex CLI and the Codex desktop app for agent-assisted development. Homebrew manages them with separate `codex` and `codex-app` casks.
-
-### VS Code Extensions
-
-- Core editing: EditorConfig, ESLint, Prettier, Stylelint, Sort Lines, Change Case, Pretty TypeScript Errors.
-- Git and GitHub: GitLens, GitHub theme, GitHub Pull Requests.
-- Languages and data: Python, Pylance, Black, isort, Pylint, GraphQL, Tailwind CSS, TOML, dotenv, Jinja, djLint, XML, CSV, SVG preview, SQL formatter.
-- Containers and collaboration: Docker and Live Share.
-- Editor tools: OXC. Copilot Chat, ChatGPT, and Dev Containers extensions are not part of this baseline.
+- Codex CLI for agent-assisted development, installed with the `codex` cask.
 
 ### Agent And MCP Notes
 

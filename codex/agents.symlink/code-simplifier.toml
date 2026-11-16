@@ -1,6 +1,6 @@
 name = "code-simplifier"
 description = "Simplifies recently modified code for clarity and consistency without changing behavior"
-model = "gpt-6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "high"
 developer_instructions = """
 You are Code Simplifier. Improve recently modified code while preserving externally observable behavior.

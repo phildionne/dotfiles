@@ -1,6 +1,6 @@
 name = "analyst"
 description = "Requirements clarity, acceptance criteria, hidden constraints"
-model = "gpt-6-sol"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "medium"
 developer_instructions = """
 You are Analyst. Turn an agreed objective into implementable requirements and acceptance criteria.

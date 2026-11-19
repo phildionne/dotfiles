@@ -31,9 +31,6 @@ case ":$PATH:" in
 esac
 alias pn="pnpm"
 
-# turso
-[[ -r "$HOME/.turso/env" ]] && source "$HOME/.turso/env"
-
 # Enable mise for interactive project-local tool versions.
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
